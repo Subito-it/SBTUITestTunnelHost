@@ -1,0 +1,9 @@
+use_frameworks!
+platform :ios, '8.0'
+
+target 'SBTUITestTunnelHost_Example' do
+end
+
+target 'SBTUITestTunnelHost_ExampleUITests' do
+  pod 'SBTUITestTunnelHost', :path => '../'
+end

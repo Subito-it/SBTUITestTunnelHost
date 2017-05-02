@@ -1,0 +1,404 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		72EB04F079F767286CF2155F /* Pods_SBTUITunnelHostServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8C34FAC177FA8F229FCFD33 /* Pods_SBTUITunnelHostServer.framework */; };
+		C34E6CAC1CF44D2D004D96DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34E6CAB1CF44D2D004D96DD /* AppDelegate.swift */; };
+		C34E6CAE1CF44D2D004D96DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C34E6CAD1CF44D2D004D96DD /* Assets.xcassets */; };
+		C34E6CB11CF44D2D004D96DD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C34E6CAF1CF44D2D004D96DD /* MainMenu.xib */; };
+		C3CA5A3A1EB8974100B8717E /* MouseMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CA5A391EB8974100B8717E /* MouseMagic.swift */; };
+		C3CA5A3C1EB897A000B8717E /* ShellCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CA5A3B1EB897A000B8717E /* ShellCommands.swift */; };
+		C3CA5A471EB8AC8800B8717E /* BaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CA5A441EB8AC8800B8717E /* BaseHandler.swift */; };
+		C3CA5A481EB8AC8800B8717E /* CatHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CA5A451EB8AC8800B8717E /* CatHandler.swift */; };
+		C3CA5A491EB8AC8800B8717E /* ExecHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CA5A461EB8AC8800B8717E /* ExecHandler.swift */; };
+		C3CA5A4B1EB8ACBF00B8717E /* MouseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CA5A4A1EB8ACBF00B8717E /* MouseHandler.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1FCA6BB9513E6E4E58CED026 /* Pods-SBTUITunnelHostServer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SBTUITunnelHostServer.release.xcconfig"; path = "Pods/Target Support Files/Pods-SBTUITunnelHostServer/Pods-SBTUITunnelHostServer.release.xcconfig"; sourceTree = "<group>"; };
+		27D23485823996586D87D674 /* Pods-SBTUITunnelHostServer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SBTUITunnelHostServer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SBTUITunnelHostServer/Pods-SBTUITunnelHostServer.debug.xcconfig"; sourceTree = "<group>"; };
+		C34E6CA81CF44D2D004D96DD /* SBTUITestTunnelServer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SBTUITestTunnelServer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C34E6CAB1CF44D2D004D96DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C34E6CAD1CF44D2D004D96DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C34E6CB01CF44D2D004D96DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		C34E6CB21CF44D2D004D96DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3CA5A391EB8974100B8717E /* MouseMagic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MouseMagic.swift; sourceTree = "<group>"; };
+		C3CA5A3B1EB897A000B8717E /* ShellCommands.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShellCommands.swift; sourceTree = "<group>"; };
+		C3CA5A441EB8AC8800B8717E /* BaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseHandler.swift; sourceTree = "<group>"; };
+		C3CA5A451EB8AC8800B8717E /* CatHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatHandler.swift; sourceTree = "<group>"; };
+		C3CA5A461EB8AC8800B8717E /* ExecHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecHandler.swift; sourceTree = "<group>"; };
+		C3CA5A4A1EB8ACBF00B8717E /* MouseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MouseHandler.swift; sourceTree = "<group>"; };
+		E8C34FAC177FA8F229FCFD33 /* Pods_SBTUITunnelHostServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SBTUITunnelHostServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C34E6CA51CF44D2D004D96DD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				72EB04F079F767286CF2155F /* Pods_SBTUITunnelHostServer.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8D66FA2B0E8E4D07F3509F9E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E8C34FAC177FA8F229FCFD33 /* Pods_SBTUITunnelHostServer.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C06C11921707BE50D580D453 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				27D23485823996586D87D674 /* Pods-SBTUITunnelHostServer.debug.xcconfig */,
+				1FCA6BB9513E6E4E58CED026 /* Pods-SBTUITunnelHostServer.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		C34E6C9F1CF44D2D004D96DD = {
+			isa = PBXGroup;
+			children = (
+				C34E6CAA1CF44D2D004D96DD /* SBTUITunnelHostServer */,
+				C34E6CA91CF44D2D004D96DD /* Products */,
+				C06C11921707BE50D580D453 /* Pods */,
+				8D66FA2B0E8E4D07F3509F9E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C34E6CA91CF44D2D004D96DD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C34E6CA81CF44D2D004D96DD /* SBTUITestTunnelServer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C34E6CAA1CF44D2D004D96DD /* SBTUITunnelHostServer */ = {
+			isa = PBXGroup;
+			children = (
+				C3CA5A431EB8AC8800B8717E /* Handlers */,
+				C3CA5A391EB8974100B8717E /* MouseMagic.swift */,
+				C34E6CAB1CF44D2D004D96DD /* AppDelegate.swift */,
+				C3CA5A3B1EB897A000B8717E /* ShellCommands.swift */,
+				C34E6CAD1CF44D2D004D96DD /* Assets.xcassets */,
+				C34E6CAF1CF44D2D004D96DD /* MainMenu.xib */,
+				C34E6CB21CF44D2D004D96DD /* Info.plist */,
+			);
+			path = SBTUITunnelHostServer;
+			sourceTree = "<group>";
+		};
+		C3CA5A431EB8AC8800B8717E /* Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				C3CA5A441EB8AC8800B8717E /* BaseHandler.swift */,
+				C3CA5A451EB8AC8800B8717E /* CatHandler.swift */,
+				C3CA5A461EB8AC8800B8717E /* ExecHandler.swift */,
+				C3CA5A4A1EB8ACBF00B8717E /* MouseHandler.swift */,
+			);
+			path = Handlers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C34E6CA71CF44D2D004D96DD /* SBTUITunnelHostServer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C34E6CB51CF44D2D004D96DD /* Build configuration list for PBXNativeTarget "SBTUITunnelHostServer" */;
+			buildPhases = (
+				DEDACABA67798305DD7F0973 /* 📦 Check Pods Manifest.lock */,
+				C34E6CA41CF44D2D004D96DD /* Sources */,
+				C34E6CA51CF44D2D004D96DD /* Frameworks */,
+				C34E6CA61CF44D2D004D96DD /* Resources */,
+				39ADEBB80858C68763597C6A /* 📦 Embed Pods Frameworks */,
+				80E7E7FFDE9F0411734AECC5 /* 📦 Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SBTUITunnelHostServer;
+			productName = SBTUITunnelHostServer;
+			productReference = C34E6CA81CF44D2D004D96DD /* SBTUITestTunnelServer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C34E6CA01CF44D2D004D96DD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = Subito.it;
+				TargetAttributes = {
+					C34E6CA71CF44D2D004D96DD = {
+						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = F93T2PM4GE;
+						LastSwiftMigration = 0820;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = C34E6CA31CF44D2D004D96DD /* Build configuration list for PBXProject "SBTUITunnelHostServer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C34E6C9F1CF44D2D004D96DD;
+			productRefGroup = C34E6CA91CF44D2D004D96DD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C34E6CA71CF44D2D004D96DD /* SBTUITunnelHostServer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C34E6CA61CF44D2D004D96DD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C34E6CAE1CF44D2D004D96DD /* Assets.xcassets in Resources */,
+				C34E6CB11CF44D2D004D96DD /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		39ADEBB80858C68763597C6A /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SBTUITunnelHostServer/Pods-SBTUITunnelHostServer-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		80E7E7FFDE9F0411734AECC5 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SBTUITunnelHostServer/Pods-SBTUITunnelHostServer-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DEDACABA67798305DD7F0973 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C34E6CA41CF44D2D004D96DD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3CA5A481EB8AC8800B8717E /* CatHandler.swift in Sources */,
+				C3CA5A491EB8AC8800B8717E /* ExecHandler.swift in Sources */,
+				C34E6CAC1CF44D2D004D96DD /* AppDelegate.swift in Sources */,
+				C3CA5A3C1EB897A000B8717E /* ShellCommands.swift in Sources */,
+				C3CA5A4B1EB8ACBF00B8717E /* MouseHandler.swift in Sources */,
+				C3CA5A3A1EB8974100B8717E /* MouseMagic.swift in Sources */,
+				C3CA5A471EB8AC8800B8717E /* BaseHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C34E6CAF1CF44D2D004D96DD /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C34E6CB01CF44D2D004D96DD /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C34E6CB31CF44D2D004D96DD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C34E6CB41CF44D2D004D96DD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		C34E6CB61CF44D2D004D96DD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27D23485823996586D87D674 /* Pods-SBTUITunnelHostServer.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = F93T2PM4GE;
+				INFOPLIST_FILE = SBTUITunnelHostServer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomascamin.sbtuitesttunnelmachost;
+				PRODUCT_NAME = SBTUITestTunnelServer;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		C34E6CB71CF44D2D004D96DD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FCA6BB9513E6E4E58CED026 /* Pods-SBTUITunnelHostServer.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = F93T2PM4GE;
+				INFOPLIST_FILE = SBTUITunnelHostServer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomascamin.sbtuitesttunnelmachost;
+				PRODUCT_NAME = SBTUITestTunnelServer;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C34E6CA31CF44D2D004D96DD /* Build configuration list for PBXProject "SBTUITunnelHostServer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C34E6CB31CF44D2D004D96DD /* Debug */,
+				C34E6CB41CF44D2D004D96DD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C34E6CB51CF44D2D004D96DD /* Build configuration list for PBXNativeTarget "SBTUITunnelHostServer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C34E6CB61CF44D2D004D96DD /* Debug */,
+				C34E6CB71CF44D2D004D96DD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C34E6CA01CF44D2D004D96DD /* Project object */;
+}

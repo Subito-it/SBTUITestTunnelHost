@@ -1,0 +1,5 @@
+use_frameworks!
+
+target 'SBTUITunnelHostServer' do
+	pod 'GCDWebServer'
+end
