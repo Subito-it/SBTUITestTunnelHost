@@ -34,6 +34,10 @@ The tool is intended for testing enviornments only, use with care since **it all
 
 For additional security launch the tool with a system user with [specific access privileges](https://support.apple.com/kb/PH25796?locale=en_US&viewlocale=en_US)
 
+## Additional resources
+
+If you need to mock or inject data from a UI Test try [SBTUITestTunnel](https://github.com/Subito-it/SBTUITestTunnel).
+
 ## Contributions
 
 Contributions are welcome! If you have a bug to report, feel free to help out by opening a new issue or sending a pull request.
