@@ -60,13 +60,11 @@ const NSTimeInterval SBTUITunneledHostDefaultTimeout = 30.0;
     self.connected = YES;
 }
 
-- (NSString *)executeCommand:(NSString *)command;
+- (NSString *)performAction:(NSString *)action data:(NSString *)data
 {
-    NSString *commandB64 = [[command dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
-    NSDictionary *params = @{@"command": commandB64, @"token": SBTUITestTunnelHostValidationToken};
+    NSDictionary *params = @{@"command": data, @"token": SBTUITestTunnelHostValidationToken};
     
-    NSString *path = @"exec";
-    NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/%@", self.remoteHost, (unsigned int)self.remotePort, path];
+    NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/%@", self.remoteHost, (unsigned int)self.remotePort, action];
     
     NSURL *url = [NSURL URLWithString:urlString];
     
@@ -75,7 +73,10 @@ const NSTimeInterval SBTUITunneledHostDefaultTimeout = 30.0;
     
     NSMutableArray *queryItems = [NSMutableArray array];
     [params enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
-        [queryItems addObject:[NSURLQueryItem queryItemWithName:key value:value]];
+        NSCharacterSet *URLBase64CharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@"/+=\n"] invertedSet];
+        NSString *escapedValue = [value stringByAddingPercentEncodingWithAllowedCharacters:URLBase64CharacterSet];
+        
+        [queryItems addObject:[NSURLQueryItem queryItemWithName:key value:escapedValue]];
     }];
     components.queryItems = queryItems;
     
@@ -114,6 +115,35 @@ const NSTimeInterval SBTUITunneledHostDefaultTimeout = 30.0;
     dispatch_semaphore_wait(synchRequestSemaphore, DISPATCH_TIME_FOREVER);
     
     return responseString;
+}
+
+- (NSString *)executeCommand:(NSString *)command;
+{
+    NSString *commandB64 = [[command dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+
+    NSString *action = @"exec";
+    
+    return [self performAction:action data:commandB64];
+}
+
+- (void)executeMouseClicks:(NSArray<SBTUITunneledHostMouseClick *> *)clicks
+{
+    NSData *encodedDrags = [NSKeyedArchiver archivedDataWithRootObject:clicks];
+    NSString *commandB64 = [encodedDrags base64EncodedStringWithOptions:0];
+    
+    NSString *action = @"mouse/clicks";
+    
+    [self performAction:action data:commandB64];
+}
+
+- (void)executeMouseDrags:(NSArray<SBTUITunneledHostMouseDrag *> *)drags
+{
+    NSData *encodedDrags = [NSKeyedArchiver archivedDataWithRootObject:drags];
+    NSString *commandB64 = [encodedDrags base64EncodedStringWithOptions:0];
+    
+    NSString *action = @"mouse/drags";
+    
+    [self performAction:action data:commandB64];
 }
 
 @end

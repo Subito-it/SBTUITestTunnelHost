@@ -16,6 +16,9 @@
 
 @import Foundation;
 
+#import "SBTUITunneledHostMouseClick.h"
+#import "SBTUITunneledHostMouseDrag.h"
+
 @interface SBTUITunneledHost : NSObject
 
 /**
@@ -30,5 +33,17 @@
  *  @return command result. Nil if command failed or connnection did timeout
  */
 - (NSString *)executeCommand:(NSString *)command;
+
+/**
+ *  Command to execute a sequence of SBTUITunneledHostMouseClick
+ *
+ */
+- (void)executeMouseClicks:(NSArray<SBTUITunneledHostMouseClick *> *)clicks;
+
+/**
+ *  Command to execute a sequence of SBTUITunneledHostMouseDrag
+ *
+ */
+- (void)executeMouseDrags:(NSArray<SBTUITunneledHostMouseDrag *> *)drags;
 
 @end

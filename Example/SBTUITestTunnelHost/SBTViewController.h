@@ -2,12 +2,12 @@
 //  SBTViewController.h
 //  SBTUITestTunnelHost
 //
-//  Created by tcamin on 05/02/2017.
-//  Copyright (c) 2017 tcamin. All rights reserved.
+//  Created by Tomas Camin on 04/05/2017.
+//  Copyright © 2017 tcamin. All rights reserved.
 //
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
-@interface SBTViewController : UIViewController
+@interface SBTViewController : UITableViewController
 
 @end

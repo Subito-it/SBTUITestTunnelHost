@@ -17,14 +17,14 @@
 import Foundation
 import GCDWebServer
 
-class MouseHandler: BaseHandler {
+class CatHandler: BaseHandler {
     
     private let requestMethod = "GET"
     
     func addHandler(_ webServer: GCDWebServer, menubarUpdated: @escaping ((String) -> ())) {
-        let catfileRequestClass = (requestMethod == "POST") ? GCDWebServerURLEncodedFormRequest.self : GCDWebServerRequest.self
+        let requestClass = (requestMethod == "POST") ? GCDWebServerURLEncodedFormRequest.self : GCDWebServerRequest.self
         
-        webServer.addDefaultHandler(forMethod: requestMethod, request: catfileRequestClass, processBlock: { request in
+        webServer.addHandler(forMethod: requestMethod, path: "/catfile", request: requestClass, processBlock: { request in
             guard let requestPath = request?.path else {
                 menubarUpdated("Unknown path")
                 return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 1])
@@ -33,7 +33,7 @@ class MouseHandler: BaseHandler {
             case "/catfile":
                 let params = (self.requestMethod == "POST") ? (request as! GCDWebServerURLEncodedFormRequest).arguments : request?.query
                 
-                if !self.validToken(params) {
+                guard self.validToken(params) else {
                     menubarUpdated("Check token")
                     return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 5])
                 }

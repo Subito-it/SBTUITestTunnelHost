@@ -14,12 +14,12 @@
 		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
 		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
 		6003F59E195388D20070C39A /* SBTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* SBTAppDelegate.m */; };
-		6003F5A7195388D20070C39A /* SBTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* SBTViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		C304476B1EB8B7CB00454832 /* SBTUITestTunnelHost_ExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C304476A1EB8B7CB00454832 /* SBTUITestTunnelHost_ExampleUITests.m */; };
 		C30447761EB93DEF00454832 /* SBTUITestTunnelHost_ExampleUITests_Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30447751EB93DEF00454832 /* SBTUITestTunnelHost_ExampleUITests_Swift.swift */; };
+		C323A5DF1EBBCB960030F545 /* SBTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C323A5DE1EBBCB960030F545 /* SBTViewController.m */; };
 		CE376A60848A128D6B4C8378 /* Pods_SBTUITestTunnelHost_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FD89CED2F138A44A76DE302 /* Pods_SBTUITestTunnelHost_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,8 +49,6 @@
 		6003F59B195388D20070C39A /* SBTUITestTunnelHost-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SBTUITestTunnelHost-Prefix.pch"; sourceTree = "<group>"; };
 		6003F59C195388D20070C39A /* SBTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBTAppDelegate.h; sourceTree = "<group>"; };
 		6003F59D195388D20070C39A /* SBTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBTAppDelegate.m; sourceTree = "<group>"; };
-		6003F5A5195388D20070C39A /* SBTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBTViewController.h; sourceTree = "<group>"; };
-		6003F5A6195388D20070C39A /* SBTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBTViewController.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -66,6 +64,8 @@
 		C304476C1EB8B7CB00454832 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C30447721EB93DA900454832 /* SBTUITestTunnelHost_ExampleUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SBTUITestTunnelHost_ExampleUITests-Bridging-Header.h"; sourceTree = "<group>"; };
 		C30447751EB93DEF00454832 /* SBTUITestTunnelHost_ExampleUITests_Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBTUITestTunnelHost_ExampleUITests_Swift.swift; sourceTree = "<group>"; };
+		C323A5DD1EBBCB960030F545 /* SBTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBTViewController.h; sourceTree = "<group>"; };
+		C323A5DE1EBBCB960030F545 /* SBTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBTViewController.m; sourceTree = "<group>"; };
 		FB8EBC7EFC49C0E784991035 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,8 +146,8 @@
 				6003F59C195388D20070C39A /* SBTAppDelegate.h */,
 				6003F59D195388D20070C39A /* SBTAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
-				6003F5A5195388D20070C39A /* SBTViewController.h */,
-				6003F5A6195388D20070C39A /* SBTViewController.m */,
+				C323A5DD1EBBCB960030F545 /* SBTViewController.h */,
+				C323A5DE1EBBCB960030F545 /* SBTViewController.m */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -389,8 +389,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F59E195388D20070C39A /* SBTAppDelegate.m in Sources */,
-				6003F5A7195388D20070C39A /* SBTViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				C323A5DF1EBBCB960030F545 /* SBTViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

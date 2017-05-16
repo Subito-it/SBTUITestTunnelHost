@@ -18,34 +18,44 @@
 import Foundation
 import GCDWebServer
 
-class CatHandler: BaseHandler {
+class MouseHandler: BaseHandler {
     
-    private let requestMethod = "GET"
+    private let requestMethod = "POST"
     
     func addHandler(_ webServer: GCDWebServer, menubarUpdated: @escaping ((String) -> ())) {
-        let execRequestClass = (requestMethod == "POST") ? GCDWebServerURLEncodedFormRequest.self : GCDWebServerRequest.self
+        let requestClass = (requestMethod == "POST") ? GCDWebServerURLEncodedFormRequest.self : GCDWebServerRequest.self
         
-        webServer.addDefaultHandler(forMethod: requestMethod, request: execRequestClass, processBlock: { request in
+        webServer.addHandler(forMethod: requestMethod, pathRegex: "/mouse/(.*)", request: requestClass, processBlock: { request in
+            let params = (self.requestMethod == "POST") ? (request as! GCDWebServerURLEncodedFormRequest).arguments : request?.query
+
             guard let requestPath = request?.path else {
                 menubarUpdated("Unknown path")
                 return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 1])
             }
             
+            guard self.validToken(params) else {
+                menubarUpdated("Check token")
+                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 5])
+            }
+            
+            guard let commandB64 = params?["command"] as? String else {
+                    menubarUpdated("What?")
+                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 6])
+            }
+            
+            guard let commandData = Data(base64Encoded: commandB64) else {
+                    menubarUpdated("What?")
+                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 6])
+            }
+            
+            NSKeyedUnarchiver.setClass(SBTMouseClick.self, forClassName: "SBTUITunneledHostMouseClick")
+            NSKeyedUnarchiver.setClass(SBTMouseDrag.self, forClassName: "SBTUITunneledHostMouseDrag")
+            
             switch requestPath {
-            case "/mouse":
-                let params = (self.requestMethod == "POST") ? (request as! GCDWebServerURLEncodedFormRequest).arguments : request?.query
-                
-                if !self.validToken(params) {
-                    menubarUpdated("Check token")
-                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 5])
+            case "/mouse/clicks":
+                guard let mouseClicks = NSKeyedUnarchiver.unarchiveObject(with: commandData) as? [SBTMouseClick] else {
+                    return GCDWebServerDataResponse(jsonObject: ["result": "ok", "status": 7])
                 }
-                
-                let repeatCount = params?["repeat_count"] as? Int ?? 0
-                let repeatDelay = params?["repeat_delay"] as? Int ?? 0
-                let startX = params?["start_x"] as? Float ?? 0.0
-                let startY = params?["start_y"] as? Float ?? 0.0
-                let stopX = params?["stop_x"] as? Float ?? 0.0
-                let stopY = params?["stop_y"] as? Float ?? 0.0
                 
                 var bounds: CGRect = .zero
                 do {
@@ -57,18 +67,46 @@ class CatHandler: BaseHandler {
                     exit(EX_USAGE)
                 }
                 
-                switch params?["action"] as? String ?? "" {
-                case "click":
-                    return GCDWebServerDataResponse(jsonObject: ["result": "ok", "status": 1])
-                    
-                case "drag":
-                    return GCDWebServerDataResponse(jsonObject: ["result": "ok", "status": 1])
-                    
-                default:
-                    menubarUpdated("Unkown action")
-                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 2])
+                let deviceOrigin = bounds.origin
+                
+                let mouse = Mouse()
+                for mouseClick in mouseClicks {
+                    let point = CGPoint(x: deviceOrigin.x + mouseClick.point.x, y: deviceOrigin.y + mouseClick.point.y)
+                    mouse.click(at: point)
+
+                    Thread.sleep(forTimeInterval: mouseClick.completionPause)
                 }
                 
+                return GCDWebServerDataResponse(jsonObject: ["status": 0, "result": "ok"])
+            case "/mouse/drags":
+                guard let mouseDrags = NSKeyedUnarchiver.unarchiveObject(with: commandData) as? [SBTMouseDrag] else {
+                    return GCDWebServerDataResponse(jsonObject: ["result": "ok", "status": 8])
+                }
+                
+                var bounds: CGRect = .zero
+                do {
+                    var pid: pid_t
+                    (pid, bounds) = try self.findSimulator()
+                    try self.bringWindowToFront(pid: pid)
+                    Thread.sleep(forTimeInterval: 0.01)
+                } catch {
+                    print(error)
+                    exit(EX_USAGE)
+                }
+                
+                let deviceOrigin = bounds.origin
+                
+                let mouse = Mouse()
+                for mouseDrag in mouseDrags {
+                    let startPoint = CGPoint(x: deviceOrigin.x + mouseDrag.startPoint.x, y: deviceOrigin.y + mouseDrag.startPoint.y)
+                    let stopPoint = CGPoint(x: deviceOrigin.x + mouseDrag.stopPoint.x, y: deviceOrigin.y + mouseDrag.stopPoint.y)
+                    mouse.drag(from: startPoint, to: stopPoint, duration: mouseDrag.dragDuration)
+                    
+                    Thread.sleep(forTimeInterval: mouseDrag.completionPause)
+                }
+                
+                return GCDWebServerDataResponse(jsonObject: ["status": 0, "result": "ok"])
+
             default:
                 menubarUpdated("Unkown command")
                 return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 1])
@@ -106,7 +144,9 @@ class CatHandler: BaseHandler {
                 throw Error.RuntimeError("Failed getting Simulator pid")
             }
             
-            return (pid, CGRect(x: x, y: y, width: w, height: h))
+            let windowBarHeight = 24
+            
+            return (pid, CGRect(x: x, y: y + windowBarHeight, width: w, height: h - windowBarHeight))
         }
         
         throw Error.RuntimeError("Simulator not running")

@@ -11,6 +11,8 @@
 		C34E6CAC1CF44D2D004D96DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34E6CAB1CF44D2D004D96DD /* AppDelegate.swift */; };
 		C34E6CAE1CF44D2D004D96DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C34E6CAD1CF44D2D004D96DD /* Assets.xcassets */; };
 		C34E6CB11CF44D2D004D96DD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C34E6CAF1CF44D2D004D96DD /* MainMenu.xib */; };
+		C3A745051ECA3E84007B57F5 /* SBTMouseClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A745041ECA3E84007B57F5 /* SBTMouseClick.swift */; };
+		C3A745071ECA3E98007B57F5 /* SBTMouseDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A745061ECA3E98007B57F5 /* SBTMouseDrag.swift */; };
 		C3CA5A3A1EB8974100B8717E /* MouseMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CA5A391EB8974100B8717E /* MouseMagic.swift */; };
 		C3CA5A3C1EB897A000B8717E /* ShellCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CA5A3B1EB897A000B8717E /* ShellCommands.swift */; };
 		C3CA5A471EB8AC8800B8717E /* BaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CA5A441EB8AC8800B8717E /* BaseHandler.swift */; };
@@ -27,6 +29,8 @@
 		C34E6CAD1CF44D2D004D96DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C34E6CB01CF44D2D004D96DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		C34E6CB21CF44D2D004D96DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3A745041ECA3E84007B57F5 /* SBTMouseClick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBTMouseClick.swift; sourceTree = "<group>"; };
+		C3A745061ECA3E98007B57F5 /* SBTMouseDrag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBTMouseDrag.swift; sourceTree = "<group>"; };
 		C3CA5A391EB8974100B8717E /* MouseMagic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MouseMagic.swift; sourceTree = "<group>"; };
 		C3CA5A3B1EB897A000B8717E /* ShellCommands.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShellCommands.swift; sourceTree = "<group>"; };
 		C3CA5A441EB8AC8800B8717E /* BaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseHandler.swift; sourceTree = "<group>"; };
@@ -86,6 +90,7 @@
 		C34E6CAA1CF44D2D004D96DD /* SBTUITunnelHostServer */ = {
 			isa = PBXGroup;
 			children = (
+				C3A745031ECA3E5C007B57F5 /* Classes */,
 				C3CA5A431EB8AC8800B8717E /* Handlers */,
 				C3CA5A391EB8974100B8717E /* MouseMagic.swift */,
 				C34E6CAB1CF44D2D004D96DD /* AppDelegate.swift */,
@@ -95,6 +100,15 @@
 				C34E6CB21CF44D2D004D96DD /* Info.plist */,
 			);
 			path = SBTUITunnelHostServer;
+			sourceTree = "<group>";
+		};
+		C3A745031ECA3E5C007B57F5 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C3A745041ECA3E84007B57F5 /* SBTMouseClick.swift */,
+				C3A745061ECA3E98007B57F5 /* SBTMouseDrag.swift */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		C3CA5A431EB8AC8800B8717E /* Handlers */ = {
@@ -144,7 +158,7 @@
 					C34E6CA71CF44D2D004D96DD = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = F93T2PM4GE;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -234,10 +248,12 @@
 			files = (
 				C3CA5A481EB8AC8800B8717E /* CatHandler.swift in Sources */,
 				C3CA5A491EB8AC8800B8717E /* ExecHandler.swift in Sources */,
+				C3A745071ECA3E98007B57F5 /* SBTMouseDrag.swift in Sources */,
 				C34E6CAC1CF44D2D004D96DD /* AppDelegate.swift in Sources */,
 				C3CA5A3C1EB897A000B8717E /* ShellCommands.swift in Sources */,
 				C3CA5A4B1EB8ACBF00B8717E /* MouseHandler.swift in Sources */,
 				C3CA5A3A1EB8974100B8717E /* MouseMagic.swift in Sources */,
+				C3A745051ECA3E84007B57F5 /* SBTMouseClick.swift in Sources */,
 				C3CA5A471EB8AC8800B8717E /* BaseHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,6 +364,7 @@
 			baseConfigurationReference = 27D23485823996586D87D674 /* Pods-SBTUITunnelHostServer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = F93T2PM4GE;
@@ -356,6 +373,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.tomascamin.sbtuitesttunnelmachost;
 				PRODUCT_NAME = SBTUITestTunnelServer;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SBTUITunnelHostServer/SBTUITunnelHostServer-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -365,6 +384,7 @@
 			baseConfigurationReference = 1FCA6BB9513E6E4E58CED026 /* Pods-SBTUITunnelHostServer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = F93T2PM4GE;
@@ -373,6 +393,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.tomascamin.sbtuitesttunnelmachost;
 				PRODUCT_NAME = SBTUITestTunnelServer;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SBTUITunnelHostServer/SBTUITunnelHostServer-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

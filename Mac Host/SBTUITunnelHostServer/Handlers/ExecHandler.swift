@@ -24,9 +24,9 @@ class ExecHandler: BaseHandler {
     private var executablesBasePath = "~/Desktop"
 
     func addHandler(_ webServer: GCDWebServer, menubarUpdated: @escaping ((String) -> ())) {
-        let execRequestClass = (requestMethod == "POST") ? GCDWebServerURLEncodedFormRequest.self : GCDWebServerRequest.self
+        let requestClass = (requestMethod == "POST") ? GCDWebServerURLEncodedFormRequest.self : GCDWebServerRequest.self
         
-        webServer.addDefaultHandler(forMethod: requestMethod, request: execRequestClass, processBlock: { request in
+        webServer.addHandler(forMethod: requestMethod, path: "/exec", request: requestClass, processBlock: { request in
             guard let requestPath = request?.path else {
                 menubarUpdated("Unknown path")
                 return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 1])
@@ -36,7 +36,7 @@ class ExecHandler: BaseHandler {
             case "/exec":
                 let params = (self.requestMethod == "POST") ? (request as! GCDWebServerURLEncodedFormRequest).arguments : request?.query
                 
-                if !self.validToken(params) {
+                guard self.validToken(params) else {
                     menubarUpdated("Check token")
                     return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 5])
                 }

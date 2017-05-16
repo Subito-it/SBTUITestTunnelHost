@@ -10,7 +10,7 @@ import SBTUITestTunnelHost
 
 class SBTUITestTunnelHost_ExampleUITests_Swift: XCTestCase {
 
-    func testExample() {
+    func testHost() {
         // echo a string to a file and check that it is read correctly
         let app = XCUIApplication()
         app.launch()
@@ -28,5 +28,42 @@ class SBTUITestTunnelHost_ExampleUITests_Swift: XCTestCase {
         
         XCTAssertEqual(catResult, expectedCatResult)
         XCTAssertEqual(echoCmdResult, "")
+    }
+    
+    func testMultipleTap() {
+        let app = XCUIApplication()
+        app.launch()
+        
+        host.connect()
+        
+        let btn = app.buttons["Multiple tap test button"]
+        
+        let mouseClick = SBTUITunneledHostMouseClick(element: btn, completionPause: 0.05)
+        
+        let mouseCliks = Array(repeating: mouseClick, count: 3)
+        host.execute(mouseCliks)
+        
+        let existsPredicate = NSPredicate(format: "exists == true")
+        expectation(for: existsPredicate, evaluatedWith: app.alerts["Multi tap test"], handler: nil)
+        waitForExpectations(timeout: 10.0, handler: nil)
+        XCTAssert(app.alerts.staticTexts["3"].exists)
+    }
+    
+    func testMultipleDrag() {
+        let app = XCUIApplication()
+        app.launch()
+        
+        host.connect()
+    
+        let table = app.tables.element
+    
+        let mouseDrag = SBTUITunneledHostMouseDrag(element: table, startNormalizedPoint: CGPoint(x: 0.5, y: 0.9), stopNormalizedPoint: CGPoint(x: 0.5, y: 0.1), dragDuration: 0.1, completionPause: 0.05)
+        
+        let mouseDrags = Array(repeating: mouseDrag, count: 8)
+        host.execute(mouseDrags)
+    
+        Thread.sleep(forTimeInterval: 2.0)
+    
+        XCTAssert(app.cells["99"].isHittable)
     }
 }

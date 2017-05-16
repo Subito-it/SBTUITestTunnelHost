@@ -34,4 +34,45 @@
     XCTAssert([echoCmdResult isEqualToString:@""]);
 }
 
+- (void)testMultipleTap {
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    [app launch];
+    
+    [self.host connect];
+    
+    XCUIElement *btn = app.buttons[@"Multiple tap test button"];
+    
+    SBTUITunneledHostMouseClick *mouseClick = [[SBTUITunneledHostMouseClick alloc] initWithElement:btn completionPause:0.05];
+
+    [self.host executeMouseClicks:@[mouseClick, mouseClick, mouseClick]];
+    
+    NSPredicate *existsPredicate = [NSPredicate predicateWithFormat:@"exists == true"];
+    [self expectationForPredicate:existsPredicate evaluatedWithObject:app.alerts[@"Multi tap test"] handler:nil];
+    
+    [self waitForExpectationsWithTimeout:10.0 handler:nil];
+    
+    XCTAssert(app.alerts.staticTexts[@"3"].exists);
+}
+
+- (void)testMultipleDrag {
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    [app launch];
+    
+    [self.host connect];
+    
+    XCUIElement *table = app.tables.element;
+    
+    SBTUITunneledHostMouseDrag *mouseDrag = [[SBTUITunneledHostMouseDrag alloc] initWithElement:table
+                                                                           startNormalizedPoint:CGPointMake(0.5, 0.9)
+                                                                            stopNormalizedPoint:CGPointMake(0.5, 0.1)
+                                                                                   dragDuration:0.1
+                                                                                completionPause:0.05];
+    
+    [self.host executeMouseDrags:@[mouseDrag, mouseDrag, mouseDrag, mouseDrag, mouseDrag]];
+    
+    [NSThread sleepForTimeInterval:2.0];
+    
+    XCTAssert(app.cells[@"99"].isHittable);
+}
+
 @end
