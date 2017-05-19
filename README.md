@@ -6,7 +6,12 @@
 
 ## Overview
 
-If you've been writing UI Tests in Xcode you may have been in the situation where you wanted to execute some command line tools (on the mac host) during the test execution. This tool does just that and consists of a Mac App (server) and an extension of XCTests (client).
+Apple's UI testing framework is a tremendously powerful tool to write ui tests for your application. There are however some edge cases were tests can become difficult/impossible to write. We've been developing this tool to cover different (at first sight unrelated) needs in our ui testing workflow.
+
+SBTUITestTunnelHost includes a Mac App (Server) and a set of classes to be used in your UI test target which enables to:
+
+- launch shell commands on the Mac host from within the test target. This can come in handy if you have shell scripts that interact with your backend environment (user creation, deletion, content modification and so on)
+- perform mouse actions. We use this to perform very fast interaction (i.e. very fast and repeated swipes) with the app under test, which is not possible using XCTest capabilities.
 
 ## Installation (CocoaPods)
 
@@ -22,17 +27,19 @@ Add files in the *SBTUITestTunnelHost* to the UI test target.
 
 Launch the Mac App (either by compiling the `Mac Host/SBTUITunnelHostServer.xcworkspace` or launching the executable in `Mac Host/Binary/SBTUITestTunnelServer.zip`) which will fire a server on your local machine on port 8667. The current status of the server will be shown in the macOS menubar.
 
+#### Security Warnings 🔥🔥🔥 
+
+The tool is intended for testing enviornments only, use with care since **it allows to access and execute commands** on the running host. **Make sure that the host is only reachable by trusted clients.**
+
+To increase security by default the application binds the server to localhost. This means that it will only receive requests from within the same machine that runs the tool, which should be fine in most cases. You can optionally launch the application  passing the `--skipLocalhostBinding` or by manually toggling the option from menubar to bypass this limitation.
+
+For additional security launch the tool with a system user with [specific access privileges](https://support.apple.com/kb/PH25796?locale=en_US&viewlocale=en_US)
+
 ### UI Tests
 
 In your code just import SBTUITestTunnelHost. This will add a `host` property to the XCTest class which is an instance of `SBTUITestTunnelHost` that allows to remotely execute a command by calling `host.executeCommand(cmd)`. Commands are executed synchronously and return a string with the stdout output.
 
 In the Example project there are two very simple examples in Swift and Objective-C.
-
-## Security Warnings 🔥🔥🔥 
-
-The tool is intended for testing enviornments only, use with care since **it allows to access and execute commands** on the running host. **Make sure that the host is only reachable by trusted clients.**
-
-For additional security launch the tool with a system user with [specific access privileges](https://support.apple.com/kb/PH25796?locale=en_US&viewlocale=en_US)
 
 ## Additional resources
 
