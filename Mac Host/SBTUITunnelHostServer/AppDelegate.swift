@@ -26,6 +26,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     
     let bonjourServiceName = "com.sbtuitesttunnel.mac.host"
     let serverPort: UInt = 8667
+    var serverBindToLocalhost = false
+    var serverBindToLocalhostMenuItem = NSMenuItem(title: "Bind connections to localhost", action: #selector(toggleBindToLocalHostClicked), keyEquivalent: "")
+    var server: GCDWebServer?
 
     let statusBar = NSStatusBar.system()
     var statusBarItem : NSStatusItem = NSStatusItem()
@@ -33,33 +36,69 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     var statusBarImageTimer = Timer()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        self.statusBarItem = self.statusBar.statusItem(withLength: NSVariableStatusItemLength)
-        self.restoreDefaultStatusBarImage()
-        
-        startup()
+        let args = ProcessInfo().arguments
+
+        statusBarItem = statusBar.statusItem(withLength: NSVariableStatusItemLength)
+        restoreDefaultStatusBarImage()
+    
+        serverBindToLocalhost = args.contains("--skipLocalhostBinding")
+        toggleBindToLocalHost()
     }
     
     func startup() {
-        guard let webServer = GCDWebServer() else {
+        server?.stop()
+        server = GCDWebServer()
+        
+        guard let server = server else {
             exit(-1)
         }
         
         let handlers: [BaseHandler] = [ExecHandler(), CatHandler(), MouseHandler()]
         handlers.forEach {
-            $0.addHandler(webServer) { [unowned self] menubarTitle in
+            $0.addHandler(server) { [unowned self] menubarTitle in
                 self.updateMenuBarWithTitle(menubarTitle)
             }
         }
         
-        webServer.delegate = self
-        webServer.start(withPort: self.serverPort, bonjourName: self.bonjourServiceName)
+        server.delegate = self
+        try? server.start(options: [GCDWebServerOption_BindToLocalhost: serverBindToLocalhost,
+                                    GCDWebServerOption_BonjourName: bonjourServiceName,
+                                    GCDWebServerOption_Port: serverPort])
+    }
+    
+    func toggleBindToLocalHostClicked() {
+        if serverBindToLocalhost {
+            let alert = NSAlert.init()
+            alert.messageText = "Warning"
+            alert.informativeText = "Disabling this option will enable access outside localhost on port \(serverPort). For your securitu make sure this port is not reachable from unwanted clients"
+            alert.addButton(withTitle: "OK")
+            alert.addButton(withTitle: "Cancel")
+            
+            let result = alert.runModal()
+            if result == NSAlertFirstButtonReturn {
+                toggleBindToLocalHost()
+            }
+        } else {
+            toggleBindToLocalHost()
+        }
+    }
+    
+    func toggleBindToLocalHost() {
+        serverBindToLocalhost = !serverBindToLocalhost
+        serverBindToLocalhostMenuItem.state = serverBindToLocalhost ? 1 : 0
+        
+        startup()
     }
     
     private func updateMenuBarWithTitle(_ title: String) {
+        self.statusBarItem.menu?.removeItem(serverBindToLocalhostMenuItem)
+        
         let menu = NSMenu()
         
         menu.addItem(NSMenuItem(title: title, action: nil, keyEquivalent: ""))
         
+        menu.addItem(NSMenuItem.separator())
+        menu.addItem(serverBindToLocalhostMenuItem)
         menu.addItem(NSMenuItem.separator())
         menu.addItem(NSMenuItem(title: "Quit SBTUITestTunnelServer", action: #selector(NSApp.terminate), keyEquivalent: ""))
         
@@ -73,7 +112,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     }
     
     func webServerDidStart(_ server: GCDWebServer!) {
-        updateMenuBarWithTitle("Running: " + server.serverURL.description)
+        guard let serverURL = server.serverURL else {
+            return
+        }
+        
+        updateMenuBarWithTitle("Running: " + serverURL.description)
     }
     
     func restoreDefaultStatusBarImage() {
