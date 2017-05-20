@@ -15,11 +15,19 @@
 // limitations under the License.
 
 @import Foundation;
+@import XCTest;
 
 #import "SBTUITunneledHostMouseClick.h"
 #import "SBTUITunneledHostMouseDrag.h"
 
 @interface SBTUITunneledHost : NSObject
+
+/**
+ *  Initialize application by passing a reference to the hosting XCUIApplication
+ *
+ */
+- (instancetype)initWithApp:(XCUIApplication *)app;
+- (instancetype)init NS_UNAVAILABLE;
 
 /**
 *  Asynchronously connects for remote host

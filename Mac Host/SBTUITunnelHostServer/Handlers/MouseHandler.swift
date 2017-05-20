@@ -38,15 +38,35 @@ class MouseHandler: BaseHandler {
                 return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 5])
             }
             
+            guard let appFrameString = params?["app_frame"] as? String else {
+                menubarUpdated("What?")
+                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 6])
+            }
+            
             guard let commandB64 = params?["command"] as? String else {
                     menubarUpdated("What?")
-                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 6])
+                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 7])
             }
             
             guard let commandData = Data(base64Encoded: commandB64) else {
                     menubarUpdated("What?")
-                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 6])
+                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 8])
             }
+            
+            var simulator_bounds: CGRect = .zero
+            do {
+                var pid: pid_t
+                (pid, simulator_bounds) = try self.findSimulator()
+                try self.bringWindowToFront(pid: pid)
+            } catch {
+                print(error)
+                exit(EX_USAGE)
+            }
+            
+            let app_width = NSRectFromString(appFrameString).size.width
+            let dimensionRatio = simulator_bounds.size.width / app_width
+            
+            let deviceOrigin = simulator_bounds.origin
             
             NSKeyedUnarchiver.setClass(SBTMouseClick.self, forClassName: "SBTUITunneledHostMouseClick")
             NSKeyedUnarchiver.setClass(SBTMouseDrag.self, forClassName: "SBTUITunneledHostMouseDrag")
@@ -54,57 +74,34 @@ class MouseHandler: BaseHandler {
             switch requestPath {
             case "/mouse/clicks":
                 guard let mouseClicks = NSKeyedUnarchiver.unarchiveObject(with: commandData) as? [SBTMouseClick] else {
-                    return GCDWebServerDataResponse(jsonObject: ["result": "ok", "status": 7])
+                    return GCDWebServerDataResponse(jsonObject: ["result": "ok", "status": 9])
                 }
-                
-                var bounds: CGRect = .zero
-                do {
-                    var pid: pid_t
-                    (pid, bounds) = try self.findSimulator()
-                    try self.bringWindowToFront(pid: pid)
-                } catch {
-                    print(error)
-                    exit(EX_USAGE)
-                }
-                
-                let deviceOrigin = bounds.origin
                 
                 let mouse = Mouse()
                 for mouseClick in mouseClicks {
-                    let point = CGPoint(x: deviceOrigin.x + mouseClick.point.x, y: deviceOrigin.y + mouseClick.point.y)
+                    let point = CGPoint(x: deviceOrigin.x + mouseClick.point.x * dimensionRatio, y: deviceOrigin.y + mouseClick.point.y * dimensionRatio)
                     mouse.click(at: point)
 
                     Thread.sleep(forTimeInterval: mouseClick.completionPause)
                 }
-                
+                menubarUpdated("Mouse clicking...")
                 return GCDWebServerDataResponse(jsonObject: ["status": 0, "result": "ok"])
             case "/mouse/drags":
                 guard let mouseDrags = NSKeyedUnarchiver.unarchiveObject(with: commandData) as? [SBTMouseDrag] else {
-                    return GCDWebServerDataResponse(jsonObject: ["result": "ok", "status": 8])
+                    return GCDWebServerDataResponse(jsonObject: ["result": "ok", "status": 10])
                 }
-                
-                var bounds: CGRect = .zero
-                do {
-                    var pid: pid_t
-                    (pid, bounds) = try self.findSimulator()
-                    try self.bringWindowToFront(pid: pid)
-                    Thread.sleep(forTimeInterval: 0.01)
-                } catch {
-                    print(error)
-                    exit(EX_USAGE)
-                }
-                
-                let deviceOrigin = bounds.origin
                 
                 let mouse = Mouse()
                 for mouseDrag in mouseDrags {
-                    let startPoint = CGPoint(x: deviceOrigin.x + mouseDrag.startPoint.x, y: deviceOrigin.y + mouseDrag.startPoint.y)
-                    let stopPoint = CGPoint(x: deviceOrigin.x + mouseDrag.stopPoint.x, y: deviceOrigin.y + mouseDrag.stopPoint.y)
+                    let startPoint = CGPoint(x: deviceOrigin.x + mouseDrag.startPoint.x * dimensionRatio,
+                                             y: deviceOrigin.y + mouseDrag.startPoint.y * dimensionRatio)
+                    let stopPoint = CGPoint(x: deviceOrigin.x + mouseDrag.stopPoint.x * dimensionRatio,
+                                            y: deviceOrigin.y + mouseDrag.stopPoint.y * dimensionRatio)
                     mouse.drag(from: startPoint, to: stopPoint, duration: mouseDrag.dragDuration)
                     
                     Thread.sleep(forTimeInterval: mouseDrag.completionPause)
                 }
-                
+                menubarUpdated("Mouse dragging...")
                 return GCDWebServerDataResponse(jsonObject: ["status": 0, "result": "ok"])
 
             default:
