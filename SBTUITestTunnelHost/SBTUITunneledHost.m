@@ -32,7 +32,7 @@ const NSTimeInterval SBTUITunneledHostDefaultTimeout = 30.0;
 @interface SBTUITunneledHost()
 
 @property (nonatomic, assign) BOOL connected;
-@property (nonatomic, weak) XCUIApplication *app;
+@property (nonatomic, strong) XCUIApplication *app;
 @property (nonatomic, assign) NSUInteger remotePort;
 @property (nonatomic, strong) NSNetService *remoteService;
 @property (nonatomic, strong) NSString *remoteHost;
@@ -64,7 +64,8 @@ const NSTimeInterval SBTUITunneledHostDefaultTimeout = 30.0;
 
 - (NSString *)performAction:(NSString *)action data:(NSString *)data
 {
-    NSDictionary *params = @{ @"command": data, @"app_frame": NSStringFromCGRect(self.app.frame), @"token": SBTUITestTunnelHostValidationToken };
+    CGRect appFrame = (CGRect)[(XCUIElement*)[[[self app] windows] elementBoundByIndex:0] frame]; // app.frame doesn't work
+    NSDictionary *params = @{ @"command": data, @"app_frame": NSStringFromCGRect(appFrame), @"token": SBTUITestTunnelHostValidationToken };
     
     NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/%@", self.remoteHost, (unsigned int)self.remotePort, action];
     
