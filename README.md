@@ -75,7 +75,7 @@ host.execute(mouseDrags)
 
 
 #### serving files
-Simply issue a GET request to http://localhost:8667/catfile?token=<TOKEN>&content-type=application/json&path=/tmp/tunnel-test
+Simply issue a GET request to http://localhost:8667/catfile?token=TOKEN&content-type=application/json&path=/tmp/tunnel-test
 
 
 ## Additional resources
