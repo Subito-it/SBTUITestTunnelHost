@@ -51,7 +51,8 @@ You can execute 2 different type of mouse actions: clicks and drags.
 Create an instance of `SBTUITunneledHostMouseClick` by passing the `XCUIElement` you want to be clicked and specifying a delay (in seconds) to wait after the click has been performed. This is useful if you need to create a sequence of `[SBTUITunneledHostMouseClick]`.
 
 This will execute 3 consecutive mouse clicks on element btn with a pause of 50ms in between
-```let mouseClick = SBTUITunneledHostMouseClick(element: btn, completionPause: 0.05)
+```
+let mouseClick = SBTUITunneledHostMouseClick(element: btn, completionPause: 0.05)
 let mouseCliks = Array(repeating: mouseClick, count: 3)
         host.execute(mouseCliks)
 ```
