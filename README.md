@@ -47,17 +47,31 @@ To remotely execute a command invoke  `host.executeCommand(cmd)` which will sync
 
 You can execute 2 different type of mouse actions: clicks and drags.
 
-- clicks
-Create an instance of `SBTUITunneledHostMouseClick` by passing the `XCUIElement` you want to be clicked and specifying a delay (in seconds) to wait after the click has been performed. This is useful if you need to create a sequence of `[SBTUITunneledHostMouseClick]`.
+#### mouse actions: Clicks
+Create an instance of `SBTUITunneledHostMouseClick` by passing the `XCUIElement` you want to be clicked (center of element will be clicked) and specifying a delay, in seconds, to wait after the click has been performed. This is useful if you need to create a sequence of `[SBTUITunneledHostMouseClick]`.
 
-This will execute 3 consecutive mouse clicks on element btn with a pause of 50ms in between
+This will execute 3 consecutive mouse clicks on element `btn` with a pause of 50ms in between
 ```
 let mouseClick = SBTUITunneledHostMouseClick(element: btn, completionPause: 0.05)
 let mouseCliks = Array(repeating: mouseClick, count: 3)
-        host.execute(mouseCliks)
+host.execute(mouseCliks)
 ```
 
+#### mouse actions: Drags
+Create an instance of `SBTUITunneledHostMouseDrag` by passing the `XCUIElement` you want to be dragged.
+Additionally you have to pass normalized coordinates (values between 0.0 and 1.0) of the start and stop points of the drag. (0.0, 0.0) represents top left corner, (1.0, 1.0) bottom right.
+As for clicks you specify a delay, in seconds, to wait after the drag has been performed.
 
+This will execute 3 consecutive mouse drags (swipe ups) on element `table` with a duration of 100ms and a pause of 50ms in between
+```
+let mouseDrag = SBTUITunneledHostMouseDrag(element: table,
+                                           startNormalizedPoint: CGPoint(x: 0.5, y: 0.9),
+                                           stopNormalizedPoint: CGPoint(x: 0.5, y: 0.1),
+                                           dragDuration: 0.1,
+                                           completionPause: 0.05)
+let mouseDrags = Array(repeating: mouseDrag, count: 3)
+host.execute(mouseDrags)
+```
 
 
 #### serving files
