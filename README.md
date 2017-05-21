@@ -43,10 +43,6 @@ The Example project comes with several Tests in Swift and Objective-C that show 
 #### launching shell commands
 To remotely execute a command invoke  `host.executeCommand(cmd)` which will synchronously execute the command and return the stdout output.
 
-#### mouse actions
-
-You can execute 2 different type of mouse actions: clicks and drags.
-
 #### mouse actions: Clicks
 Create an instance of `SBTUITunneledHostMouseClick` by passing the `XCUIElement` you want to be clicked (center of element will be clicked) and specifying a delay, in seconds, to wait after the click has been performed. This is useful if you need to create a sequence of `[SBTUITunneledHostMouseClick]`.
 
