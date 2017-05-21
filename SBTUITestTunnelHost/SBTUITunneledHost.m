@@ -32,7 +32,6 @@ const NSTimeInterval SBTUITunneledHostDefaultTimeout = 30.0;
 @interface SBTUITunneledHost()
 
 @property (nonatomic, assign) BOOL connected;
-@property (nonatomic, strong) XCUIApplication *app;
 @property (nonatomic, assign) NSUInteger remotePort;
 @property (nonatomic, strong) NSNetService *remoteService;
 @property (nonatomic, strong) NSString *remoteHost;
@@ -41,7 +40,7 @@ const NSTimeInterval SBTUITunneledHostDefaultTimeout = 30.0;
 
 @implementation SBTUITunneledHost
 
-- (instancetype)initWithApp:(XCUIApplication *)app
+- (instancetype)init
 {
     self = [super init];
     
@@ -49,7 +48,6 @@ const NSTimeInterval SBTUITunneledHostDefaultTimeout = 30.0;
         _connected = NO;
         _remotePort = SBTUITunneledHostDefaultPort;
         _remoteHost = SBTUITunneledHostDefaultHost;
-        _app = app;
     }
     
     return self;
@@ -62,9 +60,9 @@ const NSTimeInterval SBTUITunneledHostDefaultTimeout = 30.0;
     self.connected = YES;
 }
 
-- (NSString *)performAction:(NSString *)action data:(NSString *)data
+- (NSString *)performAction:(NSString *)action data:(NSString *)data app:(XCUIApplication *)app
 {
-    CGRect appFrame = (CGRect)[(XCUIElement*)[[[self app] windows] elementBoundByIndex:0] frame]; // app.frame doesn't work
+    CGRect appFrame = [[app.windows elementBoundByIndex:0] frame]; // app.frame doesn't work
     NSDictionary *params = @{ @"command": data, @"app_frame": NSStringFromCGRect(appFrame), @"token": SBTUITestTunnelHostValidationToken };
     
     NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/%@", self.remoteHost, (unsigned int)self.remotePort, action];
@@ -126,27 +124,27 @@ const NSTimeInterval SBTUITunneledHostDefaultTimeout = 30.0;
 
     NSString *action = @"exec";
     
-    return [self performAction:action data:commandB64];
+    return [self performAction:action data:commandB64 app:nil];
 }
 
-- (void)executeMouseClicks:(NSArray<SBTUITunneledHostMouseClick *> *)clicks
+- (void)executeMouseClicks:(NSArray<SBTUITunneledHostMouseClick *> *)clicks app:(XCUIApplication *)app
 {
     NSData *encodedDrags = [NSKeyedArchiver archivedDataWithRootObject:clicks];
     NSString *commandB64 = [encodedDrags base64EncodedStringWithOptions:0];
     
     NSString *action = @"mouse/clicks";
     
-    [self performAction:action data:commandB64];
+    [self performAction:action data:commandB64 app:app];
 }
 
-- (void)executeMouseDrags:(NSArray<SBTUITunneledHostMouseDrag *> *)drags
+- (void)executeMouseDrags:(NSArray<SBTUITunneledHostMouseDrag *> *)drags app:(XCUIApplication *)app
 {
     NSData *encodedDrags = [NSKeyedArchiver archivedDataWithRootObject:drags];
     NSString *commandB64 = [encodedDrags base64EncodedStringWithOptions:0];
     
     NSString *action = @"mouse/drags";
     
-    [self performAction:action data:commandB64];
+    [self performAction:action data:commandB64 app:app];
 }
 
 @end
