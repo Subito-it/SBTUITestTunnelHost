@@ -1,5 +1,3 @@
-# SBTUITestTunnelHost
-
 [![Version](https://img.shields.io/cocoapods/v/SBTUITestTunnelHost.svg?style=flat)](http://cocoadocs.org/docsets/SBTUITestTunnelHost)
 [![License](https://img.shields.io/cocoapods/l/SBTUITestTunnelHost.svg?style=flat)](http://cocoadocs.org/docsets/SBTUITestTunnelHost)
 [![Platform](https://img.shields.io/cocoapods/p/SBTUITestTunnelHost.svg?style=flat)](http://cocoadocs.org/docsets/SBTUITestTunnelHost)
@@ -11,7 +9,8 @@ Apple's UI testing framework is a tremendously powerful tool to write ui tests f
 SBTUITestTunnelHost includes a Mac App (Server) and a set of classes to be used in your UI test target which enables to:
 
 - launch shell commands on the Mac host from within the test target. This can come in handy if you have shell scripts that interact with your backend environment (user creation, deletion, content modification and so on)
-- perform mouse actions. We use this to perform very fast interaction (i.e. very fast and repeated swipes) with the app under test, which is not possible using XCTest capabilities.
+- perform mouse actions. We use this to perform very fast interaction (i.e. very fast and repeated swipes) with the app under test, which is not possible using XCTest capabilities
+- serve static content file. Lift you from installing a full web server when in need to serve simple static content
 
 ## Installation (CocoaPods)
 
@@ -33,13 +32,29 @@ The tool is intended for testing enviornments only, use with care since **it all
 
 To increase security by default the application binds the server to localhost. This means that it will only receive requests from within the same machine that runs the tool, which should be fine in most cases. You can optionally launch the application  passing the `--skipLocalhostBinding` or by manually toggling the option from menubar to bypass this limitation.
 
-For additional security launch the tool with a system user with [specific access privileges](https://support.apple.com/kb/PH25796?locale=en_US&viewlocale=en_US)
+For additional security launch the tool with a system user with [specific access privileges](https://support.apple.com/kb/PH25796?locale=en_US&amp;viewlocale=en_US)
 
 ### UI Tests
 
-In your code just import SBTUITestTunnelHost. This will add a `host` property to the XCTest class which is an instance of `SBTUITestTunnelHost` that allows to remotely execute a command by calling `host.executeCommand(cmd)`. Commands are executed synchronously and return a string with the stdout output.
+In your code just import SBTUITestTunnelHost. This will add a `host` property to the XCTest class which is an instance of `SBTUITestTunnelHost`.
 
-In the Example project there are two very simple examples in Swift and Objective-C.
+The Example project comes with several Tests in Swift and Objective-C that show the different use cases.
+
+#### launching shell commands
+To remotely execute a command invoke  `host.executeCommand(cmd)` which will synchronously execute the command and return the stdout output.
+
+#### mouse actions
+
+You can execute 2 different type of mouse actions: clicks and drags.
+
+##### Clicks
+
+
+
+
+#### serving files
+Simply issue a GET request to http://localhost:8667/catfile?token=<TOKEN>&content-type=application/json&path=/tmp/tunnel-test
+
 
 ## Additional resources
 
