@@ -69,6 +69,9 @@ let mouseDrags = Array(repeating: mouseDrag, count: 3)
 host.execute(mouseDrags)
 ```
 
+The result is a much faster scrolling as can be seen from the demo below.
+<img src="https://raw.githubusercontent.com/Subito-it/SBTUITestTunnelHost/master/Images/ScrollingDemo.gif" width="480" />
+
 
 #### serving files
 Simply issue a GET request to http://localhost:8667/catfile?token=TOKEN&content-type=application/json&path=/tmp/tunnel-test
