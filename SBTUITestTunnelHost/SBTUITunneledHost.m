@@ -62,8 +62,10 @@ const NSTimeInterval SBTUITunneledHostDefaultTimeout = 30.0;
 
 - (NSString *)performAction:(NSString *)action data:(NSString *)data app:(XCUIApplication *)app
 {
+    NSDictionary<NSString *, NSString *> *env = [[NSProcessInfo processInfo] environment];
+    NSString *simulatorWindowName = [NSString stringWithFormat:@"%@ - iOS %@", env[@"SIMULATOR_DEVICE_NAME"], env[@"SIMULATOR_RUNTIME_VERSION"]];
     CGRect appFrame = [[app.windows elementBoundByIndex:0] frame]; // app.frame doesn't work
-    NSDictionary *params = @{ @"command": data, @"app_frame": NSStringFromCGRect(appFrame), @"token": SBTUITestTunnelHostValidationToken };
+    NSDictionary *params = @{ @"command": data, @"app_frame": NSStringFromCGRect(appFrame), @"simulator_window_name": simulatorWindowName, @"token": SBTUITestTunnelHostValidationToken };
     
     NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/%@", self.remoteHost, (unsigned int)self.remotePort, action];
     

@@ -43,20 +43,25 @@ class MouseHandler: BaseHandler {
                 return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 6])
             }
             
+            guard let simulatorWindowName = params?["simulator_window_name"] as? String else {
+                menubarUpdated("What #2?")
+                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 7])
+            }
+            
             guard let commandB64 = params?["command"] as? String else {
                     menubarUpdated("What?")
-                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 7])
+                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 8])
             }
             
             guard let commandData = Data(base64Encoded: commandB64) else {
                     menubarUpdated("What?")
-                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 8])
+                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 9])
             }
             
             var simulator_bounds: CGRect = .zero
             do {
                 var pid: pid_t
-                (pid, simulator_bounds) = try self.findSimulator()
+                (pid, simulator_bounds) = try self.findSimulator(name: simulatorWindowName)
                 try self.bringWindowToFront(pid: pid)
                 Thread.sleep(forTimeInterval: 0.025)
             } catch {
@@ -116,7 +121,7 @@ class MouseHandler: BaseHandler {
         case RuntimeError(String)
     }
     
-    private func findSimulator() throws -> (pid_t, CGRect) {
+    private func findSimulator(name: String) throws -> (pid_t, CGRect) {
         let options = CGWindowListOption(arrayLiteral: .excludeDesktopElements, CGWindowListOption.optionOnScreenOnly)
         let windowListInfo = CGWindowListCopyWindowInfo(options, CGWindowID(0))
         
@@ -125,8 +130,8 @@ class MouseHandler: BaseHandler {
         }
         
         for infoList in infosList {
-            guard let windowName = infoList["kCGWindowOwnerName"] as? String,
-                windowName == "Simulator" else {
+            guard let windowName = infoList["kCGWindowName"] as? String,
+                windowName == name else {
                     continue
             }
             
@@ -147,7 +152,7 @@ class MouseHandler: BaseHandler {
             return (pid, CGRect(x: x, y: y + windowBarHeight, width: w, height: h - windowBarHeight))
         }
         
-        throw Error.RuntimeError("Simulator not running")
+        throw Error.RuntimeError("Simulator not not found while looking for \(name)")
     }
     
     private func bringWindowToFront(pid: pid_t) throws {
