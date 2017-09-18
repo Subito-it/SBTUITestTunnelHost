@@ -93,6 +93,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     private func updateMenuBarWithTitle(_ title: String) {
         self.statusBarItem.menu?.removeItem(serverBindToLocalhostMenuItem)
         
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? ""
         let menu = NSMenu()
         
         menu.addItem(NSMenuItem(title: title, action: nil, keyEquivalent: ""))
@@ -100,7 +101,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
         menu.addItem(NSMenuItem.separator())
         menu.addItem(serverBindToLocalhostMenuItem)
         menu.addItem(NSMenuItem.separator())
-        menu.addItem(NSMenuItem(title: "Quit SBTUITestTunnelServer", action: #selector(NSApp.terminate), keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: "Quit SBTUITestTunnelServer (\(appVersion))", action: #selector(NSApp.terminate), keyEquivalent: ""))
         
         DispatchQueue.main.async {
             self.statusBarItem.menu = menu
