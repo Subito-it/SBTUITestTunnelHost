@@ -157,7 +157,7 @@
 				TargetAttributes = {
 					C34E6CA71CF44D2D004D96DD = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = F93T2PM4GE;
+						DevelopmentTeam = HUC4RY3F6U;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Manual;
 					};
@@ -367,7 +367,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = F93T2PM4GE;
+				DEVELOPMENT_TEAM = HUC4RY3F6U;
 				INFOPLIST_FILE = SBTUITunnelHostServer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tomascamin.sbtuitesttunnelmachost;
@@ -387,7 +387,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = F93T2PM4GE;
+				DEVELOPMENT_TEAM = HUC4RY3F6U;
 				INFOPLIST_FILE = SBTUITunnelHostServer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tomascamin.sbtuitesttunnelmachost;
