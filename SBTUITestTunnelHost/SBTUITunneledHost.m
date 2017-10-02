@@ -27,8 +27,6 @@ NSString * const SBTUITestTunnelHostHTTPMethod = @"POST";
 NSString * const SBTUITunneledHostDefaultHost = @"localhost";
 const uint16_t SBTUITunneledHostDefaultPort = 8667;
 
-const NSTimeInterval SBTUITunneledHostDefaultTimeout = 30.0;
-
 @interface SBTUITunneledHost()
 
 @property (nonatomic, assign) BOOL connected;
@@ -104,12 +102,12 @@ const NSTimeInterval SBTUITunneledHostDefaultTimeout = 30.0;
     __block NSString *responseString = nil;
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (![response isKindOfClass:[NSHTTPURLResponse class]]) {
-            NSAssert(NO, @"[SBTUITestTunnelHost] Failed to get http response");
+            NSAssert(NO, @"[SBTUITestTunnelHost] Failed to get http response for action %@", action);
         } else {
             NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             responseString = jsonData[SBTUITestTunnelHostResponseResultKey];
             
-            NSAssert(((NSHTTPURLResponse *)response).statusCode == 200, @"[SBTUITestTunnelHost] Message sending failed");
+            NSAssert(((NSHTTPURLResponse *)response).statusCode == 200, @"[SBTUITestTunnelHost] Message sending failed for action %@", action);
         }
         
         dispatch_semaphore_signal(synchRequestSemaphore);

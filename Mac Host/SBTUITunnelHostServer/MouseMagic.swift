@@ -23,9 +23,9 @@ class Mouse {
     func drag(from p0: CGPoint, to p1: CGPoint, duration: TimeInterval) {
         var mouseDrags = [CGEvent]()
         
-        let mouseDown = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDown, mouseCursorPosition: p0, mouseButton: .left)
+        let maxDelta = max(abs(p0.x - p1.x), abs(p0.y - p1.y))
         
-        let totalDragPoints = CGFloat(5.0)
+        let totalDragPoints = CGFloat(max(1, Int(maxDelta / 30.0))) // sequence every 30px
         let dragStepDelay = duration / TimeInterval(totalDragPoints)
         
         for i in 0..<Int(totalDragPoints) {
@@ -35,17 +35,20 @@ class Mouse {
             }
         }
         
-        let mouseUp = CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp, mouseCursorPosition: p1, mouseButton: .left)
+        print("Total points \(totalDragPoints), dragStepDelay: \(dragStepDelay), count \(mouseDrags.count)")
         
+        
+        let mouseDown = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDown, mouseCursorPosition: p0, mouseButton: .left)
         mouseDown?.post(tap: .cghidEventTap)
-        Thread.sleep(forTimeInterval: 1e-3 * 10.0)
+        Thread.sleep(forTimeInterval: 1e-3 * 50.0)
         for mouseDrag in mouseDrags {
             mouseDrag.post(tap: .cghidEventTap)
             Thread.sleep(forTimeInterval: dragStepDelay)
         }
-        
+
+        Thread.sleep(forTimeInterval: 1e-3 * 50.0)
+        let mouseUp = CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp, mouseCursorPosition: p1, mouseButton: .left)
         mouseUp?.post(tap: .cghidEventTap)
-        Thread.sleep(forTimeInterval: 1e-3 * 10.0)
     }
     
     func click(at point: CGPoint) {
