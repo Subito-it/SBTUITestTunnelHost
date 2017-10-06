@@ -55,8 +55,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
         
         let handlers: [BaseHandler] = [ExecHandler(), CatHandler(), MouseHandler()]
         handlers.forEach {
-            $0.addHandler(server) { [unowned self] menubarTitle in
-                self.updateMenuBarWithTitle(menubarTitle)
+            $0.addHandler(server) { [weak self] menubarTitle in
+                self?.updateMenuBarWithTitle(menubarTitle)
             }
         }
         
@@ -91,24 +91,30 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     }
     
     private func updateMenuBarWithTitle(_ title: String) {
-        self.statusBarItem.menu?.removeItem(serverBindToLocalhostMenuItem)
-        
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? ""
         let menu = NSMenu()
         
-        menu.addItem(NSMenuItem(title: title, action: nil, keyEquivalent: ""))
-        
-        menu.addItem(NSMenuItem.separator())
-        menu.addItem(serverBindToLocalhostMenuItem)
-        menu.addItem(NSMenuItem.separator())
-        menu.addItem(NSMenuItem(title: "Quit SBTUITestTunnelServer (\(appVersion))", action: #selector(NSApp.terminate), keyEquivalent: ""))
-        
-        DispatchQueue.main.async {
-            self.statusBarItem.menu = menu
+        DispatchQueue.main.async { [weak self] in
+            guard let serverBindToLocalhostMenuItem = self?.serverBindToLocalhostMenuItem,
+                  let strongSelf = self else {
+                return
+            }
             
-            self.statusBarItem.image = NSImage(named: "menuicon-red")
-            self.statusBarImageTimer.invalidate()
-            self.statusBarImageTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.restoreDefaultStatusBarImage), userInfo: nil, repeats: false)
+            strongSelf.statusBarItem.menu?.removeItem(serverBindToLocalhostMenuItem)
+            
+            menu.addItem(NSMenuItem(title: title, action: nil, keyEquivalent: ""))
+            
+            menu.addItem(NSMenuItem.separator())
+            menu.addItem(serverBindToLocalhostMenuItem)
+            menu.addItem(NSMenuItem.separator())
+            menu.addItem(NSMenuItem(title: "Quit SBTUITestTunnelServer (\(appVersion))", action: #selector(NSApp.terminate), keyEquivalent: ""))
+            
+        
+            strongSelf.statusBarItem.menu = menu
+            
+            strongSelf.statusBarItem.image = NSImage(named: "menuicon-red")
+            strongSelf.statusBarImageTimer.invalidate()
+            strongSelf.statusBarImageTimer = Timer.scheduledTimer(timeInterval: 1.5, target: strongSelf, selector: #selector(strongSelf.restoreDefaultStatusBarImage), userInfo: nil, repeats: false)
         }
     }
     
