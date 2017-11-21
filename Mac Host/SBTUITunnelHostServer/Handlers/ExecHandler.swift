@@ -48,7 +48,7 @@ class ExecHandler: BaseHandler {
                     do {
                         let regex = try NSRegularExpression(pattern: ".*?(?:(;|&))", options: .caseInsensitive)
                         
-                        regex.enumerateMatches(in: cmd, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, cmd.characters.count)) {
+                        regex.enumerateMatches(in: cmd, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, cmd.count)) {
                             (substringRange: NSTextCheckingResult?, _, _) in
                             if let substringRange = substringRange {
                                 let cmd2 = cmd as NSString

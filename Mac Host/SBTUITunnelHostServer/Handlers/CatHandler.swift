@@ -38,9 +38,10 @@ class CatHandler: BaseHandler {
                     return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 5])
                 }
                 
-                if let filePath = params?["path"] as? String,
-                    let fileContentType = params?["content-type"] as? String {
+                if let filePathParam = params?["path"] as? String,
+                   let fileContentType = params?["content-type"] as? String {
                     
+                    let filePath = NSString(string: filePathParam).expandingTildeInPath
                     if !FileManager.default.fileExists(atPath: filePath) {
                         menubarUpdated("File does not exists")
                         return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 4])

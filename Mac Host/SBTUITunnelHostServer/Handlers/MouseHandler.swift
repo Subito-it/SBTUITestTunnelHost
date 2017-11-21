@@ -63,7 +63,7 @@ class MouseHandler: BaseHandler {
                 var pid: pid_t
                 (pid, simulator_bounds) = try self.findSimulator(name: simulatorWindowName)
                 try self.bringWindowToFront(pid: pid)
-                Thread.sleep(forTimeInterval: 0.025)
+                Thread.sleep(forTimeInterval: 0.15)
             } catch {
                 print(error)
                 exit(EX_USAGE)
