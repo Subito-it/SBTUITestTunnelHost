@@ -21,6 +21,7 @@ import GCDWebServer
 class MouseHandler: BaseHandler {
     
     private let requestMethod = "POST"
+    private static let handlerTimeout = 15.0
     
     func addHandler(_ webServer: GCDWebServer, menubarUpdated: @escaping ((String) -> ())) {
         let requestClass = (requestMethod == "POST") ? GCDWebServerURLEncodedFormRequest.self : GCDWebServerRequest.self
@@ -49,13 +50,13 @@ class MouseHandler: BaseHandler {
             }
             
             guard let commandB64 = params?["command"] as? String else {
-                    menubarUpdated("What?")
-                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 8])
+                menubarUpdated("What?")
+                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 8])
             }
             
             guard let commandData = Data(base64Encoded: commandB64) else {
-                    menubarUpdated("What?")
-                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 9])
+                menubarUpdated("What?")
+                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 9])
             }
             
             var simulator_bounds: CGRect = .zero
@@ -65,8 +66,8 @@ class MouseHandler: BaseHandler {
                 try self.bringWindowToFront(pid: pid)
                 Thread.sleep(forTimeInterval: 0.15)
             } catch {
-                print(error)
-                exit(EX_USAGE)
+                menubarUpdated("Simulator '\(simulatorWindowName)' not found!")
+                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 10])
             }
             
             let app_width = NSRectFromString(appFrameString).size.width
@@ -76,6 +77,8 @@ class MouseHandler: BaseHandler {
             
             NSKeyedUnarchiver.setClass(SBTMouseClick.self, forClassName: "SBTUITunneledHostMouseClick")
             NSKeyedUnarchiver.setClass(SBTMouseDrag.self, forClassName: "SBTUITunneledHostMouseDrag")
+            
+            let eventStart = CFAbsoluteTimeGetCurrent()
             
             switch requestPath {
             case "/mouse/clicks":
@@ -89,6 +92,11 @@ class MouseHandler: BaseHandler {
                     mouse.click(at: point)
 
                     Thread.sleep(forTimeInterval: mouseClick.completionPause)
+                    
+                    if CFAbsoluteTimeGetCurrent() - eventStart > MouseHandler.handlerTimeout {
+                        menubarUpdated("Timeout reached, try reducing number of clicks")
+                        return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 11])
+                    }
                 }
                 menubarUpdated("Mouse clicking...")
                 return GCDWebServerDataResponse(jsonObject: ["status": 0, "result": "ok"])
@@ -106,6 +114,11 @@ class MouseHandler: BaseHandler {
                     mouse.drag(from: startPoint, to: stopPoint, duration: mouseDrag.dragDuration)
                     
                     Thread.sleep(forTimeInterval: mouseDrag.completionPause)
+                    
+                    if CFAbsoluteTimeGetCurrent() - eventStart > MouseHandler.handlerTimeout {
+                        menubarUpdated("Timeout reached, try reducing number of drags")
+                        return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 12])
+                    }
                 }
                 menubarUpdated("Mouse dragging...")
                 return GCDWebServerDataResponse(jsonObject: ["status": 0, "result": "ok"])
@@ -131,7 +144,7 @@ class MouseHandler: BaseHandler {
         
         for infoList in infosList {
             guard let windowName = infoList["kCGWindowName"] as? String,
-                windowName == name else {
+                name.contains(windowName) else {
                     continue
             }
             

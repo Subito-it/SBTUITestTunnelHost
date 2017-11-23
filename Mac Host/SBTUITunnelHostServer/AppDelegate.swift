@@ -34,6 +34,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     var statusBarItem : NSStatusItem = NSStatusItem()
     
     var statusBarImageTimer = Timer()
+    
+    var commandHistory = [String]()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         let args = ProcessInfo().arguments
@@ -57,6 +59,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
         handlers.forEach {
             $0.addHandler(server) { [weak self] menubarTitle in
                 self?.updateMenuBarWithTitle(menubarTitle)
+                print("[SBTUITestTunnelHost-Mac] \(menubarTitle)")
             }
         }
         
@@ -94,6 +97,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? ""
         let menu = NSMenu()
         
+        commandHistory.insert(title, at: 0)
+        commandHistory = Array(commandHistory.prefix(25))
+        
         DispatchQueue.main.async { [weak self] in
             guard let serverBindToLocalhostMenuItem = self?.serverBindToLocalhostMenuItem,
                   let strongSelf = self else {
@@ -102,7 +108,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
             
             strongSelf.statusBarItem.menu?.removeItem(serverBindToLocalhostMenuItem)
             
-            menu.addItem(NSMenuItem(title: title, action: nil, keyEquivalent: ""))
+            let historyMenu = NSMenu()
+            for command in self?.commandHistory ?? [] {
+                historyMenu.addItem(NSMenuItem(title: command, action: nil, keyEquivalent: ""))
+            }
+            
+            let historyMenuItem = NSMenuItem(title: "Command history", action: nil, keyEquivalent: "")
+            historyMenuItem.submenu = historyMenu
+            menu.addItem(historyMenuItem)
             
             menu.addItem(NSMenuItem.separator())
             menu.addItem(serverBindToLocalhostMenuItem)

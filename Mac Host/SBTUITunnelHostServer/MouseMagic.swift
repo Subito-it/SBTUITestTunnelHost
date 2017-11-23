@@ -37,16 +37,15 @@ class Mouse {
         
         print("Total points \(totalDragPoints), dragStepDelay: \(dragStepDelay), count \(mouseDrags.count)")
         
-        
         let mouseDown = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDown, mouseCursorPosition: p0, mouseButton: .left)
         mouseDown?.post(tap: .cghidEventTap)
-        Thread.sleep(forTimeInterval: 1e-3 * 200.0)
+        Thread.sleep(forTimeInterval: 1e-3 * 150.0)
         for mouseDrag in mouseDrags {
             mouseDrag.post(tap: .cghidEventTap)
             Thread.sleep(forTimeInterval: dragStepDelay)
         }
 
-        Thread.sleep(forTimeInterval: 1e-3 * 200.0)
+        Thread.sleep(forTimeInterval: 1e-3 * 150.0)
         let mouseUp = CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp, mouseCursorPosition: p1, mouseButton: .left)
         mouseUp?.post(tap: .cghidEventTap)
     }
@@ -56,8 +55,8 @@ class Mouse {
         let mouseUp   = CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp, mouseCursorPosition: point, mouseButton: .left)
         
         mouseDown?.post(tap: .cghidEventTap)
-        Thread.sleep(forTimeInterval: 1e-3 * 200.0)
+        Thread.sleep(forTimeInterval: 1e-3 * 50.0)
         mouseUp?.post(tap: .cghidEventTap)
-        Thread.sleep(forTimeInterval: 1e-3 * 500.0)
+        Thread.sleep(forTimeInterval: 1e-3 * 150.0)
     }
 }
