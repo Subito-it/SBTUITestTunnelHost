@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		72EB04F079F767286CF2155F /* Pods_SBTUITunnelHostServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8C34FAC177FA8F229FCFD33 /* Pods_SBTUITunnelHostServer.framework */; };
+		856701DA1FE130A0007C2221 /* SimulatorDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856701D91FE130A0007C2221 /* SimulatorDescriptor.swift */; };
 		C34E6CAC1CF44D2D004D96DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34E6CAB1CF44D2D004D96DD /* AppDelegate.swift */; };
 		C34E6CAE1CF44D2D004D96DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C34E6CAD1CF44D2D004D96DD /* Assets.xcassets */; };
 		C34E6CB11CF44D2D004D96DD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C34E6CAF1CF44D2D004D96DD /* MainMenu.xib */; };
@@ -24,6 +25,7 @@
 /* Begin PBXFileReference section */
 		1FCA6BB9513E6E4E58CED026 /* Pods-SBTUITunnelHostServer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SBTUITunnelHostServer.release.xcconfig"; path = "Pods/Target Support Files/Pods-SBTUITunnelHostServer/Pods-SBTUITunnelHostServer.release.xcconfig"; sourceTree = "<group>"; };
 		27D23485823996586D87D674 /* Pods-SBTUITunnelHostServer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SBTUITunnelHostServer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SBTUITunnelHostServer/Pods-SBTUITunnelHostServer.debug.xcconfig"; sourceTree = "<group>"; };
+		856701D91FE130A0007C2221 /* SimulatorDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulatorDescriptor.swift; sourceTree = "<group>"; };
 		C34E6CA81CF44D2D004D96DD /* SBTUITestTunnelServer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SBTUITestTunnelServer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C34E6CAB1CF44D2D004D96DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C34E6CAD1CF44D2D004D96DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				C3A745031ECA3E5C007B57F5 /* Classes */,
 				C3CA5A431EB8AC8800B8717E /* Handlers */,
 				C3CA5A391EB8974100B8717E /* MouseMagic.swift */,
+				856701D91FE130A0007C2221 /* SimulatorDescriptor.swift */,
 				C34E6CAB1CF44D2D004D96DD /* AppDelegate.swift */,
 				C3CA5A3B1EB897A000B8717E /* ShellCommands.swift */,
 				C34E6CAD1CF44D2D004D96DD /* Assets.xcassets */,
@@ -250,6 +253,7 @@
 				C3CA5A491EB8AC8800B8717E /* ExecHandler.swift in Sources */,
 				C3A745071ECA3E98007B57F5 /* SBTMouseDrag.swift in Sources */,
 				C34E6CAC1CF44D2D004D96DD /* AppDelegate.swift in Sources */,
+				856701DA1FE130A0007C2221 /* SimulatorDescriptor.swift in Sources */,
 				C3CA5A3C1EB897A000B8717E /* ShellCommands.swift in Sources */,
 				C3CA5A4B1EB8ACBF00B8717E /* MouseHandler.swift in Sources */,
 				C3CA5A3A1EB8974100B8717E /* MouseMagic.swift in Sources */,

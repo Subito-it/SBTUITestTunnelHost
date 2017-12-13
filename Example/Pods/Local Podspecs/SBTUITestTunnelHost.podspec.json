@@ -1,6 +1,6 @@
 {
   "name": "SBTUITestTunnelHost",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Execute commands on your testing mac host while using SBTUITestTunnel",
   "description": "Extend SBTUITestTunnel adding a tunnel between your test target and host mac running tests. This allows to launch terminal commands on your testing mac during test execution",
   "homepage": "https://github.com/Subito-it/SBTUITestTunnelHost",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/Subito-it/SBTUITestTunnelHost.git",
-    "tag": "0.1.0"
+    "tag": "0.1.1"
   },
   "platforms": {
     "ios": "8.0"

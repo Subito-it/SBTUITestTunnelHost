@@ -44,7 +44,7 @@ class MouseHandler: BaseHandler {
                 return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 6])
             }
             
-            guard let simulatorWindowName = params?["simulator_window_name"] as? String else {
+            guard let simulatorDescriptor = SimulatorDescriptor(requestParameters: params) else {
                 menubarUpdated("What #2?")
                 return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 7])
             }
@@ -62,11 +62,11 @@ class MouseHandler: BaseHandler {
             var simulator_bounds: CGRect = .zero
             do {
                 var pid: pid_t
-                (pid, simulator_bounds) = try self.findSimulator(name: simulatorWindowName)
+                (pid, simulator_bounds) = try self.findSimulator(descriptor: simulatorDescriptor)
                 try self.bringWindowToFront(pid: pid)
                 Thread.sleep(forTimeInterval: 0.15)
             } catch {
-                menubarUpdated("Simulator '\(simulatorWindowName)' not found!")
+                menubarUpdated("Simulator '\(simulatorDescriptor)' not found!")
                 return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 10])
             }
             
@@ -134,7 +134,7 @@ class MouseHandler: BaseHandler {
         case RuntimeError(String)
     }
     
-    private func findSimulator(name: String) throws -> (pid_t, CGRect) {
+    private func findSimulator(descriptor: SimulatorDescriptor) throws -> (pid_t, CGRect) {
         let options = CGWindowListOption(arrayLiteral: .excludeDesktopElements, CGWindowListOption.optionOnScreenOnly)
         let windowListInfo = CGWindowListCopyWindowInfo(options, CGWindowID(0))
         
@@ -144,7 +144,7 @@ class MouseHandler: BaseHandler {
         
         for infoList in infosList {
             guard let windowName = infoList["kCGWindowName"] as? String,
-                name.contains(windowName) else {
+                descriptor.recogniseSimulator(from: windowName) else {
                     continue
             }
             
@@ -165,7 +165,7 @@ class MouseHandler: BaseHandler {
             return (pid, CGRect(x: x, y: y + windowBarHeight, width: w, height: h - windowBarHeight))
         }
         
-        throw Error.RuntimeError("Simulator not not found while looking for \(name)")
+        throw Error.RuntimeError("Simulator not not found while looking for \(descriptor)")
     }
     
     private func bringWindowToFront(pid: pid_t) throws {

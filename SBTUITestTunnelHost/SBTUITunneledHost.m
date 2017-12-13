@@ -61,9 +61,10 @@ const uint16_t SBTUITunneledHostDefaultPort = 8667;
 - (NSString *)performAction:(NSString *)action data:(NSString *)data app:(XCUIApplication *)app
 {
     NSDictionary<NSString *, NSString *> *env = [[NSProcessInfo processInfo] environment];
-    NSString *simulatorWindowName = [NSString stringWithFormat:@"%@ - iOS %@", env[@"SIMULATOR_DEVICE_NAME"], env[@"SIMULATOR_RUNTIME_VERSION"]];
+    NSString *simulatorDeviceName = env[@"SIMULATOR_DEVICE_NAME"];
+    NSString *simulatorDeviceRuntime = env[@"SIMULATOR_RUNTIME_VERSION"];
     CGRect appFrame = [[app.windows elementBoundByIndex:0] frame]; // app.frame doesn't work
-    NSDictionary *params = @{ @"command": data, @"app_frame": NSStringFromCGRect(appFrame), @"simulator_window_name": simulatorWindowName, @"token": SBTUITestTunnelHostValidationToken };
+    NSDictionary *params = @{ @"command": data, @"app_frame": NSStringFromCGRect(appFrame), @"token": SBTUITestTunnelHostValidationToken, @"simulator_device_name": simulatorDeviceName, @"simulator_device_runtime": simulatorDeviceRuntime };
     
     NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/%@", self.remoteHost, (unsigned int)self.remotePort, action];
     
@@ -102,12 +103,12 @@ const uint16_t SBTUITunneledHostDefaultPort = 8667;
     __block NSString *responseString = nil;
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (![response isKindOfClass:[NSHTTPURLResponse class]]) {
-            NSAssert(NO, @"[SBTUITestTunnelHost] Failed to get http response for action %@", action);
+            NSAssert(NO, @"[SBTUITestTunnelHost] Failed to get http response");
         } else {
             NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             responseString = jsonData[SBTUITestTunnelHostResponseResultKey];
             
-            NSAssert(((NSHTTPURLResponse *)response).statusCode == 200, @"[SBTUITestTunnelHost] Message sending failed for action %@", action);
+            NSAssert(((NSHTTPURLResponse *)response).statusCode == 200, @"[SBTUITestTunnelHost] Message sending failed");
         }
         
         dispatch_semaphore_signal(synchRequestSemaphore);
