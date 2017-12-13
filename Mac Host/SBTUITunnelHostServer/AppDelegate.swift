@@ -24,10 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
 
     @IBOutlet weak var window: NSWindow!
     
-    let bonjourServiceName = "com.sbtuitesttunnel.mac.host"
     let serverPort: UInt = 8667
-    var serverBindToLocalhost = false
-    var serverBindToLocalhostMenuItem = NSMenuItem(title: "Bind connections to localhost", action: #selector(toggleBindToLocalHostClicked), keyEquivalent: "")
     var server: GCDWebServer?
 
     let statusBar = NSStatusBar.system()
@@ -42,9 +39,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
 
         statusBarItem = statusBar.statusItem(withLength: NSVariableStatusItemLength)
         restoreDefaultStatusBarImage()
-    
-        serverBindToLocalhost = args.contains("--skipLocalhostBinding")
-        toggleBindToLocalHost()
+        
+        startup()
     }
     
     func startup() {
@@ -64,33 +60,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
         }
         
         server.delegate = self
-        try? server.start(options: [GCDWebServerOption_BindToLocalhost: serverBindToLocalhost,
-                                    GCDWebServerOption_BonjourName: bonjourServiceName,
+        try? server.start(options: [GCDWebServerOption_BindToLocalhost: true,
                                     GCDWebServerOption_Port: serverPort])
-    }
-    
-    func toggleBindToLocalHostClicked() {
-        if serverBindToLocalhost {
-            let alert = NSAlert.init()
-            alert.messageText = "Warning"
-            alert.informativeText = "Disabling this option will enable access outside localhost on port \(serverPort). For your securitu make sure this port is not reachable from unwanted clients"
-            alert.addButton(withTitle: "OK")
-            alert.addButton(withTitle: "Cancel")
-            
-            let result = alert.runModal()
-            if result == NSAlertFirstButtonReturn {
-                toggleBindToLocalHost()
-            }
-        } else {
-            toggleBindToLocalHost()
-        }
-    }
-    
-    func toggleBindToLocalHost() {
-        serverBindToLocalhost = !serverBindToLocalhost
-        serverBindToLocalhostMenuItem.state = serverBindToLocalhost ? 1 : 0
-        
-        startup()
     }
     
     private func updateMenuBarWithTitle(_ title: String) {
@@ -101,12 +72,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
         commandHistory = Array(commandHistory.prefix(25))
         
         DispatchQueue.main.async { [weak self] in
-            guard let serverBindToLocalhostMenuItem = self?.serverBindToLocalhostMenuItem,
-                  let strongSelf = self else {
+            guard let strongSelf = self else {
                 return
             }
-            
-            strongSelf.statusBarItem.menu?.removeItem(serverBindToLocalhostMenuItem)
             
             let historyMenu = NSMenu()
             for command in self?.commandHistory ?? [] {
@@ -118,10 +86,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
             menu.addItem(historyMenuItem)
             
             menu.addItem(NSMenuItem.separator())
-            menu.addItem(serverBindToLocalhostMenuItem)
-            menu.addItem(NSMenuItem.separator())
             menu.addItem(NSMenuItem(title: "Quit SBTUITestTunnelServer (\(appVersion))", action: #selector(NSApp.terminate), keyEquivalent: ""))
-            
         
             strongSelf.statusBarItem.menu = menu
             
