@@ -21,6 +21,16 @@
 		C323A5E31EBBD15F0030F545 /* SBTUITunneledHostMouseClick.m in Sources */ = {isa = PBXBuildFile; fileRef = C323A5E11EBBD15F0030F545 /* SBTUITunneledHostMouseClick.m */; };
 		C323A5E61EBBD1D90030F545 /* SBTUITunneledHostMouseDrag.h in Headers */ = {isa = PBXBuildFile; fileRef = C323A5E41EBBD1D90030F545 /* SBTUITunneledHostMouseDrag.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C323A5E71EBBD1D90030F545 /* SBTUITunneledHostMouseDrag.m in Sources */ = {isa = PBXBuildFile; fileRef = C323A5E51EBBD1D90030F545 /* SBTUITunneledHostMouseDrag.m */; };
+		C3422D441FEB06DA00BE1ABD /* SBTUITestTunnelHost.h in Headers */ = {isa = PBXBuildFile; fileRef = C3422D421FEB06DA00BE1ABD /* SBTUITestTunnelHost.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C3422D481FEB06E900BE1ABD /* SBTUITunneledHostMouseClick.h in Headers */ = {isa = PBXBuildFile; fileRef = C323A5E01EBBD15F0030F545 /* SBTUITunneledHostMouseClick.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C3422D491FEB06E900BE1ABD /* SBTUITunneledHostMouseClick.m in Sources */ = {isa = PBXBuildFile; fileRef = C323A5E11EBBD15F0030F545 /* SBTUITunneledHostMouseClick.m */; };
+		C3422D4A1FEB06E900BE1ABD /* SBTUITunneledHostMouseDrag.h in Headers */ = {isa = PBXBuildFile; fileRef = C323A5E41EBBD1D90030F545 /* SBTUITunneledHostMouseDrag.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C3422D4B1FEB06E900BE1ABD /* SBTUITunneledHostMouseDrag.m in Sources */ = {isa = PBXBuildFile; fileRef = C323A5E51EBBD1D90030F545 /* SBTUITunneledHostMouseDrag.m */; };
+		C3422D4C1FEB06E900BE1ABD /* SBTUITunneledHost.h in Headers */ = {isa = PBXBuildFile; fileRef = D85AEB4C845C35FD3B5D05DB94D36C7B /* SBTUITunneledHost.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C3422D4D1FEB06E900BE1ABD /* SBTUITunneledHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 664C334A8E9B2AB7956AE687BA5A9634 /* SBTUITunneledHost.m */; };
+		C3422D4E1FEB06E900BE1ABD /* XCTestCase+HostExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 82073932755EC23DE7482FF717B647B7 /* XCTestCase+HostExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C3422D4F1FEB06E900BE1ABD /* XCTestCase+HostExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F02D6FDCD941042F30977E7DAF12540 /* XCTestCase+HostExtension.m */; };
+		C3422D521FEB0C1E00BE1ABD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3422D501FEB099B00BE1ABD /* XCTest.framework */; };
 		CA641C227D9BA2C4F98B33A76C880683 /* SBTUITestTunnelHost-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E779ACE3D19060F736E1FEAFAACCDA7 /* SBTUITestTunnelHost-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E6CACEDCBF50EE525C025331378281C4 /* Pods-SBTUITestTunnelHost_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B11CCC2A0CE266EA6E1FBBDE10CD90 /* Pods-SBTUITestTunnelHost_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F55549D779A53DDF91B0C875F5AE08BD /* Pods-SBTUITestTunnelHost_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6924841074847349DD7085CF3C7BE861 /* Pods-SBTUITestTunnelHost_Example-dummy.m */; };
@@ -69,6 +79,10 @@
 		C323A5E11EBBD15F0030F545 /* SBTUITunneledHostMouseClick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBTUITunneledHostMouseClick.m; sourceTree = "<group>"; };
 		C323A5E41EBBD1D90030F545 /* SBTUITunneledHostMouseDrag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBTUITunneledHostMouseDrag.h; sourceTree = "<group>"; };
 		C323A5E51EBBD1D90030F545 /* SBTUITunneledHostMouseDrag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBTUITunneledHostMouseDrag.m; sourceTree = "<group>"; };
+		C3422D401FEB06DA00BE1ABD /* SBTUITestTunnelHost.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SBTUITestTunnelHost.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3422D421FEB06DA00BE1ABD /* SBTUITestTunnelHost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBTUITestTunnelHost.h; sourceTree = "<group>"; };
+		C3422D431FEB06DA00BE1ABD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3422D501FEB099B00BE1ABD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D85AEB4C845C35FD3B5D05DB94D36C7B /* SBTUITunneledHost.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SBTUITunneledHost.h; sourceTree = "<group>"; };
 		E1B11CCC2A0CE266EA6E1FBBDE10CD90 /* Pods-SBTUITestTunnelHost_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SBTUITestTunnelHost_Example-umbrella.h"; sourceTree = "<group>"; };
 		E22965D1CF819BAC66EA3E6F820089A5 /* Pods-SBTUITestTunnelHost_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SBTUITestTunnelHost_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -98,6 +112,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C3422D3C1FEB06DA00BE1ABD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3422D521FEB0C1E00BE1ABD /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E59736621C60BEF8504D95432F67C037 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -112,6 +134,7 @@
 		433CD3331B6C3787F473C941B61FC68F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C3422D501FEB099B00BE1ABD /* XCTest.framework */,
 				7BE34EE7067F7CC8A54539A282682749 /* iOS */,
 			);
 			name = Frameworks;
@@ -155,6 +178,7 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				B4CF23B2B85684241DD5A70F39489521 /* Development Pods */,
+				C3422D411FEB06DA00BE1ABD /* SBTUITestTunnelHost-Framework */,
 				433CD3331B6C3787F473C941B61FC68F /* Frameworks */,
 				E169CAE62E2788960410B7F6379B55CA /* Products */,
 				5D70D5AE521F4BA87D9B01BD98C8FC05 /* Targets Support Files */,
@@ -205,6 +229,15 @@
 			path = "Target Support Files/Pods-SBTUITestTunnelHost_Example";
 			sourceTree = "<group>";
 		};
+		C3422D411FEB06DA00BE1ABD /* SBTUITestTunnelHost-Framework */ = {
+			isa = PBXGroup;
+			children = (
+				C3422D421FEB06DA00BE1ABD /* SBTUITestTunnelHost.h */,
+				C3422D431FEB06DA00BE1ABD /* Info.plist */,
+			);
+			path = "SBTUITestTunnelHost-Framework";
+			sourceTree = "<group>";
+		};
 		D3C463F4314889BE22A2DD7AE1F43E34 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +268,7 @@
 				FF3F93DBC744F7F91FE1E8091EDD8A99 /* Pods_SBTUITestTunnelHost_Example.framework */,
 				65DC62E876720F9B71DAE1C726E9CD9E /* Pods_SBTUITestTunnelHost_ExampleUITests.framework */,
 				52E9910822F2D7BAAB3BBA35670F3A8C /* SBTUITestTunnelHost.framework */,
+				C3422D401FEB06DA00BE1ABD /* SBTUITestTunnelHost.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -267,6 +301,18 @@
 				C323A5E61EBBD1D90030F545 /* SBTUITunneledHostMouseDrag.h in Headers */,
 				C323A5E21EBBD15F0030F545 /* SBTUITunneledHostMouseClick.h in Headers */,
 				226ECCA2091E05435E8C8BBBBA66A97E /* XCTestCase+HostExtension.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3422D3D1FEB06DA00BE1ABD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3422D481FEB06E900BE1ABD /* SBTUITunneledHostMouseClick.h in Headers */,
+				C3422D4C1FEB06E900BE1ABD /* SBTUITunneledHost.h in Headers */,
+				C3422D441FEB06DA00BE1ABD /* SBTUITestTunnelHost.h in Headers */,
+				C3422D4E1FEB06E900BE1ABD /* XCTestCase+HostExtension.h in Headers */,
+				C3422D4A1FEB06E900BE1ABD /* SBTUITunneledHostMouseDrag.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +371,24 @@
 			productReference = FF3F93DBC744F7F91FE1E8091EDD8A99 /* Pods_SBTUITestTunnelHost_Example.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		C3422D3F1FEB06DA00BE1ABD /* SBTUITestTunnelHost-Framework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3422D471FEB06DA00BE1ABD /* Build configuration list for PBXNativeTarget "SBTUITestTunnelHost-Framework" */;
+			buildPhases = (
+				C3422D3B1FEB06DA00BE1ABD /* Sources */,
+				C3422D3C1FEB06DA00BE1ABD /* Frameworks */,
+				C3422D3D1FEB06DA00BE1ABD /* Headers */,
+				C3422D3E1FEB06DA00BE1ABD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SBTUITestTunnelHost-Framework";
+			productName = "SBTUITestTunnelHost-Framework";
+			productReference = C3422D401FEB06DA00BE1ABD /* SBTUITestTunnelHost.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -333,6 +397,12 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0700;
+				TargetAttributes = {
+					C3422D3F1FEB06DA00BE1ABD = {
+						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = HUC4RY3F6U;
+					};
+				};
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -349,9 +419,20 @@
 				BC2672FAF8F39D65411409E766AADEDB /* Pods-SBTUITestTunnelHost_Example */,
 				491B1D43C2270D72CB834BED9F4544B0 /* Pods-SBTUITestTunnelHost_ExampleUITests */,
 				9934346684601E44D7441C97D82AF5AE /* SBTUITestTunnelHost */,
+				C3422D3F1FEB06DA00BE1ABD /* SBTUITestTunnelHost-Framework */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C3422D3E1FEB06DA00BE1ABD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5AA7E29B12E12DA1A2C3D08C275DF444 /* Sources */ = {
@@ -379,6 +460,17 @@
 				C323A5E71EBBD1D90030F545 /* SBTUITunneledHostMouseDrag.m in Sources */,
 				2AB7ED279C57C2247A314455DC6E1575 /* XCTestCase+HostExtension.m in Sources */,
 				C323A5E31EBBD15F0030F545 /* SBTUITunneledHostMouseClick.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3422D3B1FEB06DA00BE1ABD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3422D4B1FEB06E900BE1ABD /* SBTUITunneledHostMouseDrag.m in Sources */,
+				C3422D491FEB06E900BE1ABD /* SBTUITunneledHostMouseClick.m in Sources */,
+				C3422D4F1FEB06E900BE1ABD /* XCTestCase+HostExtension.m in Sources */,
+				C3422D4D1FEB06E900BE1ABD /* SBTUITunneledHost.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,6 +754,105 @@
 			};
 			name = Debug;
 		};
+		C3422D451FEB06DA00BE1ABD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = HUC4RY3F6U;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(PLATFORM_DIR)/Developer/Library/Frameworks\"";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "SBTUITestTunnelHost-Framework/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = (
+					"-framework",
+					"\"XCTest\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.com.subito.SBTUITestTunnelHost;
+				PRODUCT_NAME = SBTUITestTunnelHost;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C3422D461FEB06DA00BE1ABD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = HUC4RY3F6U;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(PLATFORM_DIR)/Developer/Library/Frameworks\"";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "SBTUITestTunnelHost-Framework/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"-framework",
+					"\"XCTest\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.com.subito.SBTUITestTunnelHost;
+				PRODUCT_NAME = SBTUITestTunnelHost;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		D1D59A236BEF207D820164E62B68C667 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2FD5CDAC6CB0821A63229E7DD7B81AFC /* SBTUITestTunnelHost.xcconfig */;
@@ -729,6 +920,15 @@
 			buildConfigurations = (
 				555077835FDA0943B2F1D7FCE3308457 /* Debug */,
 				406CD94FB60A318662225BBE23C50967 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3422D471FEB06DA00BE1ABD /* Build configuration list for PBXNativeTarget "SBTUITestTunnelHost-Framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3422D451FEB06DA00BE1ABD /* Debug */,
+				C3422D461FEB06DA00BE1ABD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

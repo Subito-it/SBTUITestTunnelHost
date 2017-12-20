@@ -22,7 +22,7 @@
 
 #if ENABLE_UITUNNEL
 
-#import <XCTest/XCTest.h>
+@import XCTest;
 #import "SBTUITunneledHost.h"
 
 @interface XCTestCase (HostExtension)
