@@ -35,8 +35,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     var commandHistory = [String]()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        let args = ProcessInfo().arguments
-
         statusBarItem = statusBar.statusItem(withLength: NSVariableStatusItemLength)
         restoreDefaultStatusBarImage()
         
@@ -68,16 +66,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? ""
         let menu = NSMenu()
         
-        commandHistory.insert(title, at: 0)
-        commandHistory = Array(commandHistory.prefix(25))
-        
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else {
                 return
             }
             
+            strongSelf.commandHistory.insert(title, at: 0)
+            strongSelf.commandHistory = Array(strongSelf.commandHistory.prefix(25))
+
             let historyMenu = NSMenu()
-            for command in self?.commandHistory ?? [] {
+            for command in strongSelf.commandHistory {
                 historyMenu.addItem(NSMenuItem(title: command, action: nil, keyEquivalent: ""))
             }
             
