@@ -33,6 +33,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     var statusBarImageTimer = Timer()
     
     var commandHistory = [String]()
+    
+    let appVersion: String = {
+        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+    }()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusBarItem = statusBar.statusItem(withLength: NSVariableStatusItemLength)
@@ -63,13 +67,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     }
     
     private func updateMenuBarWithTitle(_ title: String) {
-        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? ""
-        let menu = NSMenu()
-        
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else {
                 return
             }
+            
+            let menu = NSMenu()
             
             strongSelf.commandHistory.insert(title, at: 0)
             strongSelf.commandHistory = Array(strongSelf.commandHistory.prefix(25))
@@ -84,7 +87,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
             menu.addItem(historyMenuItem)
             
             menu.addItem(NSMenuItem.separator())
-            menu.addItem(NSMenuItem(title: "Quit SBTUITestTunnelServer (\(appVersion))", action: #selector(NSApp.terminate), keyEquivalent: ""))
+            menu.addItem(NSMenuItem(title: "Quit SBTUITestTunnelServer (\(strongSelf.appVersion))", action: #selector(NSApp.terminate), keyEquivalent: ""))
         
             strongSelf.statusBarItem.menu = menu
             
