@@ -169,7 +169,7 @@ class MouseHandler: BaseHandler {
     }
     
     private func bringWindowToFront(pid: pid_t) throws {
-        if NSRunningApplication(processIdentifier: pid)?.activate(options: .activateIgnoringOtherApps) == false {
+        if NSRunningApplication(processIdentifier: pid)?.activate(options: NSApplication.ActivationOptions.activateIgnoringOtherApps) == false {
             throw Error.RuntimeError("Failed bringing Simulator to front")
         }
     }

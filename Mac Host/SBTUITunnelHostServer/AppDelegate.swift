@@ -27,7 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     let serverPort: UInt = 8667
     var server: GCDWebServer?
 
-    let statusBar = NSStatusBar.system()
+    let statusBar = NSStatusBar.system
     var statusBarItem : NSStatusItem = NSStatusItem()
     
     var statusBarImageTimer = Timer()
@@ -39,7 +39,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     }()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        statusBarItem = statusBar.statusItem(withLength: NSVariableStatusItemLength)
+        statusBarItem = statusBar.statusItem(withLength: NSStatusItem.variableLength)
         restoreDefaultStatusBarImage()
         
         startup()
@@ -91,7 +91,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
         
             strongSelf.statusBarItem.menu = menu
             
-            strongSelf.statusBarItem.image = NSImage(named: "menuicon-red")
+            strongSelf.statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "menuicon-red"))
             strongSelf.statusBarImageTimer.invalidate()
             strongSelf.statusBarImageTimer = Timer.scheduledTimer(timeInterval: 1.5, target: strongSelf, selector: #selector(strongSelf.restoreDefaultStatusBarImage), userInfo: nil, repeats: false)
         }
@@ -105,7 +105,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
         updateMenuBarWithTitle("Running: " + serverURL.description)
     }
     
-    func restoreDefaultStatusBarImage() {
-        self.statusBarItem.image = NSImage(named: "menuicon")
+    @objc func restoreDefaultStatusBarImage() {
+        self.statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "menuicon"))
     }    
 }
