@@ -41,7 +41,7 @@ class SBTUITestTunnelHost_ExampleUITests_Swift: XCTestCase {
         let mouseClick = SBTUITunneledHostMouseClick(element: btn, completionPause: 0.05)
         
         let mouseCliks = Array(repeating: mouseClick, count: 3)
-        host.execute(mouseCliks)
+        host.execute(mouseCliks, app: app)
         
         let existsPredicate = NSPredicate(format: "exists == true")
         expectation(for: existsPredicate, evaluatedWith: app.alerts["Multi tap test"], handler: nil)
@@ -60,7 +60,7 @@ class SBTUITestTunnelHost_ExampleUITests_Swift: XCTestCase {
         let mouseDrag = SBTUITunneledHostMouseDrag(element: table, startNormalizedPoint: CGPoint(x: 0.5, y: 0.9), stopNormalizedPoint: CGPoint(x: 0.5, y: 0.1), dragDuration: 0.1, completionPause: 0.05)
         
         let mouseDrags = Array(repeating: mouseDrag, count: 8)
-        host.execute(mouseDrags)
+        host.execute(mouseDrags, app: app)
     
         Thread.sleep(forTimeInterval: 2.0)
     

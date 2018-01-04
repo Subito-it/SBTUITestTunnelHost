@@ -44,7 +44,7 @@
     
     SBTUITunneledHostMouseClick *mouseClick = [[SBTUITunneledHostMouseClick alloc] initWithElement:btn completionPause:0.05];
 
-    [self.host executeMouseClicks:@[mouseClick, mouseClick, mouseClick]];
+    [self.host executeMouseClicks:@[mouseClick, mouseClick, mouseClick] app:app];
     
     NSPredicate *existsPredicate = [NSPredicate predicateWithFormat:@"exists == true"];
     [self expectationForPredicate:existsPredicate evaluatedWithObject:app.alerts[@"Multi tap test"] handler:nil];
@@ -68,7 +68,7 @@
                                                                                    dragDuration:0.1
                                                                                 completionPause:0.05];
     
-    [self.host executeMouseDrags:@[mouseDrag, mouseDrag, mouseDrag, mouseDrag, mouseDrag]];
+    [self.host executeMouseDrags:@[mouseDrag, mouseDrag, mouseDrag, mouseDrag, mouseDrag] app:app];
     
     [NSThread sleepForTimeInterval:2.0];
     
