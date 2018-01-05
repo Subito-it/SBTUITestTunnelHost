@@ -18,7 +18,9 @@ enum SimulatorDescriptor {
             return windowName.contains(simulatorCompleteName)
         case .byDeviceNameAndRuntime(let deviceName, var runtime):
             runtime = runtime.components(separatedBy: ".").prefix(2).joined(separator: ".") // 11.1.1 -> 11.1
-            return windowName.range(of: "\(deviceName) - (iOS )?\(runtime)+", options: .regularExpression, range: nil, locale: nil) != nil
+            let escapedDeviceName = NSRegularExpression.escapedPattern(for: deviceName)
+            let regex = "\(escapedDeviceName) - (iOS )?\(runtime)(\\.\\d)?"
+            return windowName.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
         }
     }
 }
