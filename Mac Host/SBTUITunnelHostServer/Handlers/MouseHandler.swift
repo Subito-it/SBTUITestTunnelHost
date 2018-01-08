@@ -20,7 +20,7 @@ import GCDWebServer
 
 class MouseHandler: BaseHandler {
     
-    private static let mouseExecutionQueue = DispatchQueue(label: String(describing: Mouse.self))
+    private static let mouseExecutionQueue = DispatchQueue.main
     
     private let requestMethod = "POST"
     private static let handlerTimeout = 15.0
@@ -64,16 +64,10 @@ class MouseHandler: BaseHandler {
             var ret: GCDWebServerDataResponse!
             MouseHandler.mouseExecutionQueue.sync {
                 var simulator_bounds: CGRect = .zero
-                do {
-                    var pid: pid_t
-                    (pid, simulator_bounds) = try self.findSimulator(descriptor: simulatorDescriptor)
-                    try self.bringWindowToFront(pid: pid)
-                    Thread.sleep(forTimeInterval: 0.15)
-                } catch {
-                    menubarUpdated("Simulator '\(simulatorDescriptor)' not found!")
-                    ret = GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 10])
-                    return
-                }
+                var pid: pid_t
+
+                (pid, simulator_bounds) = try! self.findSimulator(descriptor: simulatorDescriptor)
+                try! self.bringWindowToFrontIfNeeded(pid: pid)
                 
                 let app_width = NSRectFromString(appFrameString).size.width
                 let dimensionRatio = simulator_bounds.size.width / app_width
@@ -95,6 +89,8 @@ class MouseHandler: BaseHandler {
                     let mouse = Mouse()
                     for mouseClick in mouseClicks {
                         let point = CGPoint(x: deviceOrigin.x + mouseClick.point.x * dimensionRatio, y: deviceOrigin.y + mouseClick.point.y * dimensionRatio)
+                        
+                        try! self.bringWindowToFrontIfNeeded(pid: pid)
                         mouse.click(at: point)
                         
                         Thread.sleep(forTimeInterval: mouseClick.completionPause)
@@ -120,6 +116,7 @@ class MouseHandler: BaseHandler {
                                                  y: deviceOrigin.y + mouseDrag.startPoint.y * dimensionRatio)
                         let stopPoint = CGPoint(x: deviceOrigin.x + mouseDrag.stopPoint.x * dimensionRatio,
                                                 y: deviceOrigin.y + mouseDrag.stopPoint.y * dimensionRatio)
+                        try! self.bringWindowToFrontIfNeeded(pid: pid)
                         mouse.drag(from: startPoint, to: stopPoint, duration: mouseDrag.dragDuration)
                         
                         Thread.sleep(forTimeInterval: mouseDrag.completionPause)
@@ -183,9 +180,18 @@ class MouseHandler: BaseHandler {
         throw Error.RuntimeError("Simulator not not found while looking for \(descriptor)")
     }
     
-    private func bringWindowToFront(pid: pid_t) throws {
-        if NSRunningApplication(processIdentifier: pid)?.activate(options: NSApplication.ActivationOptions.activateIgnoringOtherApps) == false {
+    private func bringWindowToFrontIfNeeded(pid: pid_t) throws {
+        guard let runningApp = NSRunningApplication(processIdentifier: pid) else {
+            throw Error.RuntimeError("Running application with pid \(pid) not found!")
+        }
+        
+        guard !runningApp.isActive else {
+            return
+        }
+        
+        if !runningApp.activate(options: NSApplication.ActivationOptions.activateIgnoringOtherApps) {
             throw Error.RuntimeError("Failed bringing Simulator to front")
         }
+        Thread.sleep(forTimeInterval: 0.25)
     }
 }
