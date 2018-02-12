@@ -29,7 +29,7 @@ class ExecHandler: BaseHandler {
         webServer.addHandler(forMethod: requestMethod, path: "/exec", request: requestClass, processBlock: { request in
             guard let requestPath = request?.path else {
                 menubarUpdated("Unknown path")
-                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 1])
+                return GCDWebServerErrorResponse(statusCode: 701)
             }
             
             switch requestPath {
@@ -38,7 +38,7 @@ class ExecHandler: BaseHandler {
                 
                 guard self.validToken(params) else {
                     menubarUpdated("Check token")
-                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 5])
+                    return GCDWebServerErrorResponse(statusCode: 702)
                 }
                 
                 if let cmdB64 = params?["command"] as? String,
@@ -59,11 +59,11 @@ class ExecHandler: BaseHandler {
                         
                         if cmd.hasPrefix("rm ") {
                             menubarUpdated("WTF!")
-                            return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 4])
+                            return GCDWebServerErrorResponse(statusCode: 703)
                         }
                     } catch {
                         menubarUpdated("Regex failed?")
-                        return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 3])
+                        return GCDWebServerErrorResponse(statusCode: 704)
                     }
                     
                     let cmdOutput = executeShellCommand(cmd, basePath: self.executablesBasePath)
@@ -71,11 +71,11 @@ class ExecHandler: BaseHandler {
                     return GCDWebServerDataResponse(jsonObject: ["result": cmdOutput, "status": 1])
                 } else {
                     menubarUpdated("Missing parameter!")
-                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 2])
+                    return GCDWebServerErrorResponse(statusCode: 705)
                 }
             default:
                 menubarUpdated("Unkown command")
-                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 1])
+                return GCDWebServerErrorResponse(statusCode: 706)
             }
         })
     }

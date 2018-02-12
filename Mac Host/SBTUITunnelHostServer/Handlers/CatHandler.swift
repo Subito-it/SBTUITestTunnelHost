@@ -27,7 +27,7 @@ class CatHandler: BaseHandler {
         webServer.addHandler(forMethod: requestMethod, path: "/catfile", request: requestClass, processBlock: { request in
             guard let requestPath = request?.path else {
                 menubarUpdated("Unknown path")
-                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 1])
+                return GCDWebServerErrorResponse(statusCode: 701)
             }
             switch requestPath {
             case "/catfile":
@@ -35,7 +35,7 @@ class CatHandler: BaseHandler {
                 
                 guard self.validToken(params) else {
                     menubarUpdated("Check token")
-                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 5])
+                    return GCDWebServerErrorResponse(statusCode: 702)
                 }
                 
                 if let filePathParam = params?["path"] as? String,
@@ -44,7 +44,7 @@ class CatHandler: BaseHandler {
                     let filePath = NSString(string: filePathParam).expandingTildeInPath
                     if !FileManager.default.fileExists(atPath: filePath) {
                         menubarUpdated("File does not exists")
-                        return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 4])
+                        return GCDWebServerErrorResponse(statusCode: 703)
                     } else {
                         let fileURL = URL(fileURLWithPath: filePath)
                         menubarUpdated("Catting file \(fileURL.lastPathComponent)")
@@ -53,16 +53,16 @@ class CatHandler: BaseHandler {
                             return GCDWebServerDataResponse(data: fileData, contentType: fileContentType)
                         } catch {
                             menubarUpdated("Failed reading file?")
-                            return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 3])
+                            return GCDWebServerErrorResponse(statusCode: 704)
                         }
                     }
                 } else {
                     menubarUpdated("Missing parameter!")
-                    return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 2])
+                    return GCDWebServerErrorResponse(statusCode: 705)
                 }
             default:
                 menubarUpdated("Unkown command")
-                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 1])
+                return GCDWebServerErrorResponse(statusCode: 706)
             }
         })
     }

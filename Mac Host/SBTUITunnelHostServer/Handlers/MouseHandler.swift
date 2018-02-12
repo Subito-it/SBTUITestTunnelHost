@@ -33,32 +33,32 @@ class MouseHandler: BaseHandler {
 
             guard let requestPath = request?.path else {
                 menubarUpdated("Unknown path")
-                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 1])
+                return GCDWebServerErrorResponse(statusCode: 701)
             }
             
             guard self.validToken(params) else {
                 menubarUpdated("Check token")
-                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 5])
+                return GCDWebServerErrorResponse(statusCode: 702)
             }
             
             guard let appFrameString = params?["app_frame"] as? String else {
                 menubarUpdated("What?")
-                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 6])
+                return GCDWebServerErrorResponse(statusCode: 703)
             }
             
             guard let simulatorDescriptor = SimulatorDescriptor(requestParameters: params) else {
                 menubarUpdated("What #2?")
-                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 7])
+                return GCDWebServerErrorResponse(statusCode: 704)
             }
             
             guard let commandB64 = params?["command"] as? String else {
                 menubarUpdated("What?")
-                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 8])
+                return GCDWebServerErrorResponse(statusCode: 705)
             }
             
             guard let commandData = Data(base64Encoded: commandB64) else {
                 menubarUpdated("What?")
-                return GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 9])
+                return GCDWebServerErrorResponse(statusCode: 706)
             }
             
             var ret: GCDWebServerDataResponse!
@@ -133,7 +133,7 @@ class MouseHandler: BaseHandler {
                     
                 default:
                     menubarUpdated("Unkown command")
-                    ret = GCDWebServerDataResponse(jsonObject: ["status": 0, "error": 1])
+                    ret = GCDWebServerErrorResponse(statusCode: 707)
                     return
                 }
             }
