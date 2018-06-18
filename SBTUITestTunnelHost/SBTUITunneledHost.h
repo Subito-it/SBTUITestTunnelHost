@@ -23,9 +23,9 @@
 @interface SBTUITunneledHost : NSObject
 
 /**
-*  Asynchronously connects for remote host
-*
-*/
+ *  Asynchronously connects for remote host
+ *
+ */
 - (void)connect;
 
 /**
@@ -38,13 +38,15 @@
 /**
  *  Command to execute a sequence of SBTUITunneledHostMouseClick
  *
+ *  @return command result. Nil if command failed or connnection did timeout
  */
-- (void)executeMouseClicks:(NSArray<SBTUITunneledHostMouseClick *> *)clicks app:(XCUIApplication *)app;
+- (NSString *)executeMouseClicks:(NSArray<SBTUITunneledHostMouseClick *> *)clicks app:(XCUIApplication *)app;
 
 /**
  *  Command to execute a sequence of SBTUITunneledHostMouseDrag
  *
+ *  @return command result. Nil if command failed or connnection did timeout
  */
-- (void)executeMouseDrags:(NSArray<SBTUITunneledHostMouseDrag *> *)drags app:(XCUIApplication *)app;
+- (NSString *)executeMouseDrags:(NSArray<SBTUITunneledHostMouseDrag *> *)drags app:(XCUIApplication *)app;
 
 @end

@@ -128,24 +128,24 @@ const uint16_t SBTUITunneledHostDefaultPort = 8667;
     return [self performAction:action data:commandB64 app:nil];
 }
 
-- (void)executeMouseClicks:(NSArray<SBTUITunneledHostMouseClick *> *)clicks app:(XCUIApplication *)app
+- (NSString *)executeMouseClicks:(NSArray<SBTUITunneledHostMouseClick *> *)clicks app:(XCUIApplication *)app
 {
     NSData *encodedDrags = [NSKeyedArchiver archivedDataWithRootObject:clicks];
     NSString *commandB64 = [encodedDrags base64EncodedStringWithOptions:0];
     
     NSString *action = @"mouse/clicks";
     
-    [self performAction:action data:commandB64 app:app];
+    return [self performAction:action data:commandB64 app:app];
 }
 
-- (void)executeMouseDrags:(NSArray<SBTUITunneledHostMouseDrag *> *)drags app:(XCUIApplication *)app
+- (NSString *)executeMouseDrags:(NSArray<SBTUITunneledHostMouseDrag *> *)drags app:(XCUIApplication *)app
 {
     NSData *encodedDrags = [NSKeyedArchiver archivedDataWithRootObject:drags];
     NSString *commandB64 = [encodedDrags base64EncodedStringWithOptions:0];
     
     NSString *action = @"mouse/drags";
     
-    [self performAction:action data:commandB64 app:app];
+    return [self performAction:action data:commandB64 app:app];
 }
 
 @end
