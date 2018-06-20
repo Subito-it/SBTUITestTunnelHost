@@ -177,6 +177,17 @@ class MouseHandler: BaseHandler {
             return (pid, CGRect(x: x, y: y + windowBarHeight, width: w, height: h - windowBarHeight))
         }
         
+        if let screenshot = CGWindowListCreateImage(.infinite, .optionOnScreenOnly, 0, .bestResolution) {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "YYYY-MM-dd-HHmmss"
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            
+            let filename: NSString = "~/Library/Logs/DiagnosticReports/SBTUITestTunnelServer_\(dateFormatter.string(from: Date())).png" as NSString
+            let absolutePath = filename.expandingTildeInPath
+            let fileUrl = URL(fileURLWithPath: absolutePath)
+            writeToFile(image: screenshot, url: fileUrl)
+        }
+        
         throw Error.RuntimeError("Simulator not not found while looking for \(descriptor)")
     }
     
@@ -193,5 +204,11 @@ class MouseHandler: BaseHandler {
             throw Error.RuntimeError("Failed bringing Simulator to front")
         }
         Thread.sleep(forTimeInterval: 0.25)
+    }
+    
+    private func writeToFile(image: CGImage, url: URL) {
+        let bitmapRep = NSBitmapImageRep(cgImage: image)
+        let data = bitmapRep.representation(using: NSBitmapImageRep.FileType.png, properties: [:])!
+        try? data.write(to: url)
     }
 }
