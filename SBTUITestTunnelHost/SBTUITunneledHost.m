@@ -100,6 +100,12 @@ const uint16_t SBTUITunneledHostDefaultPort = 8667;
     
     NSURLSession *session = [NSURLSession sharedSession];
     
+    NSTimeInterval requestStart = CFAbsoluteTimeGetCurrent();
+    
+    if (self.logLevel == SBTUITunneledHostLogLevelDebug) {
+        NSLog(@"[SBTUITunneledHost] Starting request for action: %@ on simulator: %@", action, simulatorDeviceName);
+    }
+    
     __block NSString *responseString = nil;
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (![response isKindOfClass:[NSHTTPURLResponse class]]) {
@@ -115,6 +121,10 @@ const uint16_t SBTUITunneledHostDefaultPort = 8667;
     }] resume];
     
     dispatch_semaphore_wait(synchRequestSemaphore, DISPATCH_TIME_FOREVER);
+    
+    if (self.logLevel == SBTUITunneledHostLogLevelDebug) {
+        NSLog(@"[SBTUITunneledHost] Request for action: %@ on simulator %@ took %fs", action, simulatorDeviceName, CFAbsoluteTimeGetCurrent() - requestStart);
+    }
     
     return responseString;
 }

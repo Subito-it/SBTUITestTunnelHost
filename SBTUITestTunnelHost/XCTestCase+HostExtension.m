@@ -39,6 +39,7 @@ static char kHostAssociatedKey;
     SBTUITunneledHost *ret = objc_getAssociatedObject(self, &kHostAssociatedKey);
     if (!ret) {
         ret = [[SBTUITunneledHost alloc] init];
+        ret.logLevel = SBTUITunneledHostLogLevelDebug;
         objc_setAssociatedObject(self, &kHostAssociatedKey, ret, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return ret;

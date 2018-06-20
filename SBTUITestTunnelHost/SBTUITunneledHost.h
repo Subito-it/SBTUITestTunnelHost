@@ -20,6 +20,11 @@
 #import "SBTUITunneledHostMouseClick.h"
 #import "SBTUITunneledHostMouseDrag.h"
 
+typedef NS_ENUM(NSInteger, SBTUITunneledHostLogLevel) {
+    SBTUITunneledHostLogLevelNone,
+    SBTUITunneledHostLogLevelDebug
+};
+
 @interface SBTUITunneledHost : NSObject
 
 /**
@@ -48,5 +53,7 @@
  *  @return command result. Nil if command failed or connnection did timeout
  */
 - (NSString *)executeMouseDrags:(NSArray<SBTUITunneledHostMouseDrag *> *)drags app:(XCUIApplication *)app;
+
+@property (nonatomic, assign) SBTUITunneledHostLogLevel logLevel;
 
 @end
