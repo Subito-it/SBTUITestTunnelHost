@@ -17,5 +17,6 @@ s.requires_arc = true
 
 s.frameworks = 'XCTest'
 s.source_files = 'SBTUITestTunnelHost/*.{h,m}'
+s.pod_target_xcconfig = { :prebuild_configuration => 'debug' }
 
 end
