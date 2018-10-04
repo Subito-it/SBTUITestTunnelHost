@@ -17,6 +17,7 @@
 
 import Foundation
 import GCDWebServer
+import os.log
 
 class MouseHandler: BaseHandler {
     
@@ -63,16 +64,16 @@ class MouseHandler: BaseHandler {
             
             var ret: GCDWebServerDataResponse!
             MouseHandler.mouseExecutionQueue.sync {
-                var simulator_bounds: CGRect = .zero
-                var pid: pid_t
-
-                (pid, simulator_bounds) = try! self.findSimulator(descriptor: simulatorDescriptor)
-                try! self.bringWindowToFrontIfNeeded(pid: pid)
+                guard let simulatorInfo = try? self.findSimulator(descriptor: simulatorDescriptor) else {
+                    os_log("%{public}@", "Couldn't find simulator info \(simulatorDescriptor)")
+                    return
+                }
+                try? self.bringApplicationToFrontIfNeeded(pid: simulatorInfo.0)
                 
                 let app_width = NSRectFromString(appFrameString).size.width
-                let dimensionRatio = simulator_bounds.size.width / app_width
+                let dimensionRatio = simulatorInfo.1.size.width / app_width
                 
-                let deviceOrigin = simulator_bounds.origin
+                let deviceOrigin = simulatorInfo.1.origin
                 
                 NSKeyedUnarchiver.setClass(SBTMouseClick.self, forClassName: "SBTUITunneledHostMouseClick")
                 NSKeyedUnarchiver.setClass(SBTMouseDrag.self, forClassName: "SBTUITunneledHostMouseDrag")
@@ -90,7 +91,7 @@ class MouseHandler: BaseHandler {
                     for mouseClick in mouseClicks {
                         let point = CGPoint(x: deviceOrigin.x + mouseClick.point.x * dimensionRatio, y: deviceOrigin.y + mouseClick.point.y * dimensionRatio)
                         
-                        try! self.bringWindowToFrontIfNeeded(pid: pid)
+                        try? self.bringApplicationToFrontIfNeeded(pid: simulatorInfo.0)
                         mouse.click(at: point)
                         
                         Thread.sleep(forTimeInterval: mouseClick.completionPause)
@@ -116,7 +117,7 @@ class MouseHandler: BaseHandler {
                                                  y: deviceOrigin.y + mouseDrag.startPoint.y * dimensionRatio)
                         let stopPoint = CGPoint(x: deviceOrigin.x + mouseDrag.stopPoint.x * dimensionRatio,
                                                 y: deviceOrigin.y + mouseDrag.stopPoint.y * dimensionRatio)
-                        try! self.bringWindowToFrontIfNeeded(pid: pid)
+                        try? self.bringApplicationToFrontIfNeeded(pid: simulatorInfo.0)
                         mouse.drag(from: startPoint, to: stopPoint, duration: mouseDrag.dragDuration)
                         
                         Thread.sleep(forTimeInterval: mouseDrag.completionPause)
@@ -165,10 +166,12 @@ class MouseHandler: BaseHandler {
                 let y = bounds["Y"] as? Int,
                 let w = bounds["Width"] as? Int,
                 let h = bounds["Height"] as? Int else {
+                    os_log("%{public}@", "Simulator window bounds missing")
                     throw Error.RuntimeError("Simulator window bounds missing")
             }
             
             guard let pid = infoList["kCGWindowOwnerPID"] as? pid_t else {
+                os_log("%{public}@", "pid not found for \(windowName)")
                 throw Error.RuntimeError("Failed getting Simulator pid")
             }
             
@@ -191,8 +194,13 @@ class MouseHandler: BaseHandler {
         throw Error.RuntimeError("Simulator not not found while looking for \(descriptor)")
     }
     
-    private func bringWindowToFrontIfNeeded(pid: pid_t) throws {
+    private func bringApplicationToFrontIfNeeded(pid: pid_t) throws {
+        // It is important to understand that we cannot bring a specific window to front but only an applicaiton pid
+        // This needs improvement
+        
         guard let runningApp = NSRunningApplication(processIdentifier: pid) else {
+            os_log("%{public}@", "Running application with pid \(pid) not found!")
+            
             throw Error.RuntimeError("Running application with pid \(pid) not found!")
         }
         
@@ -201,6 +209,8 @@ class MouseHandler: BaseHandler {
         }
         
         if !runningApp.activate(options: NSApplication.ActivationOptions.activateIgnoringOtherApps) {
+            os_log("%{public}@", "Failed bringing Simulator to front")
+            
             throw Error.RuntimeError("Failed bringing Simulator to front")
         }
         Thread.sleep(forTimeInterval: 0.25)
