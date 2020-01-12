@@ -18,28 +18,63 @@
 import Foundation
 
 func executeShellCommand(_ cmd: String, basePath: String) -> String {
-    let task = Process()
-    let pipeStd = Pipe()
-    let pipeErr = Pipe()
-    task.standardOutput = pipeStd
-    task.standardError = pipeErr
+    let processEnvironment = ProcessEnvironment(cmd, basePath: basePath)
     
-    task.currentDirectoryPath = basePath
+    processEnvironment.launch()
+    processEnvironment.waitUntilExit()
     
-    task.launchPath = "/bin/sh"
+    return (processEnvironment.standardOutput ?? "") +
+        (processEnvironment.standardError ?? "")
+}
+
+private var runningProcesses = Set<ProcessEnvironment>() 
+
+func launchShellCommand(_ cmd: String, basePath: String) -> UUID {
+    let processEnvironment = ProcessEnvironment(cmd, basePath: basePath)
+    processEnvironment.launch()
     
-    task.arguments = ["-c", cmd]
+    runningProcesses.insert(processEnvironment)
     
-    task.launch()
-    task.waitUntilExit()
+    return processEnvironment.id
+}
+
+private func getShellCommandStatus(
+    for process: ProcessEnvironment,
+    afterRunning command: ((ProcessEnvironment) -> Void)? = nil
+) -> ProcessEnvironment.Status? {
+    let status = process.status
     
-    let retStd: String?
-    let retErr: String?
+    command?(process)
+        
+    if case .finished = status {
+        runningProcesses.remove(process)
+    }
     
-    let pipeStdRead = pipeStd.fileHandleForReading
-    retStd = String(data: pipeStdRead.readDataToEndOfFile(), encoding: String.Encoding.utf8)?.trimmingCharacters(in: CharacterSet.newlines)
-    let pipeErrRead = pipeErr.fileHandleForReading
-    retErr = String(data: pipeErrRead.readDataToEndOfFile(), encoding: String.Encoding.utf8)?.trimmingCharacters(in: CharacterSet.newlines)
+    return status
+}
+
+func getShellCommandStatus(for id: UUID) -> ProcessEnvironment.Status? {
+    guard let process = runningProcesses.first(where: { $0.id == id }) else {
+        return nil
+    }
     
-    return (retStd ?? "") + (retErr ?? "")
+    return getShellCommandStatus(for: process)
+}
+
+func interruptCommand(with id: UUID) -> ProcessEnvironment.Status? {
+    guard let process = runningProcesses.first(where: { $0.id == id }) else {
+        return nil
+    }
+    
+    return getShellCommandStatus(for: process,
+                                 afterRunning: { $0.interrupt() })
+}
+
+func terminateCommand(with id: UUID) -> ProcessEnvironment.Status? {
+    guard let process = runningProcesses.first(where: { $0.id == id }) else {
+        return nil
+    }
+    
+    return getShellCommandStatus(for: process,
+                                 afterRunning: { $0.terminate() })
 }
