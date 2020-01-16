@@ -17,6 +17,8 @@
 @import Foundation;
 @import XCTest;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface SBTUITunneledHostMouseDrag : NSObject <NSCoding>
 
 /*!
@@ -30,10 +32,12 @@
  
  @return float The degrees in the Celsius scale.
  */
-- (nonnull instancetype)initWithElement:(nonnull XCUIElement *)element
-                   startNormalizedPoint:(CGPoint)startNormalizedPoint
-                    stopNormalizedPoint:(CGPoint)stopNormalizedPoint
-                           dragDuration:(NSTimeInterval)dragDuration
-                        completionPause:(NSTimeInterval)completionPause;
+- (instancetype)initWithElement:(XCUIElement *)element
+           startNormalizedPoint:(CGPoint)startNormalizedPoint
+            stopNormalizedPoint:(CGPoint)stopNormalizedPoint
+                   dragDuration:(NSTimeInterval)dragDuration
+                completionPause:(NSTimeInterval)completionPause;
 
 @end
+
+NS_ASSUME_NONNULL_END

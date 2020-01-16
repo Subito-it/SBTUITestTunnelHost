@@ -255,6 +255,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -474,6 +475,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -511,6 +513,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -570,7 +573,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SBTUITestTunnelHost_ExampleUITests/SBTUITestTunnelHost_ExampleUITests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = SBTUITestTunnelHost_Example;
 			};
 			name = Debug;
@@ -597,7 +599,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tomascamin.SBTUITestTunnelHost-ExampleUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SBTUITestTunnelHost_ExampleUITests/SBTUITestTunnelHost_ExampleUITests-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = SBTUITestTunnelHost_Example;
 			};
 			name = Release;

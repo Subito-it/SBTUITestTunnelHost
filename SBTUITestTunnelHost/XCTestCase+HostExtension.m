@@ -27,21 +27,30 @@
 
 @implementation XCTestCase (HostExtension)
 
-static char kHostAssociatedKey;
+static const void * const kHostAssociatedKey = &kHostAssociatedKey;
 
 - (void)setHost:(SBTUITunneledHost *)host
 {
-    return objc_setAssociatedObject(self, &kHostAssociatedKey, host, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    return objc_setAssociatedObject(self, 
+                                    &kHostAssociatedKey,
+                                    host,
+                                    OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (SBTUITunneledHost *)host
 {
     SBTUITunneledHost *ret = objc_getAssociatedObject(self, &kHostAssociatedKey);
+    
     if (!ret) {
         ret = [[SBTUITunneledHost alloc] init];
         ret.logLevel = SBTUITunneledHostLogLevelDebug;
-        objc_setAssociatedObject(self, &kHostAssociatedKey, ret, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        
+        objc_setAssociatedObject(self, 
+                                 &kHostAssociatedKey, 
+                                 ret, 
+                                 OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
+    
     return ret;
 }
 
