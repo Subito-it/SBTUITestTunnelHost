@@ -20,6 +20,8 @@
 #import "SBTUITunneledHostMouseClick.h"
 #import "SBTUITunneledHostMouseDrag.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSInteger, SBTUITunneledHostLogLevel) {
     SBTUITunneledHostLogLevelNone,
     SBTUITunneledHostLogLevelDebug
@@ -36,24 +38,28 @@ typedef NS_ENUM(NSInteger, SBTUITunneledHostLogLevel) {
 /**
  *  Command to execute on the host
  *
- *  @return command result. Nil if command failed or connnection did timeout
+ *  @return command result. @c nil if command failed or connnection did timeout
  */
-- (NSString *)executeCommand:(NSString *)command;
+- (nullable NSString *)executeCommand:(NSString *)command;
 
 /**
  *  Command to execute a sequence of SBTUITunneledHostMouseClick
  *
- *  @return command result. Nil if command failed or connnection did timeout
+ *  @return command result. @c nil if command failed or connnection did timeout
  */
-- (NSString *)executeMouseClicks:(NSArray<SBTUITunneledHostMouseClick *> *)clicks app:(XCUIApplication *)app;
+- (nullable NSString *)executeMouseClicks:(NSArray<SBTUITunneledHostMouseClick *> *)clicks
+                                      app:(XCUIApplication *)app;
 
 /**
  *  Command to execute a sequence of SBTUITunneledHostMouseDrag
  *
- *  @return command result. Nil if command failed or connnection did timeout
+ *  @return command result. @c nil if command failed or connnection did timeout
  */
-- (NSString *)executeMouseDrags:(NSArray<SBTUITunneledHostMouseDrag *> *)drags app:(XCUIApplication *)app;
+- (nullable NSString *)executeMouseDrags:(NSArray<SBTUITunneledHostMouseDrag *> *)drags
+                                     app:(XCUIApplication *)app;
 
 @property (nonatomic, assign) SBTUITunneledHostLogLevel logLevel;
 
 @end
+
+NS_ASSUME_NONNULL_END

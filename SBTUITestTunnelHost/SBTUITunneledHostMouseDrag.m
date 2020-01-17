@@ -27,19 +27,31 @@
 
 @implementation SBTUITunneledHostMouseDrag
 
-- (instancetype)initWithElement:(XCUIElement *)element startNormalizedPoint:(CGPoint)startNormalizedPoint stopNormalizedPoint:(CGPoint)stopNormalizedPoint dragDuration:(NSTimeInterval)dragDuration completionPause:(NSTimeInterval)completionPause
+- (instancetype)initWithElement:(XCUIElement *)element
+           startNormalizedPoint:(CGPoint)startNormalizedPoint stopNormalizedPoint:(CGPoint)stopNormalizedPoint
+                   dragDuration:(NSTimeInterval)dragDuration
+                completionPause:(NSTimeInterval)completionPause
 {
     CGRect frame = element.frame;
     CGPoint origin = frame.origin;
     CGSize size = frame.size;
     
-    CGPoint startPoint = CGPointMake(origin.x + size.width * startNormalizedPoint.x, origin.y + size.height * startNormalizedPoint.y);
-    CGPoint stopPoint = CGPointMake(origin.x + size.width * stopNormalizedPoint.x, origin.y + size.height * stopNormalizedPoint.y);
+    CGPoint startPoint = CGPointMake(origin.x + size.width * startNormalizedPoint.x,
+                                     origin.y + size.height * startNormalizedPoint.y);
     
-    return [self initWithStartPoint:startPoint stopPoint:stopPoint dragDuration:dragDuration completionPause:completionPause];
+    CGPoint stopPoint = CGPointMake(origin.x + size.width * stopNormalizedPoint.x,
+                                    origin.y + size.height * stopNormalizedPoint.y);
+    
+    return [self initWithStartPoint:startPoint 
+                          stopPoint:stopPoint 
+                       dragDuration:dragDuration 
+                    completionPause:completionPause];
 }
 
-- (instancetype)initWithStartPoint:(CGPoint)startPoint stopPoint:(CGPoint)stopPoint dragDuration:(NSTimeInterval)dragDuration completionPause:(NSTimeInterval)completionPause
+- (instancetype)initWithStartPoint:(CGPoint)startPoint 
+                         stopPoint:(CGPoint)stopPoint 
+                      dragDuration:(NSTimeInterval)dragDuration
+                   completionPause:(NSTimeInterval)completionPause
 {
     if ((self = [super init])) {
         _startPoint = startPoint;
@@ -58,7 +70,10 @@
     NSTimeInterval completionPause = [decoder decodeDoubleForKey:@"completionPause"];
     NSTimeInterval dragDuration = [decoder decodeDoubleForKey:@"dragDuration"];
     
-    return [self initWithStartPoint:startPoint stopPoint:stopPoint dragDuration:dragDuration completionPause:completionPause];
+    return [self initWithStartPoint:startPoint 
+                          stopPoint:stopPoint
+                       dragDuration:dragDuration 
+                    completionPause:completionPause];
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder

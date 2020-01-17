@@ -58,20 +58,35 @@ const uint16_t SBTUITunneledHostDefaultPort = 8667;
     self.connected = YES;
 }
 
-- (NSString *)performAction:(NSString *)action data:(NSString *)data app:(XCUIApplication *)app
+- (NSString *)performAction:(NSString *)action
+                       data:(NSString *)data
+                        app:(XCUIApplication *)app
 {
-    NSDictionary<NSString *, NSString *> *env = [[NSProcessInfo processInfo] environment];
+    NSDictionary<NSString *, NSString *> *env = NSProcessInfo.processInfo.environment;
+    
     NSString *simulatorDeviceName = env[@"SIMULATOR_DEVICE_NAME"];
     NSString *simulatorDeviceRuntime = env[@"SIMULATOR_RUNTIME_VERSION"];
-    CGRect appFrame = [[app.windows elementBoundByIndex:0] frame]; // app.frame doesn't work
-    NSDictionary *params = @{ @"command": data, @"app_frame": NSStringFromCGRect(appFrame), @"token": SBTUITestTunnelHostValidationToken, @"simulator_device_name": simulatorDeviceName, @"simulator_device_runtime": simulatorDeviceRuntime };
     
-    NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/%@", self.remoteHost, (unsigned int)self.remotePort, action];
+    CGRect appFrame = [[app.windows elementBoundByIndex:0] frame]; // app.frame doesn't work
+    
+    NSDictionary *params = @{
+        @"command": data,
+        @"app_frame": NSStringFromCGRect(appFrame),
+        @"token": SBTUITestTunnelHostValidationToken,
+        @"simulator_device_name": simulatorDeviceName,
+        @"simulator_device_runtime": simulatorDeviceRuntime
+    };
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/%@",
+                           self.remoteHost,
+                           (unsigned int)self.remotePort,
+                           action];
     
     NSURL *url = [NSURL URLWithString:urlString];
     
     NSMutableURLRequest *request = nil;
-    NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+    NSURLComponents *components = [NSURLComponents componentsWithURL:url
+                                             resolvingAgainstBaseURL:NO];
     
     NSMutableArray *queryItems = [NSMutableArray array];
     [params enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
@@ -89,6 +104,7 @@ const uint16_t SBTUITunneledHostDefaultPort = 8667;
         
         request.HTTPBody = [components.query dataUsingEncoding:NSUTF8StringEncoding];
     }
+    
     request.HTTPMethod = SBTUITestTunnelHostHTTPMethod;
     
     if (!request) {
@@ -138,7 +154,8 @@ const uint16_t SBTUITunneledHostDefaultPort = 8667;
     return [self performAction:action data:commandB64 app:nil];
 }
 
-- (NSString *)executeMouseClicks:(NSArray<SBTUITunneledHostMouseClick *> *)clicks app:(XCUIApplication *)app
+- (NSString *)executeMouseClicks:(NSArray<SBTUITunneledHostMouseClick *> *)clicks
+                             app:(XCUIApplication *)app
 {
     NSData *encodedDrags = [NSKeyedArchiver archivedDataWithRootObject:clicks];
     NSString *commandB64 = [encodedDrags base64EncodedStringWithOptions:0];
@@ -148,7 +165,8 @@ const uint16_t SBTUITunneledHostDefaultPort = 8667;
     return [self performAction:action data:commandB64 app:app];
 }
 
-- (NSString *)executeMouseDrags:(NSArray<SBTUITunneledHostMouseDrag *> *)drags app:(XCUIApplication *)app
+- (NSString *)executeMouseDrags:(NSArray<SBTUITunneledHostMouseDrag *> *)drags
+                            app:(XCUIApplication *)app
 {
     NSData *encodedDrags = [NSKeyedArchiver archivedDataWithRootObject:drags];
     NSString *commandB64 = [encodedDrags base64EncodedStringWithOptions:0];

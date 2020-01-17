@@ -25,7 +25,8 @@
 
 @implementation SBTUITunneledHostMouseClick
 
-- (instancetype)initWithPoint:(CGPoint)point completionPause:(NSTimeInterval)completionPause
+- (instancetype)initWithPoint:(CGPoint)point 
+              completionPause:(NSTimeInterval)completionPause
 {
     if ((self = [super init])) {
         _point = point;
@@ -35,7 +36,8 @@
     return self;
 }
 
-- (instancetype)initWithElement:(XCUIElement *)element completionPause:(NSTimeInterval)completionPause;
+- (instancetype)initWithElement:(XCUIElement *)element
+                completionPause:(NSTimeInterval)completionPause;
 {
     CGRect frame = element.frame;
     CGPoint frameCenter = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
