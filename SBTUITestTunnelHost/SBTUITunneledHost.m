@@ -122,13 +122,13 @@ const uint16_t SBTUITunneledHostDefaultPort = 8667;
         NSLog(@"[SBTUITunneledHost] Starting request for action: %@ on simulator: %@", action, simulatorDeviceName);
     }
     
-    __block NSString *responseString = nil;
+    __block id responseObject = nil;
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (![response isKindOfClass:[NSHTTPURLResponse class]]) {
             NSAssert(NO, @"[SBTUITestTunnelHost] Failed to get http response for action %@", action);
         } else {
             NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            responseString = jsonData[SBTUITestTunnelHostResponseResultKey];
+            responseObject = jsonData[SBTUITestTunnelHostResponseResultKey];
             
             NSAssert(((NSHTTPURLResponse *)response).statusCode == 200, @"[SBTUITestTunnelHost] Message sending failed for action %@", action);
         }
@@ -142,16 +142,52 @@ const uint16_t SBTUITunneledHostDefaultPort = 8667;
         NSLog(@"[SBTUITunneledHost] Request for action: %@ on simulator %@ took %fs", action, simulatorDeviceName, CFAbsoluteTimeGetCurrent() - requestStart);
     }
     
-    return responseString;
+    return responseObject;
 }
 
-- (NSString *)executeCommand:(NSString *)command;
+- (NSString *)executeCommand:(NSString *)command
 {
     NSString *commandB64 = [[command dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
-
+    
     NSString *action = @"exec";
     
     return [self performAction:action data:commandB64 app:nil];
+}
+
+- (NSUUID *)launchCommand:(NSString *)command
+{
+    NSString *commandB64 = [[command dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+    
+    NSString *action = @"launch";
+    
+    NSString *commandID = [self performAction:action data:commandB64 app:nil];
+    
+    if (commandID != nil) {
+        return [[NSUUID alloc] initWithUUIDString:commandID];
+    }
+    
+    return nil;
+}
+
+- (NSDictionary *)getStatusOfCommandWithID:(NSUUID *)commandID
+{
+    NSString *action = @"status";
+    
+    return [self performAction:action data:commandID.UUIDString app:nil];
+}
+
+- (NSDictionary *)interruptCommandWithID:(NSUUID *)commandID
+{
+    NSString *action = @"interrupt";
+    
+    return [self performAction:action data:commandID.UUIDString app:nil];
+}
+
+- (NSDictionary *)terminateCommandWithID:(NSUUID *)commandID
+{
+    NSString *action = @"terminate";
+    
+    return [self performAction:action data:commandID.UUIDString app:nil];
 }
 
 - (NSString *)executeMouseClicks:(NSArray<SBTUITunneledHostMouseClick *> *)clicks
