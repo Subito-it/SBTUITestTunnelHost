@@ -91,7 +91,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
         
             strongSelf.statusBarItem.menu = menu
             
-            strongSelf.statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "menuicon-red"))
+            strongSelf.statusBarItem.image = NSImage(named: "menuicon-red")
             strongSelf.statusBarImageTimer.invalidate()
             strongSelf.statusBarImageTimer = Timer.scheduledTimer(timeInterval: 1.5, target: strongSelf, selector: #selector(strongSelf.restoreDefaultStatusBarImage), userInfo: nil, repeats: false)
         }
@@ -106,6 +106,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     }
     
     @objc func restoreDefaultStatusBarImage() {
-        self.statusBarItem.image = NSImage(named: NSImage.Name(rawValue: "menuicon"))
+        self.statusBarItem.image = NSImage(named: "menuicon")
     }    
 }

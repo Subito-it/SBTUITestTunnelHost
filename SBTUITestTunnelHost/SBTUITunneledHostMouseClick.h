@@ -17,6 +17,8 @@
 @import Foundation;
 @import XCTest;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface SBTUITunneledHostMouseClick : NSObject <NSCoding>
 
 /*!
@@ -27,6 +29,9 @@
  
  @return float The degrees in the Celsius scale.
  */
-- (nonnull instancetype)initWithElement:(nonnull XCUIElement *)element completionPause:(NSTimeInterval)completionPause;
+- (instancetype)initWithElement:(XCUIElement *)element 
+                completionPause:(NSTimeInterval)completionPause;
 
 @end
+
+NS_ASSUME_NONNULL_END

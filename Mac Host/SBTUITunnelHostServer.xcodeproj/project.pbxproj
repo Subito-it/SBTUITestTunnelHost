@@ -164,8 +164,8 @@
 					C34E6CA71CF44D2D004D96DD = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = F93T2PM4GE;
-						LastSwiftMigration = 0920;
 						ProvisioningStyle = Manual;
+						LastSwiftMigration = 1130;
 					};
 				};
 			};
@@ -398,7 +398,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "SBTUITunnelHostServer/SBTUITunnelHostServer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -418,7 +418,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SBTUITunnelHostServer/SBTUITunnelHostServer-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

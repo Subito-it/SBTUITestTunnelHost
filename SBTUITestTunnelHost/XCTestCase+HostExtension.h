@@ -25,6 +25,8 @@
 @import XCTest;
 #import "SBTUITunneledHost.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface XCTestCase (HostExtension)
 
 @property (nonatomic, strong) SBTUITunneledHost *host;
@@ -32,3 +34,5 @@
 @end
 
 #endif
+
+NS_ASSUME_NONNULL_END
