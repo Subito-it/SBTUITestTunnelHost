@@ -14,18 +14,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 import Foundation
 import GCDWebServer
 
-fileprivate let validationToken = "lkju32yt$£bmnA"
+private let validationToken = "lkju32yt$£bmnA"
 
 protocol BaseHandler {
-    func addHandler(_ webServer: GCDWebServer, menubarUpdated: @escaping ((String) -> ()))
+    func addHandler(_ webServer: GCDWebServer, menubarUpdated: @escaping ((String) -> Void))
 }
 
 extension BaseHandler {
-    func validToken(_ params: ([AnyHashable : Any])?) -> Bool {
+    func validToken(_ params: ([AnyHashable: Any])?) -> Bool {
         guard let token = params?["token"] as? String else {
             return false
         }

@@ -14,12 +14,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-import Foundation
 import AppKit
+import Foundation
 
 class Mouse {
-        
     func drag(from p0: CGPoint, to p1: CGPoint, duration: TimeInterval) {
         var mouseDrags = [CGEvent]()
         
@@ -28,7 +26,7 @@ class Mouse {
         let totalDragPoints = CGFloat(max(1, Int(maxDelta / 30.0))) // sequence every 30px
         let dragStepDelay = duration / TimeInterval(totalDragPoints)
         
-        for i in 0..<Int(totalDragPoints) {
+        for i in 0 ..< Int(totalDragPoints) {
             let p = CGPoint(x: p0.x + (p1.x - p0.x) / totalDragPoints * CGFloat(i), y: p0.y + (p1.y - p0.y) / totalDragPoints * CGFloat(i))
             if let mouseDrag = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDragged, mouseCursorPosition: p, mouseButton: .left) {
                 mouseDrags.append(mouseDrag)
@@ -52,7 +50,7 @@ class Mouse {
     
     func click(at point: CGPoint) {
         let mouseDown = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDown, mouseCursorPosition: point, mouseButton: .left)
-        let mouseUp   = CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp, mouseCursorPosition: point, mouseButton: .left)
+        let mouseUp = CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp, mouseCursorPosition: point, mouseButton: .left)
         
         mouseDown?.post(tap: .cghidEventTap)
         Thread.sleep(forTimeInterval: 1e-3 * 50.0)

@@ -14,30 +14,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-import Foundation
 import Cocoa
+import Foundation
 import GCDWebServer
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
-
-    @IBOutlet weak var window: NSWindow!
+    @IBOutlet var window: NSWindow!
     
-    let serverPort: UInt = 8667
+    let serverPort: UInt = 8_667
     var server: GCDWebServer?
-
+    
     let statusBar = NSStatusBar.system
-    var statusBarItem : NSStatusItem = NSStatusItem()
+    var statusBarItem = NSStatusItem()
     
     var statusBarImageTimer = Timer()
     
     var commandHistory = [String]()
     
     let appVersion: String = {
-        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     }()
-
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusBarItem = statusBar.statusItem(withLength: NSStatusItem.variableLength)
         restoreDefaultStatusBarImage()
@@ -76,7 +74,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
             
             strongSelf.commandHistory.insert(title, at: 0)
             strongSelf.commandHistory = Array(strongSelf.commandHistory.prefix(25))
-
+            
             let historyMenu = NSMenu()
             for command in strongSelf.commandHistory {
                 historyMenu.addItem(NSMenuItem(title: command, action: nil, keyEquivalent: ""))
@@ -88,7 +86,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
             
             menu.addItem(NSMenuItem.separator())
             menu.addItem(NSMenuItem(title: "Quit SBTUITestTunnelServer (\(strongSelf.appVersion))", action: #selector(NSApp.terminate), keyEquivalent: ""))
-        
+            
             strongSelf.statusBarItem.menu = menu
             
             strongSelf.statusBarItem.image = NSImage(named: "menuicon-red")
@@ -106,6 +104,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     }
     
     @objc func restoreDefaultStatusBarImage() {
-        self.statusBarItem.image = NSImage(named: "menuicon")
-    }    
+        statusBarItem.image = NSImage(named: "menuicon")
+    }
 }

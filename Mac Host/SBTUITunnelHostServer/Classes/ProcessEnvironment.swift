@@ -9,20 +9,17 @@
 import Foundation
 
 struct ProcessEnvironment {
-    
     enum Status {
-        
         case running(pid: Int32)
-
+        
         case finished(
             standardOutput: String?,
             standardError: String?,
             terminationStatus: Int32,
             terminationReason: Process.TerminationReason
         )
-        
     }
-
+    
     let task = Process()
     let standardOutputPipe = Pipe()
     let standardErrorPipe = Pipe()
@@ -67,7 +64,7 @@ struct ProcessEnvironment {
         let data = standardOutputPipe.fileHandleForReading.readDataToEndOfFile()
         
         guard let output = String(data: data, encoding: .utf8)
-            else { return nil }
+        else { return nil }
         
         return output
     }
@@ -78,7 +75,7 @@ struct ProcessEnvironment {
         let data = standardErrorPipe.fileHandleForReading.readDataToEndOfFile()
         
         guard let error = String(data: data, encoding: .utf8)
-            else { return nil }
+        else { return nil }
         
         return error
     }
@@ -86,29 +83,23 @@ struct ProcessEnvironment {
     var status: Status {
         if task.isRunning {
             return .running(pid: task.processIdentifier)
-        }
-        else {
+        } else {
             return .finished(standardOutput: standardOutput,
                              standardError: standardError,
                              terminationStatus: task.terminationStatus,
                              terminationReason: task.terminationReason)
         }
     }
-    
 }
 
 extension ProcessEnvironment: Equatable {
-    
-    static func ==(lhs: ProcessEnvironment, rhs: ProcessEnvironment) -> Bool {
-        return lhs.id == rhs.id
+    static func == (lhs: ProcessEnvironment, rhs: ProcessEnvironment) -> Bool {
+        lhs.id == rhs.id
     }
-    
 }
 
 extension ProcessEnvironment: Hashable {
-    
     func hash(into hasher: inout Hasher) {
         id.hash(into: &hasher)
     }
-    
 }

@@ -14,7 +14,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 import Foundation
 
 func executeShellCommand(_ cmd: String, basePath: String) -> String {
@@ -27,7 +26,7 @@ func executeShellCommand(_ cmd: String, basePath: String) -> String {
         (processEnvironment.standardError ?? "")
 }
 
-private var runningProcesses = Set<ProcessEnvironment>() 
+private var runningProcesses = Set<ProcessEnvironment>()
 
 func launchShellCommand(_ cmd: String, basePath: String) -> UUID {
     let processEnvironment = ProcessEnvironment(cmd, basePath: basePath)
@@ -45,7 +44,7 @@ private func getShellCommandStatus(
     let status = process.status
     
     command?(process)
-        
+    
     if case .finished = status {
         runningProcesses.remove(process)
     }

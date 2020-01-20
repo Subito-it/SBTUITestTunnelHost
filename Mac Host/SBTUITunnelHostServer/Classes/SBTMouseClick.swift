@@ -24,7 +24,7 @@ class SBTMouseClick: NSObject, NSCoding {
         self.point = point
         self.completionPause = completionPause
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         self.completionPause = aDecoder.decodeDouble(forKey: "completionPause")
         self.point = aDecoder.decodePoint(forKey: "point")

@@ -18,10 +18,9 @@ import Foundation
 import GCDWebServer
 
 class CatHandler: BaseHandler {
-    
     private let requestMethod = "GET"
     
-    func addHandler(_ webServer: GCDWebServer, menubarUpdated: @escaping ((String) -> ())) {
+    func addHandler(_ webServer: GCDWebServer, menubarUpdated: @escaping ((String) -> Void)) {
         let requestClass = (requestMethod == "POST") ? GCDWebServerURLEncodedFormRequest.self : GCDWebServerRequest.self
         
         webServer.addHandler(forMethod: requestMethod, path: "/catfile", request: requestClass, processBlock: { request in
@@ -39,8 +38,7 @@ class CatHandler: BaseHandler {
                 }
                 
                 if let filePathParam = params?["path"] as? String,
-                   let fileContentType = params?["content-type"] as? String {
-                    
+                    let fileContentType = params?["content-type"] as? String {
                     let filePath = NSString(string: filePathParam).expandingTildeInPath
                     if !FileManager.default.fileExists(atPath: filePath) {
                         menubarUpdated("File does not exists")

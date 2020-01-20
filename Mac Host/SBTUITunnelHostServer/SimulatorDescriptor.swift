@@ -14,13 +14,13 @@ enum SimulatorDescriptor {
     
     func recogniseSimulator(from windowName: String) -> Bool {
         switch self {
-        case .byCompleteName(let simulatorCompleteName):
+        case let .byCompleteName(simulatorCompleteName):
             return windowName.contains(simulatorCompleteName)
         case .byDeviceNameAndRuntime(let deviceName, var runtime):
             runtime = runtime.components(separatedBy: ".").prefix(2).joined(separator: ".") // 11.1.1 -> 11.1
             let escapedDeviceName = NSRegularExpression.escapedPattern(for: deviceName)
             let regex = "\(escapedDeviceName) (-|—) (iOS )?\(runtime)(\\.\\d)?"
-
+            
             return windowName.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
         }
     }
@@ -34,9 +34,9 @@ extension SimulatorDescriptor {
         let simulatorRuntime = params["simulator_device_runtime"] as? String
         
         switch (simulatorWindowName, simulatorName, simulatorRuntime) {
-        case (.some(let simulatorWindowName), nil, nil):
+        case (let .some(simulatorWindowName), nil, nil):
             self = .byCompleteName(simulatorWindowName)
-        case (nil, .some(let simulatorName), .some(let simulatorRuntime)):
+        case (nil, let .some(simulatorName), let .some(simulatorRuntime)):
             self = .byDeviceNameAndRuntime(simulatorName, simulatorRuntime)
         default:
             return nil
@@ -47,9 +47,9 @@ extension SimulatorDescriptor {
 extension SimulatorDescriptor: CustomStringConvertible {
     var description: String {
         switch self {
-        case .byCompleteName(let completeName):
+        case let .byCompleteName(completeName):
             return completeName
-        case .byDeviceNameAndRuntime(let deviceName, let runtime):
+        case let .byDeviceNameAndRuntime(deviceName, runtime):
             return "with name: \(deviceName) and runtime: \(runtime)"
         }
     }

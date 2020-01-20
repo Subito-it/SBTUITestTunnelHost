@@ -14,12 +14,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 import Foundation
 import GCDWebServer
 
 class ExecHandler: BaseHandler {
-    
     private let requestMethod = "POST"
     private var executablesBasePath = "~/Desktop"
     
@@ -27,7 +25,7 @@ class ExecHandler: BaseHandler {
         guard let encodedCommand = params["command"] as? String,
             let decdedData = Data(base64Encoded: encodedCommand),
             let decodedCommand = String(data: decdedData, encoding: .utf8)
-            else { return nil }
+        else { return nil }
         
         return decodedCommand
     }
@@ -46,16 +44,15 @@ class ExecHandler: BaseHandler {
         switch status {
         case .none:
             return GCDWebServerResponse(statusCode: 404)
-        case .running(pid: let pid):
+        case let .running(pid: pid):
             return GCDWebServerDataResponse(jsonObject: ["result": [
                 "pid": pid
-                ]
-            ])
+            ]])
         case let .finished(standardOutput: stdOut,
-                           standardError: stdErr, 
+                           standardError: stdErr,
                            terminationStatus: status,
                            terminationReason: reason):
-            var jsonObject: [String : Any] = [
+            var jsonObject: [String: Any] = [
                 "terminationStatus": status,
                 "terminationReason": reason.rawValue
             ]
@@ -83,7 +80,7 @@ class ExecHandler: BaseHandler {
         do {
             let regex = try NSRegularExpression(pattern: ".*?(?:(;|&))", options: .caseInsensitive)
             
-            regex.enumerateMatches(in: cmd, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, cmd.count)) {
+            regex.enumerateMatches(in: cmd, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: cmd.count)) {
                 (substringRange: NSTextCheckingResult?, _, _) in
                 if let substringRange = substringRange {
                     let cmd2 = cmd as NSString
@@ -95,8 +92,7 @@ class ExecHandler: BaseHandler {
             if cmd.hasPrefix("rm ") {
                 errorHandler("WTF!")
                 return GCDWebServerErrorResponse(statusCode: 703)
-            }
-            else {
+            } else {
                 return nil
             }
         } catch {
@@ -106,7 +102,7 @@ class ExecHandler: BaseHandler {
     }
     
     func addHandler(_ webServer: GCDWebServer,
-                    menubarUpdated: @escaping ((String) -> ())) {
+                    menubarUpdated: @escaping ((String) -> Void)) {
         let requestClass = (requestMethod == "POST") ?
             GCDWebServerURLEncodedFormRequest.self :
             GCDWebServerRequest.self
@@ -117,7 +113,7 @@ class ExecHandler: BaseHandler {
             responseForItem: @escaping ((T) -> GCDWebServerResponse)
         ) {
             webServer.addHandler(
-                forMethod: self.requestMethod, 
+                forMethod: requestMethod,
                 path: path,
                 request: requestClass,
                 processBlock: { request in
@@ -134,7 +130,8 @@ class ExecHandler: BaseHandler {
                     }
                     
                     return responseForItem(item)
-            })
+                }
+            )
         }
         
         addHandlerForParameter("/exec", parser: parseCommand) { command in
@@ -174,17 +171,15 @@ class ExecHandler: BaseHandler {
         }
         
         addHandlerForParameter("/status", parser: parseUUID) { id in
-            return self.responseForCommandStatus(getShellCommandStatus(for: id))
+            self.responseForCommandStatus(getShellCommandStatus(for: id))
         }
-                
+        
         addHandlerForParameter("/interrupt", parser: parseUUID) { id in
-            return self.responseForCommandStatus(interruptCommand(with: id))
+            self.responseForCommandStatus(interruptCommand(with: id))
         }
-                
+        
         addHandlerForParameter("/terminate", parser: parseUUID) { id in
-            return self.responseForCommandStatus(terminateCommand(with: id))
+            self.responseForCommandStatus(terminateCommand(with: id))
         }
-                
     }
-
 }

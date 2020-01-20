@@ -5,11 +5,10 @@
 //  Copyright © 2017 tcamin. All rights reserved.
 //
 
-import XCTest
 import SBTUITestTunnelHost
+import XCTest
 
 class SBTUITestTunnelHost_ExampleUITests_Swift: XCTestCase {
-
     func testHost() {
         // echo a string to a file and check that it is read correctly
         let app = XCUIApplication()
@@ -54,16 +53,16 @@ class SBTUITestTunnelHost_ExampleUITests_Swift: XCTestCase {
         app.launch()
         
         host.connect()
-    
+        
         let table = app.tables.element
-    
+        
         let mouseDrag = SBTUITunneledHostMouseDrag(element: table, startNormalizedPoint: CGPoint(x: 0.5, y: 0.9), stopNormalizedPoint: CGPoint(x: 0.5, y: 0.1), dragDuration: 0.1, completionPause: 0.05)
         
         let mouseDrags = Array(repeating: mouseDrag, count: 8)
         host.execute(mouseDrags, app: app)
-    
+        
         Thread.sleep(forTimeInterval: 2.0)
-    
+        
         XCTAssert(app.cells["99"].isHittable)
     }
 }

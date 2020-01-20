@@ -14,24 +14,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 import Foundation
 import GCDWebServer
 import os.log
 
 class MouseHandler: BaseHandler {
-    
     private static let mouseExecutionQueue = DispatchQueue.main
     
     private let requestMethod = "POST"
     private static let handlerTimeout = 15.0
     
-    func addHandler(_ webServer: GCDWebServer, menubarUpdated: @escaping ((String) -> ())) {
+    func addHandler(_ webServer: GCDWebServer, menubarUpdated: @escaping ((String) -> Void)) {
         let requestClass = (requestMethod == "POST") ? GCDWebServerURLEncodedFormRequest.self : GCDWebServerRequest.self
         
         webServer.addHandler(forMethod: requestMethod, pathRegex: "/mouse/(.*)", request: requestClass, processBlock: { request in
             let params = (self.requestMethod == "POST") ? (request as! GCDWebServerURLEncodedFormRequest).arguments : request?.query
-
+            
             guard let requestPath = request?.path else {
                 menubarUpdated("Unknown path")
                 return GCDWebServerErrorResponse(statusCode: 701)
@@ -143,7 +141,7 @@ class MouseHandler: BaseHandler {
         })
     }
     
-    private enum Error : Swift.Error {
+    private enum Error: Swift.Error {
         case RuntimeError(String)
     }
     
@@ -158,7 +156,7 @@ class MouseHandler: BaseHandler {
         for infoList in infosList {
             guard let windowName = infoList["kCGWindowName"] as? String,
                 descriptor.recogniseSimulator(from: windowName) else {
-                    continue
+                continue
             }
             
             guard let bounds = infoList["kCGWindowBounds"] as? [String: Any],
@@ -166,8 +164,8 @@ class MouseHandler: BaseHandler {
                 let y = bounds["Y"] as? Int,
                 let w = bounds["Width"] as? Int,
                 let h = bounds["Height"] as? Int else {
-                    os_log("%{public}@", "Simulator window bounds missing")
-                    throw Error.RuntimeError("Simulator window bounds missing")
+                os_log("%{public}@", "Simulator window bounds missing")
+                throw Error.RuntimeError("Simulator window bounds missing")
             }
             
             guard let pid = infoList["kCGWindowOwnerPID"] as? pid_t else {
