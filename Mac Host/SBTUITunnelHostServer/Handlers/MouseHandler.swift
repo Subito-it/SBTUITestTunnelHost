@@ -28,6 +28,7 @@ class MouseHandler: BaseHandler {
         let requestClass = (requestMethod == "POST") ? GCDWebServerURLEncodedFormRequest.self : GCDWebServerRequest.self
         
         webServer.addHandler(forMethod: requestMethod, pathRegex: "/mouse/(.*)", request: requestClass, processBlock: { request in
+            // swiftlint:disable:next force_cast
             let params = (self.requestMethod == "POST") ? (request as! GCDWebServerURLEncodedFormRequest).arguments : request?.query
             
             guard let requestPath = request?.path else {
@@ -60,6 +61,7 @@ class MouseHandler: BaseHandler {
                 return GCDWebServerErrorResponse(statusCode: 706)
             }
             
+            // swiftlint:disable:next implicitly_unwrapped_optional
             var ret: GCDWebServerDataResponse!
             MouseHandler.mouseExecutionQueue.sync {
                 guard let simulatorInfo = try? self.findSimulator(descriptor: simulatorDescriptor) else {
@@ -216,7 +218,8 @@ class MouseHandler: BaseHandler {
     
     private func writeToFile(image: CGImage, url: URL) {
         let bitmapRep = NSBitmapImageRep(cgImage: image)
-        let data = bitmapRep.representation(using: NSBitmapImageRep.FileType.png, properties: [:])!
-        try? data.write(to: url)
+        if let data = bitmapRep.representation(using: NSBitmapImageRep.FileType.png, properties: [:]) {
+            try? data.write(to: url)
+        }
     }
 }

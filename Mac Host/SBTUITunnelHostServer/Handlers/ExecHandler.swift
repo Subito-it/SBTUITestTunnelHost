@@ -80,8 +80,9 @@ class ExecHandler: BaseHandler {
         do {
             let regex = try NSRegularExpression(pattern: ".*?(?:(;|&))", options: .caseInsensitive)
             
-            regex.enumerateMatches(in: cmd, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: cmd.count)) {
-                (substringRange: NSTextCheckingResult?, _, _) in
+            regex.enumerateMatches(in: cmd,
+                                   options: NSRegularExpression.MatchingOptions(rawValue: 0),
+                                   range: NSRange(location: 0, length: cmd.count)) { (substringRange: NSTextCheckingResult?, _, _) in
                 if let substringRange = substringRange {
                     let cmd2 = cmd as NSString
                     
@@ -117,6 +118,7 @@ class ExecHandler: BaseHandler {
                 path: path,
                 request: requestClass,
                 processBlock: { request in
+                    // swiftlint:disable:next force_cast
                     let params = (self.requestMethod == "POST") ? (request as! GCDWebServerURLEncodedFormRequest).arguments : request?.query
                     
                     guard self.validToken(params) else {

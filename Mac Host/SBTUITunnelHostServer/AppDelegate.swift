@@ -20,7 +20,7 @@ import GCDWebServer
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
-    @IBOutlet var window: NSWindow!
+    @IBOutlet private var window: NSWindow!
     
     let serverPort: UInt = 8_667
     var server: GCDWebServer?
@@ -95,6 +95,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
         }
     }
     
+    // swiftlint:disable:next implicitly_unwrapped_optional
     func webServerDidStart(_ server: GCDWebServer!) {
         guard let serverURL = server.serverURL else {
             return

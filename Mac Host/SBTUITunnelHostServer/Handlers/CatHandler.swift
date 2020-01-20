@@ -30,6 +30,7 @@ class CatHandler: BaseHandler {
             }
             switch requestPath {
             case "/catfile":
+                // swiftlint:disable:next force_cast
                 let params = (self.requestMethod == "POST") ? (request as! GCDWebServerURLEncodedFormRequest).arguments : request?.query
                 
                 guard self.validToken(params) else {
