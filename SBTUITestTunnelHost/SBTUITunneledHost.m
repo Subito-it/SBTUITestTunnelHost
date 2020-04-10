@@ -58,7 +58,7 @@ const uint16_t SBTUITunneledHostDefaultPort = 8667;
     self.connected = YES;
 }
 
-- (NSString *)performAction:(NSString *)action
+- (id)performAction:(NSString *)action
                        data:(NSString *)data
                         app:(XCUIApplication *)app
 {
