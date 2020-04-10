@@ -22,9 +22,20 @@ Add files in the *SBTUITestTunnelHost* to the UI test target.
 
 ## Usage
 
-### Mac
+### Mac Server App
 
-Launch the Mac App (either by compiling the `Mac Host/SBTUITunnelHostServer.xcworkspace` or launching the executable in `Mac Host/Binary/SBTUITestTunnelServer.zip`) which will fire a server on your local machine on port 8667. The current status of the server will be shown in the macOS menubar.
+Launch the Mac App (either by compiling the `SBTUITunnelHostServer/SBTUITunnelHostServer.xcworkspace` or launching the executable in `SBTUITunnelHostServer/Binary/SBTUITestTunnelServer.zip`) which will fire a server on your local machine on port 8667. The current status of the server will be shown in the macOS menubar.
+
+#### Executable under Pods folder
+
+Usually you should place the executable under _/Applications_ so that the same instance can be shared across multiple projects, however there are scenarios where you might prefer to place the server's executable under your project _Pods_ folder. This can be achieved adding the following post_install step in your Podfile:
+
+```
+post_install do |installer|
+  puts "Fetching SBTUITestTunnelHost Server"
+  system("curl -s https://raw.githubusercontent.com/Subito-it/SBTUITestTunnelHost/master/SBTUITunnelHostServer/Binary/SBTUITestTunnelServer.zip > /tmp/SBTUITestTunnelServer.zip; unzip -qqo /tmp/SBTUITestTunnelServer.zip -d #{installer.pods_project.path.dirname}/SBTUITestTunnelHost && rm -rf /tmp/SBTUITestTunnelServer.zip")
+end
+```
 
 #### Security Warnings 🔥🔥🔥 
 
