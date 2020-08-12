@@ -57,4 +57,10 @@ class Mouse {
         mouseUp?.post(tap: .cghidEventTap)
         Thread.sleep(forTimeInterval: 1e-3 * 150.0)
     }
+    
+    func move(to point: CGPoint) {
+        let mouseMove = CGEvent(mouseEventSource: nil, mouseType: .mouseMoved, mouseCursorPosition: point, mouseButton: .left)
+        
+        mouseMove?.post(tap: .cghidEventTap)
+    }
 }

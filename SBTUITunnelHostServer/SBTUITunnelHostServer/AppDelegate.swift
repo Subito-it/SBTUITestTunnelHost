@@ -25,6 +25,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     let serverPort: UInt = 8_667
     var server: GCDWebServer?
     
+    var mouseInteractionEnabled: Bool = false
+    
     let statusBar = NSStatusBar.system
     var statusBarItem = NSStatusItem()
     
@@ -37,6 +39,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     }()
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        mouseInteractionEnabled = ProcessInfo().arguments.contains("--enable-mouse-interaction")
+        if mouseInteractionEnabled {
+            let mouse = Mouse()
+            let point = CGPoint(x: 0, y: 0)
+            mouse.move(to: point)
+        }
+        
         statusBarItem = statusBar.statusItem(withLength: NSStatusItem.variableLength)
         restoreDefaultStatusBarImage()
         
