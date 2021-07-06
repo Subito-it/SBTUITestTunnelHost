@@ -34,7 +34,7 @@ To allow SBTUITestTunnelServer to interact with machine mouse you'll need to exp
 
 Usually you should place the executable under _/Applications_ so that the same instance can be shared across multiple projects, however there are scenarios where you might prefer to place the server's executable under your project _Pods_ folder. This can be achieved adding the following post_install step in your Podfile:
 
-```
+```ruby
 post_install do |installer|
   puts "Fetching SBTUITestTunnelHost Server"
   system("curl -s https://raw.githubusercontent.com/Subito-it/SBTUITestTunnelHost/master/SBTUITunnelHostServer/Binary/SBTUITestTunnelServer.zip > /tmp/SBTUITestTunnelServer.zip; unzip -qqo /tmp/SBTUITestTunnelServer.zip -d #{installer.pods_project.path.dirname}/SBTUITestTunnelHost && rm -rf /tmp/SBTUITestTunnelServer.zip")
@@ -62,7 +62,7 @@ To remotely execute a command invoke  `host.executeCommand(cmd)` which will sync
 Create an instance of `SBTUITunneledHostMouseClick` by passing the `XCUIElement` you want to be clicked (center of element will be clicked) and specifying a delay, in seconds, to wait after the click has been performed. This is useful if you need to create a sequence of `[SBTUITunneledHostMouseClick]`.
 
 This will execute 3 consecutive mouse clicks on element `btn` with a pause of 50ms in between
-```
+```swift
 let mouseClick = SBTUITunneledHostMouseClick(element: btn, completionPause: 0.05)
 let mouseCliks = Array(repeating: mouseClick, count: 3)
 host.execute(mouseCliks)
@@ -74,7 +74,7 @@ Additionally you have to pass normalized coordinates (values between 0.0 and 1.0
 As for clicks you specify a delay, in seconds, to wait after the drag has been performed.
 
 This will execute 3 consecutive mouse drags (swipe ups) on element `table` with a duration of 100ms and a pause of 50ms in between
-```
+```swift
 let mouseDrag = SBTUITunneledHostMouseDrag(element: table,
                                            startNormalizedPoint: CGPoint(x: 0.5, y: 0.9),
                                            stopNormalizedPoint: CGPoint(x: 0.5, y: 0.1),
