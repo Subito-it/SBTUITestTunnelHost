@@ -21,7 +21,7 @@ class SBTUITestTunnelHost_ExampleUITests_Swift: XCTestCase {
         let echoCmd = String(format: "echo %.2f > /tmp/tunnel-test", now)
         let echoCmdResult = host.executeCommand(echoCmd)
         
-        let catUrl = URL(string: "http://127.0.0.1:8667/catfile?token=lkju32yt$%C2%A3bmnA&content-type=application/json&path=/tmp/tunnel-test")!
+        let catUrl = URL(string: "http://127.0.0.1:8667/catfile?content-type=application/json&path=/tmp/tunnel-test")!
         let catResult = try! String(contentsOf: catUrl)
         let expectedCatResult = String(format: "%.2f\n", now)
         

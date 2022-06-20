@@ -35,12 +35,7 @@ class MouseHandler: BaseHandler {
                 menubarUpdated("Unknown path")
                 return GCDWebServerErrorResponse(statusCode: 701)
             }
-            
-            guard self.validToken(params) else {
-                menubarUpdated("Check token")
-                return GCDWebServerErrorResponse(statusCode: 702)
-            }
-            
+                        
             guard let appFrameString = params?["app_frame"] as? String else {
                 menubarUpdated("What?")
                 return GCDWebServerErrorResponse(statusCode: 703)

@@ -18,7 +18,6 @@
 #include <ifaddrs.h>
 #include <arpa/inet.h>
 
-NSString * const SBTUITestTunnelHostValidationToken = @"lkju32yt$£bmnA";
 NSString * const SBTUITestTunnelHostResponseResultKey = @"result";
 NSString * const SBTUITestTunnelHostHTTPMethod = @"POST";
 
@@ -72,7 +71,6 @@ const uint16_t SBTUITunneledHostDefaultPort = 8667;
     NSDictionary *params = @{
         @"command": data,
         @"app_frame": NSStringFromCGRect(appFrame),
-        @"token": SBTUITestTunnelHostValidationToken,
         @"simulator_device_name": simulatorDeviceName,
         @"simulator_device_runtime": simulatorDeviceRuntime
     };

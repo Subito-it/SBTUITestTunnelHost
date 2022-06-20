@@ -32,12 +32,7 @@ class CatHandler: BaseHandler {
             case "/catfile":
                 // swiftlint:disable:next force_cast
                 let params = (self.requestMethod == "POST") ? (request as! GCDWebServerURLEncodedFormRequest).arguments : request?.query
-                
-                guard self.validToken(params) else {
-                    menubarUpdated("Check token")
-                    return GCDWebServerErrorResponse(statusCode: 702)
-                }
-                
+                                
                 if let filePathParam = params?["path"] as? String,
                     let fileContentType = params?["content-type"] as? String {
                     let filePath = NSString(string: filePathParam).expandingTildeInPath
