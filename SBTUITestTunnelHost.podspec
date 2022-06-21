@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'SBTUITestTunnelHost'
-    s.version          = '0.5.0'
+    s.version          = '2.0.0'
     s.summary          = 'Execute commands on your testing mac host while using SBTUITestTunnel'
 
     s.description      = <<-DESC
