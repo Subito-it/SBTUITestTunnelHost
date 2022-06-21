@@ -1,6 +1,0 @@
-framework module Pods_SBTUITestTunnelHost_ExampleUITests {
-  umbrella header "Pods-SBTUITestTunnelHost_ExampleUITests-umbrella.h"
-
-  export *
-  module * { export * }
-}

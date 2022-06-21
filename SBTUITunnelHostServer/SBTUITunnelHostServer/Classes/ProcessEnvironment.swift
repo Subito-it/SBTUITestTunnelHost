@@ -31,7 +31,7 @@ struct ProcessEnvironment {
         task.standardError = standardErrorPipe
         
         task.currentDirectoryPath = basePath
-        task.launchPath = "/bin/sh"
+        task.launchPath = "/bin/zsh"
         
         task.arguments = ["-c", cmd]
         

@@ -45,7 +45,7 @@ end
 
 The tool is intended for testing enviornments only, use with care since **it allows to access and execute commands** on the running host. **Make sure that the host is only reachable by trusted clients.**
 
-To increase security by default the application binds the server to localhost. This means that it will only receive requests from within the same machine that runs the tool, which should be fine in most cases. You can optionally launch the application  passing the `--skipLocalhostBinding` or by manually toggling the option from menubar to bypass this limitation.
+To increase security by default the application binds the server to localhost. This means that it will only receive requests from within the same machine that runs the tool, which should be fine in most cases.
 
 For additional security launch the tool with a system user with [specific access privileges](https://support.apple.com/kb/PH25796?locale=en_US&amp;viewlocale=en_US)
 
@@ -89,7 +89,7 @@ The result is a much faster scrolling as can be seen from the demo below.
 
 
 #### serving files
-Simply issue a GET request to http://localhost:8667/catfile?token=TOKEN&content-type=application/json&path=/tmp/tunnel-test
+Simply issue a GET request to http://localhost:8667/catfile?content-type=application/json&path=/tmp/tunnel-test
 
 
 ## Additional resources

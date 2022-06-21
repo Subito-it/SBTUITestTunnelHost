@@ -71,37 +71,6 @@ class ExecHandler: BaseHandler {
         }
     }
     
-    private func validate(
-        command: String,
-        errorHandler: (String) -> Void
-    ) -> GCDWebServerErrorResponse? {
-        var cmd = command
-        
-        do {
-            let regex = try NSRegularExpression(pattern: ".*?(?:(;|&))", options: .caseInsensitive)
-            
-            regex.enumerateMatches(in: cmd,
-                                   options: NSRegularExpression.MatchingOptions(rawValue: 0),
-                                   range: NSRange(location: 0, length: cmd.count)) { (substringRange: NSTextCheckingResult?, _, _) in
-                if let substringRange = substringRange {
-                    let cmd2 = cmd as NSString
-                    
-                    cmd = cmd2.substring(with: substringRange.range)
-                }
-            }
-            
-            if cmd.hasPrefix("rm ") {
-                errorHandler("WTF!")
-                return GCDWebServerErrorResponse(statusCode: 703)
-            } else {
-                return nil
-            }
-        } catch {
-            errorHandler("Regex failed?")
-            return GCDWebServerErrorResponse(statusCode: 704)
-        }
-    }
-    
     func addHandler(_ webServer: GCDWebServer,
                     menubarUpdated: @escaping ((String) -> Void)) {
         let requestClass = (requestMethod == "POST") ?
@@ -120,12 +89,7 @@ class ExecHandler: BaseHandler {
                 processBlock: { request in
                     // swiftlint:disable:next force_cast
                     let params = (self.requestMethod == "POST") ? (request as! GCDWebServerURLEncodedFormRequest).arguments : request?.query
-                    
-                    guard self.validToken(params) else {
-                        menubarUpdated("Check token")
-                        return GCDWebServerErrorResponse(statusCode: 702)
-                    }
-                    
+                                        
                     guard let p = params, let item = paramsParser(p) else {
                         menubarUpdated("Missing parameter!")
                         return GCDWebServerErrorResponse(statusCode: 705)
@@ -137,11 +101,6 @@ class ExecHandler: BaseHandler {
         }
         
         addHandlerForParameter("/exec", parser: parseCommand) { command in
-            if let error = self.validate(command: command,
-                                         errorHandler: menubarUpdated) {
-                return error
-            }
-            
             let cmdOutput = executeShellCommand(
                 command,
                 basePath: self.executablesBasePath
@@ -156,11 +115,6 @@ class ExecHandler: BaseHandler {
         }
         
         addHandlerForParameter("/launch", parser: parseCommand) { command in
-            if let error = self.validate(command: command,
-                                         errorHandler: menubarUpdated) {
-                return error
-            }
-            
             let id = launchShellCommand(command,
                                         basePath: self.executablesBasePath)
             

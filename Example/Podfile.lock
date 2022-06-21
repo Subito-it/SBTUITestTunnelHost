@@ -1,5 +1,5 @@
 PODS:
-  - SBTUITestTunnelHost (0.1.0)
+  - SBTUITestTunnelHost (0.5.0)
 
 DEPENDENCIES:
   - SBTUITestTunnelHost (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  SBTUITestTunnelHost: 40419b4f6d0f020f62565da6f2e6fdb38883458a
+  SBTUITestTunnelHost: 683cef8fbf9a12d0bb3e13f78b6d8b0aa7708c97
 
-PODFILE CHECKSUM: 67bb2640d137cf587b5c1817e27b178e4f4dd22d
+PODFILE CHECKSUM: 7e208d3af5cd5448e350a53a2a05e3ccdd74b16b
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.11.2

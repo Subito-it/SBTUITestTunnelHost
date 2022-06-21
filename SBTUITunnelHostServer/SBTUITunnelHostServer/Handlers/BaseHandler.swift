@@ -17,18 +17,6 @@
 import Foundation
 import GCDWebServer
 
-private let validationToken = "lkju32yt$£bmnA"
-
 protocol BaseHandler {
     func addHandler(_ webServer: GCDWebServer, menubarUpdated: @escaping ((String) -> Void))
-}
-
-extension BaseHandler {
-    func validToken(_ params: ([AnyHashable: Any])?) -> Bool {
-        guard let token = params?["token"] as? String else {
-            return false
-        }
-        
-        return token == validationToken
-    }
 }
