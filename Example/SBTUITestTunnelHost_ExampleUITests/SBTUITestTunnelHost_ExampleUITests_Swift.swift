@@ -65,4 +65,30 @@ class SBTUITestTunnelHost_ExampleUITests_Swift: XCTestCase {
         
         XCTAssert(app.cells["99"].isHittable)
     }
+    
+    func testCommandWithAmpersand() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        host.connect()
+     
+        let cmd = "xcrun simctl openurl \(try deviceIdentifier()) 'https://www.google.com/search?q=tunnel&p=1'"
+        _ = host.executeCommand(cmd)
+        
+        let safari = XCUIApplication(bundleIdentifier: "com.apple.mobilesafari")
+        
+        wait { safari.state == .runningForeground }
+    }
+    
+    private func deviceIdentifier() throws -> String {
+        let bundlePathComponents = Bundle.main.bundleURL.pathComponents
+        guard let devicesIndex = bundlePathComponents.firstIndex(where: { $0 == "Devices" || $0 == "XCTestDevices" }),
+              let deviceIdentifier = bundlePathComponents.dropFirst(devicesIndex + 1).first else {
+            throw "Failed extracting device identifier"
+        }
+
+        return deviceIdentifier
+    }
 }
+
+extension String: Error {}
