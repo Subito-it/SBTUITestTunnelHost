@@ -57,6 +57,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, GCDWebServerDelegate {
     }
 
     func startup() {
+        if !CGPreflightScreenCaptureAccess() {
+            CGRequestScreenCaptureAccess()
+        }
+        
         server?.stop()
         server = GCDWebServer()
 
