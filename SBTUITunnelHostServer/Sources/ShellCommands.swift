@@ -1,6 +1,10 @@
+// Copyright (C) 2023 Subito.it
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+
 // ShellCommands.swift
 //
-// Copyright (C) 2017 Subito.it S.r.l (www.subito.it)
+// Copyright (C) 2023 Subito.it
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,10 +22,10 @@ import Foundation
 
 func executeShellCommand(_ cmd: String, basePath: String) -> String {
     let processEnvironment = ProcessEnvironment(cmd, basePath: basePath)
-    
+
     processEnvironment.launch()
     processEnvironment.waitUntilExit()
-    
+
     return (processEnvironment.standardOutput ?? "") +
         (processEnvironment.standardError ?? "")
 }
@@ -31,9 +35,9 @@ private var runningProcesses = Set<ProcessEnvironment>()
 func launchShellCommand(_ cmd: String, basePath: String) -> UUID {
     let processEnvironment = ProcessEnvironment(cmd, basePath: basePath)
     processEnvironment.launch()
-    
+
     runningProcesses.insert(processEnvironment)
-    
+
     return processEnvironment.id
 }
 
@@ -42,13 +46,13 @@ private func getShellCommandStatus(
     afterRunning command: ((ProcessEnvironment) -> Void)? = nil
 ) -> ProcessEnvironment.Status? {
     let status = process.status
-    
+
     command?(process)
-    
+
     if case .finished = status {
         runningProcesses.remove(process)
     }
-    
+
     return status
 }
 
@@ -56,7 +60,7 @@ func getShellCommandStatus(for id: UUID) -> ProcessEnvironment.Status? {
     guard let process = runningProcesses.first(where: { $0.id == id }) else {
         return nil
     }
-    
+
     return getShellCommandStatus(for: process)
 }
 
@@ -64,7 +68,7 @@ func interruptCommand(with id: UUID) -> ProcessEnvironment.Status? {
     guard let process = runningProcesses.first(where: { $0.id == id }) else {
         return nil
     }
-    
+
     return getShellCommandStatus(for: process,
                                  afterRunning: { $0.interrupt() })
 }
@@ -73,7 +77,7 @@ func terminateCommand(with id: UUID) -> ProcessEnvironment.Status? {
     guard let process = runningProcesses.first(where: { $0.id == id }) else {
         return nil
     }
-    
+
     return getShellCommandStatus(for: process,
                                  afterRunning: { $0.terminate() })
 }

@@ -1,6 +1,10 @@
+// Copyright (C) 2023 Subito.it
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+
 // SBTMouseDrag.swift
 //
-// Copyright (C) 2017 Subito.it S.r.l (www.subito.it)
+// Copyright (C) 2023 Subito.it
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,21 +25,21 @@ class SBTMouseDrag: NSObject, NSCoding {
     let dragDuration: TimeInterval
     let startPoint: CGPoint
     let stopPoint: CGPoint
-    
+
     init(startPoint: NSPoint, stopPoint: NSPoint, dragDuration: TimeInterval, completionPause: TimeInterval) {
         self.startPoint = startPoint
         self.stopPoint = stopPoint
         self.dragDuration = dragDuration
         self.completionPause = completionPause
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         self.completionPause = aDecoder.decodeDouble(forKey: "completionPause")
         self.dragDuration = aDecoder.decodeDouble(forKey: "dragDuration")
         self.startPoint = aDecoder.decodePoint(forKey: "startPoint")
         self.stopPoint = aDecoder.decodePoint(forKey: "stopPoint")
     }
-    
+
     func encode(with aCoder: NSCoder) {
         aCoder.encode(completionPause, forKey: "completionPause")
         aCoder.encode(dragDuration, forKey: "dragDuration")

@@ -1,6 +1,10 @@
+// Copyright (C) 2023 Subito.it
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+
 // ExecHandler.swift
 //
-// Copyright (C) 2017 Subito.it S.r.l (www.subito.it)
+// Copyright (C) 2023 Subito.it
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,24 +24,24 @@ import GCDWebServer
 class ExecHandler: BaseHandler {
     private let requestMethod = "POST"
     private var executablesBasePath = "~/Desktop"
-    
+
     private func parseCommand(_ params: [AnyHashable: Any]) -> String? {
         guard let encodedCommand = params["command"] as? String,
-            let decdedData = Data(base64Encoded: encodedCommand),
-            let decodedCommand = String(data: decdedData, encoding: .utf8)
+              let decdedData = Data(base64Encoded: encodedCommand),
+              let decodedCommand = String(data: decdedData, encoding: .utf8)
         else { return nil }
-        
+
         return decodedCommand
     }
-    
+
     private func parseUUID(_ params: [AnyHashable: Any]) -> UUID? {
         guard let idString = params["command"] as? String else {
             return nil
         }
-        
+
         return UUID(uuidString: idString)
     }
-    
+
     private func responseForCommandStatus(
         _ status: ProcessEnvironment.Status?
     ) -> GCDWebServerResponse {
@@ -56,27 +60,27 @@ class ExecHandler: BaseHandler {
                 "terminationStatus": status,
                 "terminationReason": reason.rawValue
             ]
-            
+
             if let stdOut = stdOut {
                 jsonObject["stdOut"] = stdOut
             }
-            
+
             if let stdErr = stdErr {
                 jsonObject["stdErr"] = stdErr
             }
-            
+
             return GCDWebServerDataResponse(
                 jsonObject: ["result": jsonObject]
             )
         }
     }
-    
+
     func addHandler(_ webServer: GCDWebServer,
                     menubarUpdated: @escaping ((String) -> Void)) {
         let requestClass = (requestMethod == "POST") ?
             GCDWebServerURLEncodedFormRequest.self :
             GCDWebServerRequest.self
-        
+
         func addHandlerForParameter<T>(
             _ path: String,
             parser paramsParser: @escaping ([AnyHashable: Any]) -> T?,
@@ -89,51 +93,51 @@ class ExecHandler: BaseHandler {
                 processBlock: { request in
                     // swiftlint:disable:next force_cast
                     let params = (self.requestMethod == "POST") ? (request as! GCDWebServerURLEncodedFormRequest).arguments : request?.query
-                                        
+
                     guard let p = params, let item = paramsParser(p) else {
                         menubarUpdated("Missing parameter!")
                         return GCDWebServerErrorResponse(statusCode: 705)
                     }
-                    
+
                     return responseForItem(item)
                 }
             )
         }
-        
+
         addHandlerForParameter("/exec", parser: parseCommand) { command in
             let cmdOutput = executeShellCommand(
                 command,
                 basePath: self.executablesBasePath
             )
-            
+
             menubarUpdated("Executed: \(command)")
-            
+
             return GCDWebServerDataResponse(jsonObject: [
                 "result": cmdOutput,
                 "status": 1
             ])
         }
-        
+
         addHandlerForParameter("/launch", parser: parseCommand) { command in
             let id = launchShellCommand(command,
                                         basePath: self.executablesBasePath)
-            
+
             menubarUpdated("Launch: \(command)")
-            
+
             return GCDWebServerDataResponse(jsonObject: [
                 "result": id.uuidString,
                 "status": 1
             ])
         }
-        
+
         addHandlerForParameter("/status", parser: parseUUID) { id in
             self.responseForCommandStatus(getShellCommandStatus(for: id))
         }
-        
+
         addHandlerForParameter("/interrupt", parser: parseUUID) { id in
             self.responseForCommandStatus(interruptCommand(with: id))
         }
-        
+
         addHandlerForParameter("/terminate", parser: parseUUID) { id in
             self.responseForCommandStatus(terminateCommand(with: id))
         }
