@@ -1,9 +1,9 @@
 use_frameworks!
-platform :ios, '12.0'
+platform :ios, '15.0'
 
-target 'SBTUITestTunnelHost_Example' do
+target 'Example' do
 end
 
-target 'SBTUITestTunnelHost_ExampleUITests' do
+target 'UITests' do
   pod 'SBTUITestTunnelHost', :path => '../'
 end

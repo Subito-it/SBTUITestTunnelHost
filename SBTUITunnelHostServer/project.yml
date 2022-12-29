@@ -1,0 +1,14 @@
+name: SBTUITestTunnelServer
+options:
+  bundleIdPrefix: com.subito
+  postGenCommand: "pod install"
+targets:
+  SBTUITestTunnelServer:
+    type: application
+    platform: macOS
+    deploymentTarget: 11.0
+    settings:
+      base:
+        INFOPLIST_FILE: "Sources/Info.plist"
+    sources:
+      - path: Sources
