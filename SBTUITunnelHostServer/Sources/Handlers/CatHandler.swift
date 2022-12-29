@@ -1,6 +1,10 @@
+// Copyright (C) 2023 Subito.it
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+
 // CatHandler.swift
 //
-// Copyright (C) 2017 Subito.it S.r.l (www.subito.it)
+// Copyright (C) 2023 Subito.it
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,10 +23,10 @@ import GCDWebServer
 
 class CatHandler: BaseHandler {
     private let requestMethod = "GET"
-    
+
     func addHandler(_ webServer: GCDWebServer, menubarUpdated: @escaping ((String) -> Void)) {
         let requestClass = (requestMethod == "POST") ? GCDWebServerURLEncodedFormRequest.self : GCDWebServerRequest.self
-        
+
         webServer.addHandler(forMethod: requestMethod, path: "/catfile", request: requestClass, processBlock: { request in
             guard let requestPath = request?.path else {
                 menubarUpdated("Unknown path")
@@ -32,9 +36,9 @@ class CatHandler: BaseHandler {
             case "/catfile":
                 // swiftlint:disable:next force_cast
                 let params = (self.requestMethod == "POST") ? (request as! GCDWebServerURLEncodedFormRequest).arguments : request?.query
-                                
+
                 if let filePathParam = params?["path"] as? String,
-                    let fileContentType = params?["content-type"] as? String {
+                   let fileContentType = params?["content-type"] as? String {
                     let filePath = NSString(string: filePathParam).expandingTildeInPath
                     if !FileManager.default.fileExists(atPath: filePath) {
                         menubarUpdated("File does not exists")

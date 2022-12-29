@@ -1,9 +1,6 @@
-//  SBTUITestTunnelHost_ExampleUITests_Swift.swift
-//  SBTUITestTunnelHost_ExampleUITests
+// Copyright (C) 2023 Subito.it
 //
-//  Created by Tomas Camin on 02/05/2017.
-//  Copyright © 2017 tcamin. All rights reserved.
-//
+// Licensed under the Apache License, Version 2.0 (the "License");
 
 import SBTUITestTunnelHost
 import XCTest
@@ -13,22 +10,22 @@ class SBTUITestTunnelHost_ExampleUITests_Swift: XCTestCase {
         // echo a string to a file and check that it is read correctly
         let app = XCUIApplication()
         app.launch()
-        
+
         host.connect()
-        
+
         let now = NSDate().timeIntervalSince1970
-        
+
         let echoCmd = String(format: "echo %.2f > /tmp/tunnel-test", now)
         let echoCmdResult = host.executeCommand(echoCmd)
-        
+
         let catUrl = URL(string: "http://127.0.0.1:8667/catfile?content-type=application/json&path=/tmp/tunnel-test")!
         let catResult = try! String(contentsOf: catUrl)
         let expectedCatResult = String(format: "%.2f\n", now)
-        
+
         XCTAssertEqual(catResult, expectedCatResult)
         XCTAssertEqual(echoCmdResult, "")
     }
-    
+
     func testMultipleTap() {
         let app = XCUIApplication()
         app.launch()
@@ -69,21 +66,22 @@ class SBTUITestTunnelHost_ExampleUITests_Swift: XCTestCase {
     func testCommandWithAmpersand() throws {
         let app = XCUIApplication()
         app.launch()
-        
+
         host.connect()
-     
+
         let cmd = "xcrun simctl openurl \(try deviceIdentifier()) 'https://www.google.com/search?q=tunnel&p=1'"
         _ = host.executeCommand(cmd)
-        
+
         let safari = XCUIApplication(bundleIdentifier: "com.apple.mobilesafari")
-        
+
         wait { safari.state == .runningForeground }
     }
-    
+
     private func deviceIdentifier() throws -> String {
         let bundlePathComponents = Bundle.main.bundleURL.pathComponents
         guard let devicesIndex = bundlePathComponents.firstIndex(where: { $0 == "Devices" || $0 == "XCTestDevices" }),
-              let deviceIdentifier = bundlePathComponents.dropFirst(devicesIndex + 1).first else {
+              let deviceIdentifier = bundlePathComponents.dropFirst(devicesIndex + 1).first
+        else {
             throw "Failed extracting device identifier"
         }
 

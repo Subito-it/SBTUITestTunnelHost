@@ -24,22 +24,14 @@ Add files in the *SBTUITestTunnelHost* to the UI test target.
 
 ### Mac Server App
 
-Launch the Mac App (either by compiling the `SBTUITunnelHostServer/SBTUITunnelHostServer.xcworkspace` or launching the executable in `SBTUITunnelHostServer/Binary/SBTUITestTunnelServer.zip`) which will fire a server on your local machine on port 8667. The current status of the server will be shown in the macOS menubar.
+Install [XcodeGen](https://github.com/yonaskolb/XcodeGen) by running `brew install xcodegen` then launch the `build_server.sh` script which will generate the SBTUITunnelHostServer.app executable.
 
-#### Mouse actions - Catalina
+The SBTUITunnelHostServer.app mac app which will fire a server on your local machine on port 8667. The current status of the server will be shown in the macOS menubar.
 
-To allow SBTUITestTunnelServer to interact with machine mouse you'll need to explicitly grant Accessibility permissions under 'Securtity & Privacy' > 'Privacy' in System preferences. If the SBTUITestTunnelServer is already listed but mouse interaction do not work try removing the entry and launching the app again.
+#### Mouse actions
 
-#### Executable under Pods folder
+To allow SBTUITestTunnelServer to interact with machine mouse you'll need to explicitly **grant Accessibility permissions** under 'Securtity & Privacy' > 'Privacy' in System preferences. If the SBTUITestTunnelServer is already listed but mouse interaction do not work try removing the entry and launching the app again. **Device Bezel should be disabled** for this functionality to properly work.
 
-Usually you should place the executable under _/Applications_ so that the same instance can be shared across multiple projects, however there are scenarios where you might prefer to place the server's executable under your project _Pods_ folder. This can be achieved adding the following post_install step in your Podfile:
-
-```ruby
-post_install do |installer|
-  puts "Fetching SBTUITestTunnelHost Server"
-  system("curl -s https://raw.githubusercontent.com/Subito-it/SBTUITestTunnelHost/master/SBTUITunnelHostServer/Binary/SBTUITestTunnelServer.zip > /tmp/SBTUITestTunnelServer.zip; unzip -qqo /tmp/SBTUITestTunnelServer.zip -d #{installer.pods_project.path.dirname}/SBTUITestTunnelHost && rm -rf /tmp/SBTUITestTunnelServer.zip")
-end
-```
 
 #### Security Warnings 🔥🔥🔥 
 
@@ -85,7 +77,7 @@ host.execute(mouseDrags)
 ```
 
 The result is a much faster scrolling as can be seen from the demo below.
-<img src="https://raw.githubusercontent.com/Subito-it/SBTUITestTunnelHost/master/Images/ScrollingDemo.gif" width="480" />
+<img src="https://raw.githubusercontent.com/Subito-it/SBTUITestTunnelHost/master/Documentation/Images/ScrollingDemo.gif" width="480" />
 
 
 #### serving files

@@ -1,5 +1,7 @@
 use_frameworks!
 
-target 'SBTUITunnelHostServer' do
+platform :macos, 11.0
+
+target 'SBTUITestTunnelServer' do
 	pod 'GCDWebServer'
 end

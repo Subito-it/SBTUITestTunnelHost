@@ -1,0 +1,28 @@
+name: SBTUITestTunnelHost
+options:
+  bundleIdPrefix: com.subito
+  postGenCommand: "pod install; xed ."
+targets:
+  Example:
+    type: application
+    platform: iOS
+    deploymentTarget: 15.0
+    settings:
+      base:
+        INFOPLIST_FILE: "Sources/SBTUITestTunnelHost-Info.plist"
+    sources:
+      - path: Sources
+    scheme:
+      gatherCoverageData: true
+      testTargets:
+        - UITests
+  UITests:
+    type: bundle.ui-testing
+    platform: iOS
+    settings:
+      base:
+        INFOPLIST_FILE: "UITests/Info.plist"
+    sources:
+      - UITests
+    dependencies:
+      - target: Example

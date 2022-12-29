@@ -1,17 +1,13 @@
+// Copyright (C) 2023 Subito.it
 //
-//  SimulatorDescriptor.swift
-//  SBTUITunnelHostServer
-//
-//  Created by mattia.valzelli on 13/12/2017.
-//  Copyright © 2017 Subito.it. All rights reserved.
-//
+// Licensed under the Apache License, Version 2.0 (the "License");
 
 import Foundation
 
 enum SimulatorDescriptor {
     case byCompleteName(String)
     case byDeviceNameAndRuntime(String, String)
-    
+
     func recogniseSimulator(from windowName: String) -> Bool {
         switch self {
         case let .byCompleteName(simulatorCompleteName):
@@ -19,9 +15,11 @@ enum SimulatorDescriptor {
         case .byDeviceNameAndRuntime(let deviceName, var runtime):
             runtime = runtime.components(separatedBy: ".").prefix(2).joined(separator: ".") // 11.1.1 -> 11.1
             let escapedDeviceName = NSRegularExpression.escapedPattern(for: deviceName)
-            let regex = "\(escapedDeviceName) (-|—) (iOS )?\(runtime)(\\.\\d)?"
+            let regex = "\(escapedDeviceName)( (-|—) (iOS )?\(runtime)(\\.\\d)?)?"
             
-            return windowName.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
+            let found = windowName.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
+
+            return found
         }
     }
 }
@@ -32,7 +30,7 @@ extension SimulatorDescriptor {
         let simulatorWindowName = params["simulator_window_name"] as? String
         let simulatorName = params["simulator_device_name"] as? String
         let simulatorRuntime = params["simulator_device_runtime"] as? String
-        
+
         switch (simulatorWindowName, simulatorName, simulatorRuntime) {
         case (let .some(simulatorWindowName), nil, nil):
             self = .byCompleteName(simulatorWindowName)
