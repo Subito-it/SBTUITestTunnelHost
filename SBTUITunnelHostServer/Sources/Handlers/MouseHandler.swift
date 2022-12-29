@@ -175,9 +175,19 @@ class MouseHandler: BaseHandler {
                 os_log("%{public}@", "pid not found for \(windowName)")
                 throw Error.RuntimeError("Failed getting Simulator pid")
             }
-
-            let windowBarHeight = 24
-
+            
+            // To determine window bar height I found no better way than doing a wild guess base on the possible aspect ratio
+            // 1.33 iPad
+            // 1.5 iPad mini
+            // 1.4375 iPad air 4
+            let aspectRatios = [2.1666, 1.3333, 1.4375, 1.5]
+            
+            let expectedHeigths = aspectRatios.map { $0 * Double(w) }
+            let menuBarHeigths = expectedHeigths.map { h - Int($0.rounded()) }
+            
+            let defaultWindowBarHeight = 55
+            let windowBarHeight = menuBarHeigths.first(where: { $0 >= 55 && $0 <= 57 }) ?? defaultWindowBarHeight
+        
             return (pid, CGRect(x: x, y: y + windowBarHeight, width: w, height: h - windowBarHeight))
         }
 
