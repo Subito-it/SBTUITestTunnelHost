@@ -12,7 +12,7 @@ cd SBTUITunnelHostServer; xcodegen &>/dev/null && xcodebuild -workspace SBTUITes
 
 if test $?
 then
-    echo "Server app SBTUITestTunnelServer.app successfully built!"
+    echo "Server app $(pwd)/SBTUITestTunnelServer.app successfully built!"
 else
     echo "Build failed"
 fi
