@@ -105,29 +105,47 @@ class ExecHandler: BaseHandler {
         }
 
         addHandlerForParameter("/exec", parser: parseCommand) { command in
-            let cmdOutput = executeShellCommand(
-                command,
-                basePath: self.executablesBasePath
-            )
+            do {
+                let cmdOutput = try executeShellCommand(
+                    command,
+                    basePath: self.executablesBasePath
+                )
 
-            menubarUpdated("Executed: \(command)")
+                menubarUpdated("Executed: \(command)")
 
-            return GCDWebServerDataResponse(jsonObject: [
-                "result": cmdOutput,
-                "status": 1
-            ])
+                return GCDWebServerDataResponse(jsonObject: [
+                    "result": cmdOutput,
+                    "status": 1
+                ])
+            } catch {
+                menubarUpdated("Failed to execute: \(command) - \(error.localizedDescription)")
+
+                return GCDWebServerDataResponse(jsonObject: [
+                    "result": error.localizedDescription,
+                    "status": -1
+                ])
+            }
         }
 
         addHandlerForParameter("/launch", parser: parseCommand) { command in
-            let id = launchShellCommand(command,
-                                        basePath: self.executablesBasePath)
+            do {
+                let id = try launchShellCommand(command,
+                                                basePath: self.executablesBasePath)
 
-            menubarUpdated("Launch: \(command)")
+                menubarUpdated("Launch: \(command)")
 
-            return GCDWebServerDataResponse(jsonObject: [
-                "result": id.uuidString,
-                "status": 1
-            ])
+                return GCDWebServerDataResponse(jsonObject: [
+                    "result": id.uuidString,
+                    "status": 1
+                ])
+            } catch {
+                menubarUpdated("Failed to execute: \(command) - \(error.localizedDescription)")
+
+                return GCDWebServerDataResponse(jsonObject: [
+                    "result": error.localizedDescription,
+                    "status": -1
+                ])
+            }
         }
 
         addHandlerForParameter("/status", parser: parseUUID) { id in
