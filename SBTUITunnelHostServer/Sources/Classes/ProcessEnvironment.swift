@@ -37,8 +37,8 @@ struct ProcessEnvironment {
     }
 
     @discardableResult
-    func launch() -> Int32 {
-        task.launch()
+    func run() throws -> Int32 {
+        try task.run()
         return task.processIdentifier
     }
 

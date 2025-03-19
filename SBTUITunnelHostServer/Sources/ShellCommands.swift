@@ -20,10 +20,10 @@
 
 import Foundation
 
-func executeShellCommand(_ cmd: String, basePath: String) -> String {
+func executeShellCommand(_ cmd: String, basePath: String) throws -> String {
     let processEnvironment = ProcessEnvironment(cmd, basePath: basePath)
 
-    processEnvironment.launch()
+    try processEnvironment.run()
     processEnvironment.waitUntilExit()
 
     return (processEnvironment.standardOutput ?? "") +
@@ -32,9 +32,9 @@ func executeShellCommand(_ cmd: String, basePath: String) -> String {
 
 private var runningProcesses = Set<ProcessEnvironment>()
 
-func launchShellCommand(_ cmd: String, basePath: String) -> UUID {
+func launchShellCommand(_ cmd: String, basePath: String) throws -> UUID {
     let processEnvironment = ProcessEnvironment(cmd, basePath: basePath)
-    processEnvironment.launch()
+    try processEnvironment.run()
 
     runningProcesses.insert(processEnvironment)
 
