@@ -23,7 +23,7 @@ import GCDWebServer
 
 class ExecHandler: BaseHandler {
     private let requestMethod = "POST"
-    private var executablesBasePath = "~/Desktop"
+    private var executablesBasePath = "~"
 
     private func parseCommand(_ params: [AnyHashable: Any]) -> String? {
         guard let encodedCommand = params["command"] as? String,
