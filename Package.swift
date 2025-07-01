@@ -17,7 +17,11 @@ let package = Package(
         .target(
             name: "SBTUITestTunnelHost",
             path: "SBTUITestTunnelHost",
-            publicHeadersPath: ""
+            publicHeadersPath: "",
+            linkerSettings: [
+                .linkedFramework("CoreGraphics"),
+                .linkedFramework("XCTest"),
+            ]
         ),
     ]
 )
